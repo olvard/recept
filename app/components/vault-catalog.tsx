@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { categories, recipes } from "@/lib/recipes";
+import { NewPostButton } from "@/app/components/new-post-button";
 
 const perPage = 4;
 const prepOptions = [
@@ -60,7 +61,7 @@ export function VaultCatalog() {
   const reset = () => router.push("/vault", { scroll: false });
 
   return <div className="page-wrap vault-page">
-    <section className="page-intro"><p className="eyebrow">Personligt arkiv · 8 recept</p><h1>Recept</h1><p>Oliver & Wilmas receptsamling.</p></section>
+    <section className="page-intro"><p className="eyebrow">Personligt arkiv · 8 recept</p><div className="page-intro-title-row"><h1>Recept</h1><NewPostButton /></div><p>Oliver & Wilmas receptsamling.</p></section>
     <section className="controls" aria-label="Sök och filtrera recept">
       <div className="search-field"><label htmlFor="search">Sök i arkivet</label><input id="search" type="search" value={q} placeholder="Till exempel morot eller citron" onChange={(e) => updateFilter({ q: e.target.value }, true)} /></div>
       <button className="filter-toggle" type="button" aria-expanded={filtersOpen} aria-controls="filter-options" onClick={() => setFiltersOpen((open) => !open)}>Filter {filtersOpen ? "−" : "+"}</button>
