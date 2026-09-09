@@ -52,3 +52,21 @@ input,select { width:100%; min-height:44px; color:var(--ink); background:#fff; b
 @media (max-width: 900px) { .controls { grid-template-columns:repeat(2,1fr); }.search-field { grid-column:span 2; }.clear-button { justify-self:start; }.attribution span:last-child { display:none; } }
 @media (max-width: 767px) { body { padding-bottom:64px; }.site-header { min-height:67px; padding:14px 20px; }.desktop-nav,.new-post { display:none; }.attribution { font-size:.72rem; gap:8px; }.attribution span + span { padding-left:8px; }.page-wrap { width:min(100% - 32px,1180px); padding:46px 0 55px; }.page-intro > p:not(.eyebrow),.detail-header > p:not(.eyebrow) { font-size:1rem; }.controls { grid-template-columns:1fr; margin-top:38px; padding:14px; }.search-field { grid-column:auto; }.recipe-grid,.category-grid,.detail-grid { grid-template-columns:1fr; }.recipe-card { min-height:250px; padding:20px; }.category-grid { margin-top:38px; }.category-card { min-height:190px; }.category-card span { margin-top:28px; }.detail-header { margin-top:36px; }.detail-grid { gap:44px; margin-top:42px; }.breadcrumbs { font-size:.78rem; }.mobile-nav { position:fixed; z-index:5; bottom:0; left:0; right:0; display:grid; grid-template-columns:1fr 1fr; background:var(--canvas); border-top:2px solid var(--line); }.mobile-nav a { min-height:62px; display:grid; place-items:center; text-decoration:none; border-bottom:3px solid transparent; }.mobile-nav .active { background:var(--soft); }.pagination { font-size:.8rem; }.pagination span { white-space:nowrap; } footer { padding:14px 16px; margin-bottom:0; } }
 @media (prefers-reduced-motion: reduce) { *,*::before,*::after { scroll-behavior:auto!important; transition:none!important; } }
+
+/* The discovery controls remain compact on phones, with optional filters. */
+.controls { grid-template-columns:2fr 3fr; }
+.filter-toggle { display:none; }
+.filter-options { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)) auto; gap:13px; align-items:end; }
+.mobile-new-post { display:none; }
+@media (max-width: 900px) {
+  .filter-options { grid-column:span 2; }
+}
+@media (max-width: 767px) {
+  .site-header { gap:12px; padding:12px 16px; }
+  .attribution { display:none; }
+  .mobile-new-post { display:block; margin-left:auto; color:#fff8f6; background:var(--accent); border:1px solid var(--accent); padding:8px 9px; font-size:.76rem; white-space:nowrap; }
+  .controls { grid-template-columns:1fr; }
+  .filter-toggle { display:block; width:100%; min-height:44px; padding:8px 10px; color:var(--ink); background:#fff; border:1px solid var(--ink); text-align:left; font-weight:700; }
+  .filter-options { display:none; grid-column:auto; grid-template-columns:1fr; }
+  .filter-options.is-open { display:grid; }
+}

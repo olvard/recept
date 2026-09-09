@@ -29,7 +29,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <Link className={pathname === "/kategorier" ? "active" : ""} href="/kategorier">Kategorier</Link>
         </nav>
         <div className="attribution"><span>Oliver</span><span>V.1</span><span>8 arkiverade recept</span></div>
-        <button className="new-post" type="button" onClick={() => setIsOpen(true)}>+ Ny post</button>
+        <button className="new-post" type="button" onClick={() => setIsOpen(true)}>+ Nytt recept</button>
+        <button className="mobile-new-post" type="button" onClick={() => setIsOpen(true)}>Nytt recept</button>
       </header>
       <main>{children}</main>
       <footer>Arkiverad · Filed 2026</footer>
