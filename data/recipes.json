@@ -1,10 +1,206 @@
 [
-  {"id":"048","slug":"rostad-morotssoppa-med-vitbonor","title":"Rostad morotssoppa med vitbönor","category":"Middag","categorySlug":"middag","prepMinutes":40,"archivedAt":"2026-02-18","note":"Sötma från rostad morot och en stadig, len kropp från bönorna.","context":"Morot · vita bönor · rosmarin","ingredients":["700 g morötter, grovt skurna","1 gul lök, klyftad","2 msk rapsolja","2 vitlöksklyftor","380 g vita bönor, avrunna","8 dl grönsaksbuljong","1 tsk torkad rosmarin","1 msk citronjuice","salt och svartpeppar"],"instructions":["Sätt ugnen på 225 °C. Vänd morot och lök i olja, salt och peppar och rosta i 25 minuter.","Lägg de rostade grönsakerna i en kastrull med vitlök, bönor, buljong och rosmarin.","Koka i 10 minuter, mixa slät och smaka av med citronjuice, salt och peppar."]},
-  {"id":"047","slug":"gron-kalspasta-med-citron","title":"Grönkålspasta med citron","category":"Middag","categorySlug":"middag","prepMinutes":25,"archivedAt":"2026-02-11","note":"En snabb vardagspasta där citronen håller grönkålen klar och frisk.","context":"Grönkål · pasta · citron","ingredients":["300 g pasta","150 g grönkål","1 citron, finrivet skal och juice","2 vitlöksklyftor, skivade","2 msk olivolja","1 dl pastavatten","50 g lagrad ost, riven","salt och svartpeppar"],"instructions":["Koka pastan i väl saltat vatten och spara 1 dl av kokvattnet.","Fräs vitlök i olja, tillsätt grönkål och låt den mjukna i 3–4 minuter.","Vänd ner pasta, citron och pastavatten. Avsluta med ost och svartpeppar."]},
-  {"id":"046","slug":"bakad-potatis-med-svamp","title":"Bakad potatis med svamp","category":"Lunch","categorySlug":"lunch","prepMinutes":60,"archivedAt":"2026-02-03","note":"Bakpotatis som får god tid i ugnen, med varm svampfyllning.","context":"Potatis · svamp · timjan","ingredients":["4 stora bakpotatisar","300 g skogschampinjoner","1 schalottenlök","1 msk smör","1 dl crème fraîche","1 tsk färsk timjan","salt och svartpeppar"],"instructions":["Sätt ugnen på 200 °C. Stick potatisen och baka den mjuk i 50–60 minuter.","Stek svamp och lök i smör tills vätskan kokat bort. Krydda med timjan.","Öppna potatisen, fyll med crème fraîche och svamp. Smaka av med salt och peppar."]},
-  {"id":"045","slug":"linsgryta-med-rotfrukter","title":"Linsgryta med rotfrukter","category":"Matlådor","categorySlug":"matlador","prepMinutes":45,"archivedAt":"2026-01-27","note":"En stadig gryta som blir ännu bättre efter en natt i kylskåpet.","context":"Röda linser · kålrot · tomat","ingredients":["2 dl röda linser","300 g kålrot, tärnad","2 morötter, tärnade","1 gul lök, hackad","1 burk krossade tomater","6 dl grönsaksbuljong","1 tsk rökt paprikapulver","2 msk rapsolja"],"instructions":["Fräs lök, kålrot och morot i olja i fem minuter.","Tillsätt linser, tomater, buljong och paprikapulver. Sjud under lock i 25 minuter.","Smaka av med salt och peppar. Låt gärna vila före servering."]},
-  {"id":"044","slug":"ragbrodstoast-med-aggsallad","title":"Rågbrödstoast med äggsallad","category":"Lunch","categorySlug":"lunch","prepMinutes":15,"archivedAt":"2026-01-19","note":"Krispigt rågbröd och äggsallad med dill för en enkel vinterlunch.","context":"Ägg · rågbröd · dill","ingredients":["4 ägg","4 skivor rågbröd","2 msk majonnäs","1 tsk dijonsenap","2 msk dill, hackad","1 stjälk selleri, finhackad","salt och svartpeppar"],"instructions":["Koka äggen i 8 minuter och spola dem kalla.","Hacka äggen och rör ihop med majonnäs, senap, dill och selleri.","Rosta rågbrödet och fördela äggsalladen ovanpå."]},
-  {"id":"043","slug":"ugnsbakad-lax-med-fankal","title":"Ugnsbakad lax med fänkål","category":"Middag","categorySlug":"middag","prepMinutes":30,"archivedAt":"2026-01-12","note":"Fänkål och citron ger laxen en lätt, tydlig riktning utan krångel.","context":"Lax · fänkål · citron","ingredients":["600 g laxfilé","2 fänkål, tunt skivade","1 citron, skivad","2 msk olivolja","1 dl vatten","1 tsk fänkålsfrön","salt och svartpeppar"],"instructions":["Sätt ugnen på 200 °C. Lägg fänkål i en form med vatten och olja.","Lägg lax och citron ovanpå, strö över fänkålsfrön och krydda.","Baka i 18–20 minuter tills laxen precis delar sig i flagor."]},
-  {"id":"042","slug":"korngrynssallad-med-rodbeta","title":"Korngrynssallad med rödbeta","category":"Matlådor","categorySlug":"matlador","prepMinutes":50,"archivedAt":"2026-01-05","note":"Matig sallad med jordiga rödbetor och en syrlig senapsvinägrett.","context":"Korngryn · rödbeta · getost","ingredients":["2 dl korngryn","4 rödbetor","100 g getost","70 g ruccola","1 msk dijonsenap","2 msk äppelcidervinäger","3 msk rapsolja","salt och svartpeppar"],"instructions":["Sätt ugnen på 200 °C. Rosta tärnade rödbetor i olja i 35 minuter.","Koka korngrynen enligt förpackningen och låt svalna något.","Vispa senap, vinäger och olja. Vänd ihop med gryn, rödbetor, ruccola och getost."]},
-  {"id":"041","slug":"varm-broccolismorgas","title":"Varm broccolismörgås","category":"Lunch","categorySlug":"lunch","prepMinutes":20,"archivedAt":"2025-12-21","note":"En varm smörgås med pressad broccoli, ost och ett sting av chili.","context":"Broccoli · surdegsbröd · ost","ingredients":["1 broccoli","4 skivor surdegsbröd","120 g prästost, riven","1 vitlöksklyfta","1 msk olivolja","1 krm chiliflakes","salt och svartpeppar"],"instructions":["Koka broccolin mjuk i lättsaltat vatten, cirka 5 minuter.","Mosa den med vitlök, olja, chili, salt och peppar.","Fördela på brödet, toppa med ost och gratinera i 225 °C i 6–8 minuter."]}
+  {
+    "id": "048",
+    "slug": "rostad-morotssoppa-med-vitbonor",
+    "title": "Rostad morotssoppa med vitbönor",
+    "category": "Middag",
+    "categorySlug": "middag",
+    "prepMinutes": 40,
+    "archivedAt": "2026-02-18",
+    "context": "Morot · vita bönor · rosmarin",
+    "ingredients": [
+      "700 g morötter, grovt skurna",
+      "1 gul lök, klyftad",
+      "2 msk rapsolja",
+      "2 vitlöksklyftor",
+      "380 g vita bönor, avrunna",
+      "8 dl grönsaksbuljong",
+      "1 tsk torkad rosmarin",
+      "1 msk citronjuice",
+      "salt och svartpeppar"
+    ],
+    "instructions": [
+      "Sätt ugnen på 225 °C. Vänd morot och lök i olja, salt och peppar och rosta i 25 minuter.",
+      "Lägg de rostade grönsakerna i en kastrull med vitlök, bönor, buljong och rosmarin.",
+      "Koka i 10 minuter, mixa slät och smaka av med citronjuice, salt och peppar."
+    ]
+  },
+  {
+    "id": "047",
+    "slug": "gron-kalspasta-med-citron",
+    "title": "Grönkålspasta med citron",
+    "category": "Middag",
+    "categorySlug": "middag",
+    "prepMinutes": 25,
+    "archivedAt": "2026-02-11",
+    "note": "En snabb vardagspasta där citronen håller grönkålen klar och frisk.",
+    "context": "Grönkål · pasta · citron",
+    "ingredients": [
+      "300 g pasta",
+      "150 g grönkål",
+      "1 citron, finrivet skal och juice",
+      "2 vitlöksklyftor, skivade",
+      "2 msk olivolja",
+      "1 dl pastavatten",
+      "50 g lagrad ost, riven",
+      "salt och svartpeppar"
+    ],
+    "instructions": [
+      "Koka pastan i väl saltat vatten och spara 1 dl av kokvattnet.",
+      "Fräs vitlök i olja, tillsätt grönkål och låt den mjukna i 3–4 minuter.",
+      "Vänd ner pasta, citron och pastavatten. Avsluta med ost och svartpeppar."
+    ]
+  },
+  {
+    "id": "046",
+    "slug": "bakad-potatis-med-svamp",
+    "title": "Bakad potatis med svamp",
+    "category": "Lunch",
+    "categorySlug": "lunch",
+    "prepMinutes": 60,
+    "archivedAt": "2026-02-03",
+    "note": "Bakpotatis som får god tid i ugnen, med varm svampfyllning.",
+    "context": "Potatis · svamp · timjan",
+    "ingredients": [
+      "4 stora bakpotatisar",
+      "300 g skogschampinjoner",
+      "1 schalottenlök",
+      "1 msk smör",
+      "1 dl crème fraîche",
+      "1 tsk färsk timjan",
+      "salt och svartpeppar"
+    ],
+    "instructions": [
+      "Sätt ugnen på 200 °C. Stick potatisen och baka den mjuk i 50–60 minuter.",
+      "Stek svamp och lök i smör tills vätskan kokat bort. Krydda med timjan.",
+      "Öppna potatisen, fyll med crème fraîche och svamp. Smaka av med salt och peppar."
+    ]
+  },
+  {
+    "id": "045",
+    "slug": "linsgryta-med-rotfrukter",
+    "title": "Linsgryta med rotfrukter",
+    "category": "Matlådor",
+    "categorySlug": "matlador",
+    "prepMinutes": 45,
+    "archivedAt": "2026-01-27",
+    "note": "En stadig gryta som blir ännu bättre efter en natt i kylskåpet.",
+    "context": "Röda linser · kålrot · tomat",
+    "ingredients": [
+      "2 dl röda linser",
+      "300 g kålrot, tärnad",
+      "2 morötter, tärnade",
+      "1 gul lök, hackad",
+      "1 burk krossade tomater",
+      "6 dl grönsaksbuljong",
+      "1 tsk rökt paprikapulver",
+      "2 msk rapsolja"
+    ],
+    "instructions": [
+      "Fräs lök, kålrot och morot i olja i fem minuter.",
+      "Tillsätt linser, tomater, buljong och paprikapulver. Sjud under lock i 25 minuter.",
+      "Smaka av med salt och peppar. Låt gärna vila före servering."
+    ]
+  },
+  {
+    "id": "044",
+    "slug": "ragbrodstoast-med-aggsallad",
+    "title": "Rågbrödstoast med äggsallad",
+    "category": "Lunch",
+    "categorySlug": "lunch",
+    "prepMinutes": 15,
+    "archivedAt": "2026-01-19",
+    "note": "Krispigt rågbröd och äggsallad med dill för en enkel vinterlunch.",
+    "context": "Ägg · rågbröd · dill",
+    "ingredients": [
+      "4 ägg",
+      "4 skivor rågbröd",
+      "2 msk majonnäs",
+      "1 tsk dijonsenap",
+      "2 msk dill, hackad",
+      "1 stjälk selleri, finhackad",
+      "salt och svartpeppar"
+    ],
+    "instructions": [
+      "Koka äggen i 8 minuter och spola dem kalla.",
+      "Hacka äggen och rör ihop med majonnäs, senap, dill och selleri.",
+      "Rosta rågbrödet och fördela äggsalladen ovanpå."
+    ]
+  },
+  {
+    "id": "043",
+    "slug": "ugnsbakad-lax-med-fankal",
+    "title": "Ugnsbakad lax med fänkål",
+    "category": "Middag",
+    "categorySlug": "middag",
+    "prepMinutes": 30,
+    "archivedAt": "2026-01-12",
+    "note": "Fänkål och citron ger laxen en lätt, tydlig riktning utan krångel.",
+    "context": "Lax · fänkål · citron",
+    "ingredients": [
+      "600 g laxfilé",
+      "2 fänkål, tunt skivade",
+      "1 citron, skivad",
+      "2 msk olivolja",
+      "1 dl vatten",
+      "1 tsk fänkålsfrön",
+      "salt och svartpeppar"
+    ],
+    "instructions": [
+      "Sätt ugnen på 200 °C. Lägg fänkål i en form med vatten och olja.",
+      "Lägg lax och citron ovanpå, strö över fänkålsfrön och krydda.",
+      "Baka i 18–20 minuter tills laxen precis delar sig i flagor."
+    ]
+  },
+  {
+    "id": "042",
+    "slug": "korngrynssallad-med-rodbeta",
+    "title": "Korngrynssallad med rödbeta",
+    "category": "Matlådor",
+    "categorySlug": "matlador",
+    "prepMinutes": 50,
+    "archivedAt": "2026-01-05",
+    "note": "Matig sallad med jordiga rödbetor och en syrlig senapsvinägrett.",
+    "context": "Korngryn · rödbeta · getost",
+    "ingredients": [
+      "2 dl korngryn",
+      "4 rödbetor",
+      "100 g getost",
+      "70 g ruccola",
+      "1 msk dijonsenap",
+      "2 msk äppelcidervinäger",
+      "3 msk rapsolja",
+      "salt och svartpeppar"
+    ],
+    "instructions": [
+      "Sätt ugnen på 200 °C. Rosta tärnade rödbetor i olja i 35 minuter.",
+      "Koka korngrynen enligt förpackningen och låt svalna något.",
+      "Vispa senap, vinäger och olja. Vänd ihop med gryn, rödbetor, ruccola och getost."
+    ]
+  },
+  {
+    "id": "041",
+    "slug": "varm-broccolismorgas",
+    "title": "Varm broccolismörgås",
+    "category": "Lunch",
+    "categorySlug": "lunch",
+    "prepMinutes": 20,
+    "archivedAt": "2025-12-21",
+    "note": "En varm smörgås med pressad broccoli, ost och ett sting av chili.",
+    "context": "Broccoli · surdegsbröd · ost",
+    "ingredients": [
+      "1 broccoli",
+      "4 skivor surdegsbröd",
+      "120 g prästost, riven",
+      "1 vitlöksklyfta",
+      "1 msk olivolja",
+      "1 krm chiliflakes",
+      "salt och svartpeppar"
+    ],
+    "instructions": [
+      "Koka broccolin mjuk i lättsaltat vatten, cirka 5 minuter.",
+      "Mosa den med vitlök, olja, chili, salt och peppar.",
+      "Fördela på brödet, toppa med ost och gratinera i 225 °C i 6–8 minuter."
+    ]
+  }
 ]

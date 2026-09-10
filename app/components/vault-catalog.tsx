@@ -74,7 +74,7 @@ export function VaultCatalog() {
     </section>
     <p className="result-count" aria-live="polite">{filtered.length} {filtered.length === 1 ? "recept" : "recept"} i arkivet</p>
     {visible.length ? <><section className="recipe-grid" aria-label="Receptposter">{visible.map((recipe) => <article className="recipe-card" key={recipe.id}>
-      <p className="archive-line">#{recipe.id} · {recipe.category} · {recipe.prepMinutes} min</p><h2>{recipe.title}</h2><p className="note">{recipe.note}</p><div className="card-bottom"><p className="context">{recipe.context}</p><Link className="open-link" href={`/recipes/${recipe.id}`}>Öppna <span aria-hidden="true">→</span></Link></div>
+      <p className="archive-line">#{recipe.id} · {recipe.category} · {recipe.prepMinutes} min</p><h2>{recipe.title}</h2>{recipe.note && <p className="note">{recipe.note}</p>}<div className="card-bottom"><p className="context">{recipe.context}</p><Link className="open-link" href={`/recipes/${recipe.id}`}>Öppna <span aria-hidden="true">→</span></Link></div>
     </article>)}</section>
       <nav className="pagination" aria-label="Sidindelning"><button type="button" disabled={page === 1} onClick={() => update({ page: String(page - 1) })}>← Föregående</button><span aria-live="polite">Sida {page} av {totalPages}</span><button type="button" disabled={page === totalPages} onClick={() => update({ page: String(page + 1) })}>Nästa →</button></nav></> : <section className="no-results"><h2>Inga recept matchar din sökning</h2><p>Prova en annan sökning eller återställ indexet.</p><button className="button" type="button" onClick={reset}>Rensa filter</button></section>}
   </div>;
