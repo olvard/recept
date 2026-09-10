@@ -295,20 +295,18 @@ select {
   font-size: .88rem;
 }
 
-.card-bottom {
+.card-context {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
   gap: 15px;
-  margin-top: auto;
-  padding-top: 25px;
+  margin-top: 25px;
   font-size: .9rem;
 }
 
-.card-bottom a:first-child {
-  color: var(--moss);
-}
-
 .open-link {
+  flex: 0 0 auto;
   font-weight: 700;
   text-decoration: none;
 }
