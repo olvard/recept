@@ -744,6 +744,10 @@ textarea { min-height: 84px; resize: vertical; }
     background: transparent;
   }
 
+  .mobile-editor.editor-create h2 {
+    margin-bottom: 24px;
+  }
+
   .page-intro-title-row {
     gap: 16px;
   }

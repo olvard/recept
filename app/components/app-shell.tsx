@@ -32,7 +32,7 @@ function ShellContents({ children }: { children: React.ReactNode }) {
       <footer>Oliver Lundin · Created 2026</footer>
       <nav className="mobile-nav" aria-label="Mobilnavigering">
         <Link className={vaultActive ? "active" : ""} href="/vault">Recept</Link>
-        <Link className={pathname === "/kategorier" ? "active" : ""} href="/kategorier">Kategorier</Link><button type="button" onClick={controls.openCreate}>+ Nytt recept</button>
+        <Link className={pathname === "/kategorier" ? "active" : ""} href="/kategorier">Kategorier</Link><button className={pathname === "/recept/nytt" ? "active" : ""} type="button" onClick={controls.openCreate}>+ Nytt recept</button>
       </nav>
     {editor && <RecipeEditorDialog mode={editor.mode} recipe={editor.recipe} onClose={() => setEditor(null)} onSaved={(recipe) => { setEditor(null); router.push(`/vault?recipe=${recipe.id}`); }} />}
     </div></EditorContext.Provider>;
