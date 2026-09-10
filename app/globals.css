@@ -6,7 +6,7 @@
   --color-surface-soft: #f9dcda;
   --color-primary: #d44625;
   --color-secondary: #c45257;
-  --color-tertiary: #9e5bbc;
+  --color-tertiary: #88409d;
   --color-neutral: #a26767;
   --color-ink: #4a2928;
 
@@ -295,7 +295,11 @@ select {
   font-size: .88rem;
 }
 
-.card-context {
+.recipe-card .context {
+  color: var(--tertiary);
+}
+
+.card-bottom {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
@@ -391,6 +395,7 @@ select {
 
 .detail-header .context {
   margin-top: 18px;
+  color: var(--tertiary);
 }
 
 .detail-grid {
@@ -436,7 +441,7 @@ select {
 
 .instructions li::before {
   content: counter(steps, decimal-leading-zero);
-  color: var(--moss);
+  color: var(--tertiary);
   font-weight: 700;
 }
 
