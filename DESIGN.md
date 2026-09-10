@@ -10,23 +10,24 @@ Sustainable web design is treated here as both an aesthetic and a performance pr
 
 | Token | Hex | Use |
 | --- | --- | --- |
-| `--color-bg` | `#f8f0aa` | Main page background |
-| `--color-fg` | `#a93115` | Primary text, headings, borders, and key actions |
-| `--color-paper` | `#fff9d6` | Cards, notes, inputs, and elevated surfaces |
-| `--color-moss` | `#2f5d50` | Secondary actions, tags, success states, and natural accents |
-| `--color-clay` | `#d96b27` | Highlights, warnings, and active indicators |
-| `--color-ink` | `#5a2a1d` | Long-form text when softer contrast is useful |
+| `--color-canvas` | `#f7cfcc` | Main page background |
+| `--color-primary` | `#d44625` | Primary actions, headings, and active states |
+| `--color-secondary` | `#c45257` | Supporting actions, metadata, and selected states |
+| `--color-tertiary` | `#9e5bbc` | Compact icon actions and accent states |
+| `--color-neutral` | `#a26767` | Quiet borders, dividers, and neutral UI |
+| `--color-ink` | `#4a2928` | Body text and inverted surfaces |
+| `--color-surface` | `#fde9e7` | Cards, notes, inputs, and grouped surfaces |
 
-The yellow background and tomato-red foreground are the signature combination and should dominate the experience. Moss and clay are supporting accents, not alternate brand colors. Use paper sparingly to create grouping and focus without introducing many surfaces.
+The pale pink canvas and tomato-red primary are the signature combination. Rose, purple, and neutral brown are supporting accents. Keep surfaces close to the canvas so the interface remains light, calm, and easy to scan.
 
 ### Color rules
 
 - Prefer flat fills and solid borders over gradients, shadows, and decorative textures.
-- Use `--color-fg` on `--color-bg` for primary text and controls.
-- Use `--color-bg` or `--color-paper` for text on `--color-fg` buttons; verify contrast for every pairing.
+- Use `--color-ink` for body text and `--color-primary` for headings and key controls.
+- Use the light canvas/surface colors for text on `--color-primary` buttons; verify contrast for every pairing.
 - Never use color as the only signal. Pair states with labels, icons, borders, or text.
 - Keep large areas of the page in the core background to reduce visual and CSS complexity.
-- Focus states should use a visible `2px` outline in `--color-moss`, with an offset that does not depend on a shadow.
+- Focus states should use a visible `2px` outline in `--color-tertiary`, with an offset that does not depend on a shadow.
 
 ## Typography
 
@@ -52,14 +53,14 @@ Use sentence case for headings and labels. Avoid dense all-caps typography; if a
 
 ## Shape, borders, and elevation
 
-Larger components are square by default. Cards, panels, navigation containers, buttons, inputs, dialogs, and image frames use no border radius.
+Cards, buttons, inputs, and grouped search/filter controls remain direct and rectangular. Dialogs and the mobile navigation use generous rounding inspired by the reference system.
 
-- Default radius: `0`.
+- Surface radius: `1.75rem`.
 - Note-style radius: `0.5rem–0.75rem`.
 - Note-style components include tips, annotations, toasts, inline messages, and small status spans.
 - Use `1px` borders for grouping and `2px` borders for emphasis.
 - Favor a hard, offset border treatment over blurred box shadows when depth is needed.
-- Do not use rounded pills for ordinary buttons or cards. A pill is reserved for a compact status or tag where the shape communicates its compactness.
+- Do not use rounded pills for ordinary buttons. A pill is reserved for navigation containers, compact statuses, or tags where the shape communicates compactness.
 
 ## Layout and spacing
 
@@ -77,11 +78,11 @@ Navigation is compact and text-led. Use Syne Mono for the brand and active navig
 
 ### Buttons
 
-Buttons are rectangular, bordered, and direct. The primary button uses `--color-fg` as its fill with a light text color; the secondary button is transparent with a `--color-fg` border. Provide clear pressed and disabled states, and keep labels action-oriented.
+Buttons are rectangular, bordered, and direct. Provide primary, secondary, inverted, and outlined variants using the named palette tokens. Provide clear pressed and disabled states, and keep labels action-oriented.
 
 ### Cards and recipe surfaces
 
-Cards use a flat `--color-paper` surface, square corners, and a visible border. Information hierarchy should come from spacing, typography, and small color accents rather than shadows. Keep metadata close to the title and make the primary action obvious.
+Cards use a flat `--color-surface` surface, square corners, and a visible border. Information hierarchy should come from spacing, typography, and small color accents rather than shadows. Keep metadata close to the title and make the primary action obvious.
 
 ### Notes, toasts, and inline messages
 
@@ -119,4 +120,4 @@ Meet WCAG 2.2 AA targets wherever applicable: at least `4.5:1` contrast for norm
 
 ## Overall impression
 
-The finished UI should feel like a well-made printed recipe card translated to the web: warm yellow paper, tomato-red ink, monospaced editorial headings, clean sans-serif reading text, firm square structure, and just enough natural green and clay color to guide attention.
+The finished UI should feel like a warm, tactile recipe archive: pale pink canvas, tomato-red primary actions, rose and purple accents, monospaced editorial headings, clean sans-serif reading text, firm square cards, rounded grouped surfaces, and clear direct controls.

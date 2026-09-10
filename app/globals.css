@@ -1,13 +1,29 @@
 @import "tailwindcss";
 
 :root {
-  --canvas: #fff8f6;
-  --accent: #d44625;
-  --ink: #a93115;
-  --moss: #2f5d50;
-  --paper: #fff;
-  --soft: #fff1ed;
-  --line: #d44625;
+  --color-canvas: #f7cfcc;
+  --color-surface: #fde9e7;
+  --color-surface-soft: #f9dcda;
+  --color-primary: #d44625;
+  --color-secondary: #c45257;
+  --color-tertiary: #9e5bbc;
+  --color-neutral: #a26767;
+  --color-ink: #4a2928;
+
+  /* Compatibility aliases for the existing component vocabulary. */
+  --canvas: var(--color-canvas);
+  --surface: var(--color-surface);
+  --surface-soft: var(--color-surface-soft);
+  --primary: var(--color-primary);
+  --secondary: var(--color-secondary);
+  --tertiary: var(--color-tertiary);
+  --neutral-dark: var(--color-ink);
+  --accent: var(--color-primary);
+  --ink: var(--color-ink);
+  --moss: var(--color-secondary);
+  --paper: var(--color-surface);
+  --soft: var(--color-surface-soft);
+  --line: var(--color-primary);
 }
 
 * {
@@ -50,7 +66,7 @@ button:disabled {
 }
 
 :focus-visible {
-  outline: 3px solid var(--moss);
+  outline: 2px solid var(--tertiary);
   outline-offset: 3px;
 }
 
@@ -145,8 +161,8 @@ h2 {
 
 .new-post:hover,
 .button:hover {
-  background: var(--moss);
-  border-color: var(--moss);
+  background: var(--neutral-dark);
+  border-color: var(--neutral-dark);
 }
 
 main {
@@ -195,6 +211,7 @@ footer {
   padding: 18px;
   background: var(--soft);
   border: 1px solid var(--line);
+  border-radius: 0;
 }
 
 .search-field,
@@ -214,7 +231,7 @@ select {
   width: 100%;
   min-height: 44px;
   color: var(--ink);
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--ink);
   padding: 8px 10px;
   border-radius: 0;
@@ -229,9 +246,17 @@ select {
   text-underline-offset: 3px;
 }
 
+.clear-button,
+.filter-toggle {
+  border-color: var(--secondary);
+}
+
 .clear-button {
   min-height: 44px;
   white-space: nowrap;
+  border: 1px solid var(--secondary);
+  padding: 10px 14px;
+  text-decoration: none;
 }
 
 .result-count {
@@ -315,6 +340,7 @@ select {
   border: 1px solid var(--line);
   padding: 40px 24px;
   background: var(--paper);
+  border-radius: 28px;
 }
 
 .no-results p {
@@ -443,7 +469,7 @@ select {
   display: grid;
   place-items: center;
   padding: 20px;
-  background: rgb(47 93 80 / .38);
+  background: rgb(74 41 40 / .38);
 }
 
 .dialog {
@@ -451,6 +477,7 @@ select {
   padding: 32px;
   background: var(--canvas);
   border: 2px solid var(--line);
+  border-radius: 28px;
 }
 
 .dialog h2 {
@@ -489,8 +516,7 @@ select {
   }
 
   .site-header {
-    min-height: 67px;
-    padding: 14px 20px;
+    display: none;
   }
 
   .desktop-nav,
@@ -567,24 +593,28 @@ select {
     position: fixed;
     z-index: 5;
     bottom: 0;
-    left: 0;
-    right: 0;
+    left: 12px;
+    right: 12px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    background: var(--canvas);
-    border-top: 2px solid var(--line);
+    overflow: hidden;
+    background: var(--surface-soft);
+    border: 0;
+    border-radius: 28px;
+    margin-bottom: 12px;
   }
 
   .mobile-nav a {
-    min-height: 62px;
+    min-height: 58px;
     display: grid;
     place-items: center;
     text-decoration: none;
-    border-bottom: 3px solid transparent;
+    border: 0;
   }
 
   .mobile-nav .active {
-    background: var(--soft);
+    color: #fff8f6;
+    background: var(--primary);
   }
 
   .pagination {
@@ -685,8 +715,8 @@ select {
     min-height: 44px;
     padding: 8px 10px;
     color: var(--ink);
-    background: #fff;
-    border: 1px solid var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--secondary);
     text-align: left;
     font-weight: 700;
   }
