@@ -487,6 +487,8 @@ textarea {
 }
 
 .editor-dialog { width: min(720px, 100%); max-height: min(88vh, 820px); overflow-y: auto; }
+.editor-surface { position: relative; }
+.mobile-editor { width: min(720px, 100%); margin: 0 auto; padding: 32px; border: 2px solid var(--line); background: var(--canvas); }
 .dialog-close { position: absolute; top: 12px; right: 14px; width: 38px; height: 38px; padding: 0; color: var(--ink); background: transparent; border: 1px solid transparent; font-size: 1.8rem; line-height: 1; }
 .dialog-close:hover { border-color: var(--line); background: var(--soft); }
 .editor-fields { display: grid; gap: 17px; }
@@ -728,6 +730,18 @@ textarea { min-height: 84px; resize: vertical; }
 
   .attribution {
     display: none;
+  }
+
+  .editor-page {
+    width: min(100% - 32px, 720px);
+    padding-top: 32px;
+    padding-bottom: 110px;
+  }
+
+  .mobile-editor {
+    padding: 22px 0;
+    border: 0;
+    background: transparent;
   }
 
   .page-intro-title-row {

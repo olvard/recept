@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { RecipeEditorDialog } from "@/app/components/recipe-editor-dialog";
 import { RecipeVaultProvider, useRecipeVault } from "@/app/components/recipe-vault-provider";
 import type { MergedRecipe } from "@/lib/recipe-vault";
@@ -14,8 +14,10 @@ export function useRecipeEditor() { const value = useContext(EditorContext); if 
 function ShellContents({ children }: { children: React.ReactNode }) {
   const pathname = usePathname(); const router = useRouter(); const { isHydrated } = useRecipeVault();
   const [editor, setEditor] = useState<{ mode: "create" | "edit"; recipe?: MergedRecipe } | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => { const media = window.matchMedia("(max-width: 767px)"); const update = () => setIsMobile(media.matches); update(); media.addEventListener("change", update); return () => media.removeEventListener("change", update); }, []);
   const vaultActive = pathname === "/vault" || pathname.startsWith("/recipes");
-  const controls = { openCreate: () => setEditor({ mode: "create" }), openEdit: (recipe: MergedRecipe) => setEditor({ mode: "edit", recipe }) };
+  const controls = { openCreate: () => { if (isMobile) router.push("/recept/nytt"); else setEditor({ mode: "create" }); }, openEdit: (recipe: MergedRecipe) => { if (isMobile) router.push(`/recept/nytt?id=${recipe.id}`); else setEditor({ mode: "edit", recipe }); } };
   return <EditorContext.Provider value={controls}><div className="site-frame">
       <header className="site-header">
         <Link className="wordmark" href="/vault">Recept</Link>
