@@ -51,7 +51,8 @@ a {
 
 button,
 input,
-select {
+select,
+textarea {
   font: inherit;
 }
 
@@ -227,7 +228,8 @@ label {
 }
 
 input,
-select {
+select,
+textarea {
   width: 100%;
   min-height: 44px;
   color: var(--ink);
@@ -342,7 +344,7 @@ select {
   border: 1px solid var(--line);
   padding: 40px 24px;
   background: var(--paper);
-  border-radius: 28px;
+  border-radius: 0;
 }
 
 .no-results p {
@@ -476,12 +478,40 @@ select {
 }
 
 .dialog {
+  position: relative;
   width: min(460px, 100%);
   padding: 32px;
   background: var(--canvas);
   border: 2px solid var(--line);
-  border-radius: 28px;
+  border-radius: 0;
 }
+
+.editor-dialog { width: min(720px, 100%); max-height: min(88vh, 820px); overflow-y: auto; }
+.dialog-close { position: absolute; top: 12px; right: 14px; width: 38px; height: 38px; padding: 0; color: var(--ink); background: transparent; border: 1px solid transparent; font-size: 1.8rem; line-height: 1; }
+.dialog-close:hover { border-color: var(--line); background: var(--soft); }
+.editor-fields { display: grid; gap: 17px; }
+.editor-fields > div, .editor-fields fieldset { display: grid; gap: 5px; margin: 0; padding: 0; border: 0; }
+.editor-fields legend, .category-filter legend { padding: 0; font-size: .78rem; font-weight: 700; }
+.category-checks, .category-filter { display: flex; flex-wrap: wrap; gap: 10px 15px; }
+.category-checks label, .category-filter label { display: flex; align-items: center; gap: 5px; font-size: .9rem; }
+.category-checks input, .category-filter input { width: auto; min-height: auto; }
+textarea { min-height: 84px; resize: vertical; }
+.editor-rows { margin: 0; padding: 0; border: 0; }
+.editor-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; margin-top: 7px; align-items: center; }
+.context-preview { padding: 12px; background: var(--soft); border: 1px solid var(--secondary); }
+.field-label { display: block; font-size: .78rem; font-weight: 700; }
+.context-preview p { margin: 4px 0 0; color: var(--tertiary); font-weight: 700; }
+.context-preview small { display: block; margin-top: 4px; color: var(--moss); }
+.dialog-actions, .detail-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 25px; }
+.dialog-actions .button:last-child { margin-left: auto; }
+.form-errors { margin: 17px 0 0; padding: 12px; color: #7e1e18; background: #f7c8c4; border: 1px solid #7e1e18; }
+.form-errors p { margin: 0; }
+.form-errors p + p { margin-top: 4px; }
+.detail-actions { margin-top: 25px; }
+.danger-button { color: #7e1e18; }
+.danger-action { background: #7e1e18; border-color: #7e1e18; }
+.confirm-dialog { width: min(460px, 100%); }
+.category-filter { flex-direction: column; align-content: start; }
 
 .dialog h2 {
   margin-bottom: 16px;
@@ -598,7 +628,7 @@ select {
     left: 12px;
     right: 12px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     overflow: hidden;
     background: var(--surface-soft);
     border: 0;
@@ -613,6 +643,8 @@ select {
     text-decoration: none;
     border: 0;
   }
+
+  .mobile-nav button { min-height: 58px; color: var(--ink); background: transparent; border: 0; }
 
   .mobile-nav .active {
     color: #fff8f6;
@@ -684,6 +716,8 @@ select {
   .filter-options {
     grid-column: span 2;
   }
+
+  .editor-dialog { padding: 22px; }
 }
 
 @media (max-width: 767px) {

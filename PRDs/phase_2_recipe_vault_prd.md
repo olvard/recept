@@ -1,201 +1,201 @@
-# Recept — PRD för fas 2
+# Recept — Phase 2 PRD
 
-## 1. Produktdefinition
+## 1. Product Definition
 
-**Produkt:** Recept — Personal Recipe Vault  
-**Fas:** 2 — skapa och hantera recept  
-**Status:** Beslutad riktning för implementation
+**Product:** Recept — Personal Recipe Vault  
+**Phase:** 2 — create and manage recipes  
+**Status:** Decided direction for implementation
 
-Fas 2 utökar den statiska, läsbara receptprototypen med ett lokalt arbetsflöde för att skapa, redigera och ta bort recept. Receptdata sparas i användarens webbläsare och lämnar inte enheten.
+Phase 2 extends the static, readable recipe prototype with a local workflow for creating, editing, and deleting recipes. Recipe data is saved in the user's browser and does not leave the device.
 
-Den befintliga arkivkänslan, svenska gränssnittstexter och statiska exportmodell ska bevaras.
+The existing archive feel, Swedish UI copy, and static export model must be preserved.
 
-## 2. Mål
+## 2. Goals
 
-- Användaren ska kunna skapa ett komplett recept från `Nytt recept`.
-- Användaren ska kunna redigera befintliga fixture-recept och lokala recept.
-- Användaren ska kunna ta bort recept med ett tydligt bekräftelsesteg.
-- Utkast ska autosparas lokalt så att avbrutet arbete kan återupptas.
-- Lokala recept ska överleva omladdning och omstart av webbläsaren.
-- Lösningen ska fortsätta fungera med Next.js `output: "export"` och statisk hosting.
+- The user must be able to create a complete recipe from `Nytt recept`.
+- The user must be able to edit existing fixture recipes and local recipes.
+- The user must be able to delete recipes with a clear confirmation step.
+- Drafts must be autosaved locally so interrupted work can be resumed.
+- Local recipes must survive reloads and browser restarts.
+- The solution must continue to work with Next.js `output: "export"` and static hosting.
 
-## 3. Icke-mål
+## 3. Non-goals
 
-Följande ingår inte i fas 2:
+The following are not included in Phase 2:
 
-- Backend, API eller molndatabas.
-- Inloggning eller användarkonton.
-- Synkning mellan enheter eller webbläsare.
-- Bilduppladdning eller receptbilder.
-- Kryptering, offline-funktionalitet utöver webbläsarens lokala lagring.
-- Import/export av recept.
-- Anpassade kategorier.
-- Cook mode, portionsskalning eller checklistor.
-- Markdown-editor.
+- Backend, API, or cloud database.
+- Login or user accounts.
+- Synchronization between devices or browsers.
+- Image uploads or recipe images.
+- Encryption or offline functionality beyond the browser's local storage.
+- Recipe import/export.
+- Custom categories.
+- Cook mode, serving scaling, or checklists.
+- Markdown editor.
 
-## 4. Lagring och datalivscykel
+## 4. Storage and Data Lifecycle
 
-### 4.1 Lagringsmodell
+### 4.1 Storage Model
 
-Använd `localStorage` som primär lagringsmekanism för fas 2.
+Use `localStorage` as the primary storage mechanism for Phase 2.
 
-- Fixture-data i `data/recipes.json` ska fortsatt vara källan för de åtta ursprungliga recepten.
-- Användarens ändringar ska sparas som lokala överlagringar; fixture-filen ska aldrig muteras från klienten.
-- Nya recept, redigeringar, borttagningar och utkast ska lagras lokalt.
-- Alla läsningar från `localStorage` måste ske klient-side efter hydration.
-- Om lagringen saknas, är korrupt eller inte kan parsas ska appen falla tillbaka till fixture-data och visa ett återhämtningsbart fel.
+- Fixture data in `data/recipes.json` must remain the source for the eight original recipes.
+- User changes must be saved as local overlays; the fixture file must never be mutated from the client.
+- New recipes, edits, deletions, and drafts must be stored locally.
+- All reads from `localStorage` must happen client-side after hydration.
+- If storage is missing, corrupt, or cannot be parsed, the app must fall back to fixture data and show a recoverable error.
 
-Rekommenderade nycklar:
+Recommended keys:
 
-- `recept.phase2.recipes.v1` — publicerade lokala recept och ändringar.
-- `recept.phase2.drafts.v1` — autosparade utkast.
-- `recept.phase2.deleted.v1` — fixture-ID:n som användaren har tagit bort.
+- `recept.phase2.recipes.v1` — published local recipes and changes.
+- `recept.phase2.drafts.v1` — autosaved drafts.
+- `recept.phase2.deleted.v1` — fixture IDs that the user has deleted.
 
-En versionsprefixad lagringsnyckel ska användas så att framtida datamigreringar kan införas utan att befintlig data tyst förloras.
+A version-prefixed storage key must be used so future data migrations can be introduced without silently losing existing data.
 
-### 4.2 Publicering och utkast
+### 4.2 Publishing and Drafts
 
-- Ett nytt recept sparas som utkast medan användaren skriver.
-- Autospara sker med debounce efter ändringar.
-- Ett utkast får inget permanent arkivnummer förrän det publiceras.
-- Vid publicering skapas arkivnummer och arkivdatum automatiskt.
-- Ett publicerat recept tas bort från utkastlagringen.
-- Om användaren lämnar formuläret ska ett befintligt utkast kunna återupptas.
+- A new recipe is saved as a draft while the user is writing.
+- Autosave occurs with a debounce after changes.
+- A draft does not receive a permanent archive number until it is published.
+- Upon publishing, an archive number and archive date are generated automatically.
+- A published recipe is removed from draft storage.
+- If the user leaves the form, an existing draft must be resumable.
 
-### 4.3 Arkivmetadata
+### 4.3 Archive Metadata
 
-- Arkivnummer genereras automatiskt och ska vara unikt bland fixture-recept, lokala recept och kvarvarande historik.
-- Formatet ska följa befintliga tvåsiffriga arkivnummer där det är möjligt, exempelvis `#049` efter `#048`.
-- Arkivdatum genereras vid publicering och används av sorteringen `Senast arkiverade`.
-- Användaren ska inte behöva ange eller redigera dessa värden i formuläret.
+- Archive numbers are generated automatically and must be unique among fixture recipes, local recipes, and remaining history.
+- The format must follow the existing two-digit archive numbers where possible, for example `#049` after `#048`.
+- Archive dates are generated upon publishing and used by the `Senast arkiverade` sort order.
+- The user must not need to enter or edit these values in the form.
 
-## 5. Receptformulär
+## 5. Recipe Form
 
-### 5.1 Obligatoriska fält
+### 5.1 Required Fields
 
-Följande fält krävs för publicering:
+The following fields are required for publishing:
 
-- Titel.
-- Minst en kategori.
-- Förberedelsetid.
-- Minst en ingrediensrad.
-- Minst ett instruk­tionssteg.
+- Title.
+- At least one category.
+- Preparation time.
+- At least one ingredient row.
+- At least one instruction step.
 
-Formuläret kan dessutom innehålla:
+The form may also include:
 
-- Kort formulering eller introduktion.
-- Ingrediensens mängd och namn.
-- Instruktionstext.
-- Valfria metadatafält som följer befintlig receptmodell.
+- A short description or introduction.
+- Ingredient quantity and name.
+- Instruction text.
+- Optional metadata fields that follow the existing recipe model.
 
-### 5.2 Kategorier
+### 5.2 Categories
 
-Ett recept kan tillhöra flera kategorier. Fas 2 ska stödja de befintliga kategorierna:
+A recipe can belong to multiple categories. Phase 2 must support the existing categories:
 
 - `Lunch` (`lunch`)
 - `Middag` (`middag`)
 - `Matlådor` (`matlador`)
 
-Minst en kategori krävs vid publicering. Kategorifilter och kategorisidor ska inkludera receptet i varje vald kategori.
+At least one category is required for publishing. Category filters and category pages must include the recipe in every selected category.
 
-### 5.3 Validering
+### 5.3 Validation
 
-Validering ska ske både inline och vid publicering.
+Validation must occur both inline and upon publishing.
 
-- Inline-feedback visas efter att ett fält har berörts eller ändrats.
-- Publicering blockerar om obligatoriska fält saknas eller innehåller ogiltiga värden.
-- Felmeddelanden ska vara på svenska och kopplade till rätt formulärfält.
-- Fokus ska flyttas till det första felaktiga fältet vid misslyckad publicering.
-- Utkast får vara ofullständiga och ska kunna sparas utan publiceringsvalidering.
+- Inline feedback is shown after a field has been touched or changed.
+- Publishing is blocked if required fields are missing or contain invalid values.
+- Error messages must be in Swedish and associated with the correct form fields.
+- Focus must move to the first invalid field after an unsuccessful publishing attempt.
+- Drafts may be incomplete and must be savable without publishing validation.
 
-## 6. Användarflöden
+## 6. User Flows
 
-### 6.1 Skapa recept
+### 6.1 Create a Recipe
 
-1. Användaren väljer `Nytt recept` i applikationsskalet.
-2. Ett tillgängligt receptformulär öppnas.
-3. Formuläret autosparar ett lokalt utkast.
-4. Användaren väljer `Publicera` när valideringen är godkänd.
-5. Receptet får automatiskt arkivnummer och arkivdatum.
-6. Användaren skickas till den nya klientbaserade detaljvyn.
+1. The user selects `Nytt recept` in the application shell.
+2. An accessible recipe form opens.
+3. The form autosaves a local draft.
+4. The user selects `Publicera` once validation passes.
+5. The recipe receives an archive number and archive date automatically.
+6. The user is sent to the new client-based detail view.
 
-### 6.2 Redigera recept
+### 6.2 Edit a Recipe
 
-- Befintliga fixture-recept och lokala recept ska kunna redigeras.
-- Redigering skapar en lokal överlagring för fixture-receptet.
-- Originaldata i `data/recipes.json` ska finnas kvar som återställningsbar bas.
-- Formuläret ska tydligt visa om användaren redigerar ett utkast eller ett publicerat recept.
+- Existing fixture recipes and local recipes must be editable.
+- Editing creates a local overlay for the fixture recipe.
+- The original data in `data/recipes.json` must remain available as a recoverable base.
+- The form must clearly indicate whether the user is editing a draft or a published recipe.
 
-### 6.3 Ta bort recept
+### 6.3 Delete a Recipe
 
-- `Ta bort recept` ska kräva bekräftelse i en tillgänglig dialog.
-- Dialogen ska tydligt visa vilket recept som tas bort.
-- Vid bekräftelse tas lokala recept bort och fixture-recept markeras som borttagna lokalt.
-- Avbryt ska lämna receptet oförändrat.
-- Efter borttagning ska användaren återvända till `/vault` med säker sid- och filterhantering.
+- `Ta bort recept` must require confirmation in an accessible dialog.
+- The dialog must clearly show which recipe is being deleted.
+- Upon confirmation, local recipes are deleted and fixture recipes are marked as locally deleted.
+- Cancel must leave the recipe unchanged.
+- After deletion, the user must return to `/vault` with safe page and filter handling.
 
-## 7. Routing och visning
+## 7. Routing and Display
 
-Lokala recept ska inte kräva nya statiskt genererade `/recipes/[id]`-sidor. De ska öppnas genom en klientbaserad detaljvy på:
+Local recipes must not require new statically generated `/recipes/[id]` pages. They must open through a client-based detail view at:
 
 `/vault?recipe=<id>`
 
-Krav:
+Requirements:
 
-- Befintliga statiska fixture-routes på `/recipes/[id]` ska fortsätta fungera.
-- `/vault?recipe=<id>` ska kunna visa både lokala och fixture-baserade recept.
-- Ogiltigt eller borttaget lokalt ID ska visa en svensk, varumärkesanpassad fallback och länk tillbaka till `Vault`.
-- Detaljvyn ska ha samma shell, breadcrumbs, metadata, ingredienslista och numrerade instruktioner som befintliga receptdetaljer.
-- Redigering ska kunna öppnas från detaljvyn utan att förlora utkast.
+- Existing static fixture routes at `/recipes/[id]` must continue to work.
+- `/vault?recipe=<id>` must be able to display both local and fixture-based recipes.
+- An invalid or locally deleted ID must show a Swedish, brand-aligned fallback and a link back to `Vault`.
+- The detail view must have the same shell, breadcrumbs, metadata, ingredient list, and numbered instructions as existing recipe details.
+- Editing must be openable from the detail view without losing the draft.
 
-## 8. Katalogintegration
+## 8. Catalog Integration
 
-Lokalt skapade och redigerade recept ska använda samma katalogfunktioner som fixture-recept:
+Locally created and edited recipes must use the same catalog features as fixture recipes:
 
-- Sökning på titel, ingredienser och formulering.
-- Kategorifiltrering, inklusive flera kategorier.
-- Förberedelsetidsfilter.
-- Sortering efter arkivdatum, arkivnummer och alfabetisk ordning.
+- Search by title, ingredients, and description.
+- Category filtering, including multiple categories.
+- Preparation-time filter.
+- Sorting by archive date, archive number, and alphabetical order.
 - Pagination.
-- URL-state för katalogens befintliga parametrar.
+- URL state for the catalog's existing parameters.
 
-När en ändring påverkar katalogen ska resultat, antal och sidhantering uppdateras utan att skapa inkonsekventa URL-parametrar.
+When a change affects the catalog, results, counts, and page handling must update without creating inconsistent URL parameters.
 
-## 9. Tillgänglighet och gränssnitt
+## 9. Accessibility and Interface
 
-- Behåll befintliga svenska produktord: `Recept`, `Vault`, `Kategorier`, `Nytt recept`.
-- Använd semantiska formulärfält med synliga eller korrekt associerade etiketter.
-- Behåll synliga fokusmarkeringar.
-- Dialoger ska stödja tangentbord, `Escape`, fokusstyrning och tydliga `aria`-attribut.
-- Autosparstatus ska kommuniceras med exempelvis `Sparar utkast`, `Utkast sparat` eller ett svenskt felmeddelande.
-- Publicerings-, redigerings- och borttagningsresultat ska kunna uppfattas av skärmläsare.
-- Behåll befintlig mobil-first-layout och `767px`-brytpunkt.
+- Retain existing Swedish product terms: `Recept`, `Vault`, `Kategorier`, `Nytt recept`.
+- Use semantic form fields with visible or correctly associated labels.
+- Retain visible focus indicators.
+- Dialogs must support keyboard input, `Escape`, focus management, and clear `aria` attributes.
+- Autosave status must be communicated with messages such as `Sparar utkast`, `Utkast sparat`, or a Swedish error message.
+- Publishing, editing, and deletion results must be perceivable by screen readers.
+- Retain the existing mobile-first layout and `767px` breakpoint.
 
-## 10. Tekniska begränsningar
+## 10. Technical Constraints
 
-- Ingen server-only runtime dependency.
-- Ingen extern datahämtning.
-- Ingen tredjeparters UI-komponentbibliotek.
-- Klientkomponenter ska kapsla browser-API-användning och skydda mot hydration-problem.
-- Den befintliga statiska exporten ska fortsätta fungera.
-- Fixture-typer och taxonomi ska fortsatt importeras genom `lib/recipes.ts`.
-- Datamodellen ska vara utbyggbar för framtida export, kryptering och synkning.
+- No server-only runtime dependency.
+- No external data fetching.
+- No third-party UI component library.
+- Client components must encapsulate browser API usage and protect against hydration problems.
+- The existing static export must continue to work.
+- Fixture types and taxonomy must continue to be imported through `lib/recipes.ts`.
+- The data model must be extensible for future export, encryption, and synchronization.
 
-## 11. Acceptanskriterier
+## 11. Acceptance Criteria
 
-Fas 2 är godkänd när:
+Phase 2 is approved when:
 
-1. Ett komplett recept kan skapas, publiceras och visas i den klientbaserade detaljvyn.
-2. Ett ofullständigt recept kan autosparas som utkast och återupptas efter omladdning.
-3. Ett publicerat recept finns kvar efter att webbläsaren startats om.
-4. Befintliga och nya recept kan redigeras.
-5. Recept kan tas bort efter bekräftelse och försvinner från katalog, kategorier och detaljvy.
-6. Ett recept kan ha flera kategorier och visas under samtliga valda kategorier.
-7. Arkivnummer och arkivdatum skapas automatiskt och ger deterministisk sortering.
-8. Validering fungerar inline och vid publicering med svenska, tillgängliga felmeddelanden.
-9. Nya recept kan öppnas via `/vault?recipe=<id>` utan backend eller dynamisk server-route.
-10. `npx tsc --noEmit`, `npm run lint` och `npx next build --webpack` passerar.
+1. A complete recipe can be created, published, and displayed in the client-based detail view.
+2. An incomplete recipe can be autosaved as a draft and resumed after a reload.
+3. A published recipe remains available after the browser is restarted.
+4. Existing and new recipes can be edited.
+5. Recipes can be deleted after confirmation and disappear from the catalog, categories, and detail view.
+6. A recipe can have multiple categories and appear under all selected categories.
+7. Archive numbers and archive dates are created automatically and provide deterministic sorting.
+8. Validation works inline and upon publishing with Swedish, accessible error messages.
+9. New recipes can be opened via `/vault?recipe=<id>` without a backend or dynamic server route.
+10. `npx tsc --noEmit`, `npm run lint`, and `npx next build --webpack` pass.
 
-## 12. Framtida utbyggnad
+## 12. Future Expansion
 
-Fas 3 kan bygga vidare med anpassade kategorier, import/export, offline-lagring, kryptering och synkning utan att ändra användarens grundläggande receptformulär.
+Phase 3 can build on this with custom categories, import/export, offline storage, encryption, and synchronization without changing the user's basic recipe form.

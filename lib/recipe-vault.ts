@@ -27,6 +27,7 @@ export type RecipeDraft = Partial<Omit<CanonicalRecipe, "id" | "archivedAt" | "c
 };
 
 export type LocalRecipe = CanonicalRecipe & { source: "local" };
+export type MergedRecipe = CanonicalRecipe & { source: "fixture" | "overlay" | "local" };
 export type FixtureRecipeOverlay = Partial<Omit<CanonicalRecipe, "id">> & { id: string };
 export type LocalRecipeState = {
   version: 1;
@@ -127,7 +128,7 @@ function categoryNamesFor(slugs: string[]) {
   return slugs.map((slug) => categories.find((category) => category.slug === slug)?.name ?? slug);
 }
 
-export function mergeRecipes(state: RecipeVaultState = readRecipeVaultState()): CanonicalRecipe[] {
+export function mergeRecipes(state: RecipeVaultState = readRecipeVaultState()): MergedRecipe[] {
   const deleted = new Set(state.deletedFixtureIds);
   const overlays = new Map(state.recipes.overlays.map((overlay) => [overlay.id, overlay]));
   const fixtureRecipes = recipes
@@ -136,9 +137,9 @@ export function mergeRecipes(state: RecipeVaultState = readRecipeVaultState()): 
       const base = toCanonicalFixtureRecipe(fixture);
       const overlay = overlays.get(fixture.id);
       const merged = overlay ? { ...base, ...overlay } : base;
-      return { ...merged, categoryNames: categoryNamesFor(merged.categorySlugs) };
+      return { ...merged, categoryNames: categoryNamesFor(merged.categorySlugs), source: overlay ? "overlay" as const : "fixture" as const };
     });
-  return [...fixtureRecipes, ...state.recipes.additions].filter((recipe) => !deleted.has(recipe.id));
+  return [...fixtureRecipes, ...state.recipes.additions.map((recipe) => ({ ...recipe, source: "local" as const }))].filter((recipe) => !deleted.has(recipe.id));
 }
 
 export function saveLocalRecipeState(state: LocalRecipeState): boolean {
@@ -157,6 +158,47 @@ export function saveDeletedFixtureIds(ids: DeletedFixtureIds): boolean {
 
 export function deleteFixtureRecipe(id: string): boolean {
   return saveDeletedFixtureIds([...readDeletedFixtureIds(), id]);
+}
+
+/** Creates a new local record only; publishing it is a separate, fallible step. */
+export function createRecipeFromDraft(draft: RecipeDraft, state: RecipeVaultState = readRecipeVaultState()): LocalRecipe {
+  const errors = validateRecipeDraft(draft);
+  if (errors.length) throw new Error(errors.join(" "));
+  return {
+    id: getNextArchiveId(state), title: draft.title!.trim(),
+    categorySlugs: [...draft.categorySlugs!], categoryNames: categoryNamesFor(draft.categorySlugs!),
+    prepMinutes: draft.prepMinutes!, archivedAt: todayLocalDate(), note: draft.note?.trim() ?? "",
+    context: draft.context?.trim() ?? "", ingredients: draft.ingredients!.map((item) => item.trim()).filter(Boolean),
+    instructions: draft.instructions!.map((item) => item.trim()).filter(Boolean), source: "local",
+  };
+}
+
+/** Keeps an existing archive number and date when an entry is edited. */
+export function editRecipeFromDraft(existing: MergedRecipe | CanonicalRecipe, draft: RecipeDraft): MergedRecipe {
+  const errors = validateRecipeDraft(draft);
+  if (errors.length) throw new Error(errors.join(" "));
+  return {
+    ...existing, title: draft.title!.trim(), categorySlugs: [...draft.categorySlugs!],
+    categoryNames: categoryNamesFor(draft.categorySlugs!), prepMinutes: draft.prepMinutes!,
+    note: draft.note?.trim() ?? "", context: draft.context?.trim() ?? "",
+    ingredients: draft.ingredients!.map((item) => item.trim()).filter(Boolean),
+    instructions: draft.instructions!.map((item) => item.trim()).filter(Boolean),
+  } as MergedRecipe;
+}
+
+/** Persists an already validated record and reports storage failures to the caller. */
+export function persistRecipe(recipe: MergedRecipe | LocalRecipe, state: RecipeVaultState): boolean {
+  if (recipes.some((fixture) => fixture.id === recipe.id)) {
+    const overlay = { ...recipe };
+    delete (overlay as Partial<typeof overlay>).source;
+    return saveLocalRecipeState({ ...state.recipes, overlays: [...state.recipes.overlays.filter((item) => item.id !== recipe.id), overlay] });
+  }
+  const local: LocalRecipe = { ...recipe, source: "local" };
+  return saveLocalRecipeState({ ...state.recipes, additions: [...state.recipes.additions.filter((item) => item.id !== recipe.id), local] });
+}
+
+export function deleteLocalRecipe(id: string, state: RecipeVaultState = readRecipeVaultState()): boolean {
+  return saveLocalRecipeState({ ...state.recipes, additions: state.recipes.additions.filter((recipe) => recipe.id !== id) });
 }
 
 export function getNextArchiveId(state: RecipeVaultState = readRecipeVaultState()): string {
@@ -181,32 +223,20 @@ export function validateRecipeDraft(draft: RecipeDraft): string[] {
 }
 
 export function publishRecipeDraft(draft: RecipeDraft, state: RecipeVaultState = readRecipeVaultState()): LocalRecipe {
-  const errors = validateRecipeDraft(draft);
-  if (errors.length) throw new Error(errors.join(" "));
-  const recipe: LocalRecipe = {
-    id: draft.id ?? getNextArchiveId(state),
-    title: draft.title!.trim(),
-    categorySlugs: [...draft.categorySlugs!],
-    categoryNames: categoryNamesFor(draft.categorySlugs!),
-    prepMinutes: draft.prepMinutes!,
-    archivedAt: todayLocalDate(),
-    note: draft.note?.trim() ?? "",
-    context: draft.context?.trim() ?? "",
-    ingredients: draft.ingredients!.map((item) => item.trim()).filter(Boolean),
-    instructions: draft.instructions!.map((item) => item.trim()).filter(Boolean),
-    source: "local",
-  };
+  const recipe = draft.id
+    ? { ...createRecipeFromDraft({ ...draft, id: undefined }, state), id: draft.id }
+    : createRecipeFromDraft(draft, state);
   if (recipes.some((fixture) => fixture.id === recipe.id)) {
     const overlay = Object.fromEntries(
       Object.entries(recipe).filter(([key]) => key !== "source"),
     ) as FixtureRecipeOverlay;
-    saveLocalRecipeState({
+    if (!saveLocalRecipeState({
       ...state.recipes,
       overlays: [...state.recipes.overlays.filter((item) => item.id !== recipe.id), overlay],
-    });
+    })) throw new Error("Kunde inte spara receptet i webbläsaren.");
   } else {
     const additions = state.recipes.additions.filter((item) => item.id !== recipe.id);
-    saveLocalRecipeState({ ...state.recipes, additions: [...additions, recipe] });
+    if (!saveLocalRecipeState({ ...state.recipes, additions: [...additions, recipe] })) throw new Error("Kunde inte spara receptet i webbläsaren.");
   }
   return recipe;
 }
