@@ -157,7 +157,7 @@ Deployment is blocked until all automated checks pass, including:
 
 ### Phase 2 — Recipe detail and entry flows
 
-Expand detail pages with scalable ingredient ratios, step-by-step prep checklist, and a `+ Ny post` flow with markdown culinary notes.
+Expand`+ Ny post` flow with creation of new recipes.
 
 ### Phase 3 — Notebook organization and offline storage
 

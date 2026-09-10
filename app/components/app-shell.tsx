@@ -17,7 +17,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <div className="attribution"><span>Oliver</span><span>V.1</span><span>8 arkiverade recept</span></div>
       </header>
       <main>{children}</main>
-      <footer>Arkiverad · Filed 2026</footer>
+      <footer>Oliver Lundin · Created 2026</footer>
       <nav className="mobile-nav" aria-label="Mobilnavigering">
         <Link className={vaultActive ? "active" : ""} href="/vault">Recept</Link>
         <Link className={pathname === "/kategorier" ? "active" : ""} href="/kategorier">Kategorier</Link>
