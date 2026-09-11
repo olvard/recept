@@ -1,0 +1,30 @@
+{
+  "id": "044",
+  "slug": "ragbrodstoast-med-aggsallad",
+  "title": "Rågbrödstoast med äggsallad",
+  "categorySlugs": [
+    "lunch"
+  ],
+  "categoryNames": [
+    "Lunch"
+  ],
+  "prepMinutes": 15,
+  "archivedAt": "2026-01-19",
+  "note": "Krispigt rågbröd och äggsallad med dill för en enkel vinterlunch.",
+  "context": "Ägg · rågbröd · dill",
+  "ingredients": [
+    "4 ägg",
+    "4 skivor rågbröd",
+    "2 msk majonnäs",
+    "1 tsk dijonsenap",
+    "2 msk dill, hackad",
+    "1 stjälk selleri, finhackad",
+    "salt och svartpeppar"
+  ],
+  "instructions": [
+    "Koka äggen i 8 minuter och spola dem kalla.",
+    "Hacka äggen och rör ihop med majonnäs, senap, dill och selleri.",
+    "Rosta rågbrödet och fördela äggsalladen ovanpå."
+  ],
+  "deletedAt": null
+}

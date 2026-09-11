@@ -1,0 +1,30 @@
+{
+  "id": "043",
+  "slug": "ugnsbakad-lax-med-fankal",
+  "title": "Ugnsbakad lax med fänkål",
+  "categorySlugs": [
+    "middag"
+  ],
+  "categoryNames": [
+    "Middag"
+  ],
+  "prepMinutes": 30,
+  "archivedAt": "2026-01-12",
+  "note": "Fänkål och citron ger laxen en lätt, tydlig riktning utan krångel.",
+  "context": "Lax · fänkål · citron",
+  "ingredients": [
+    "600 g laxfilé",
+    "2 fänkål, tunt skivade",
+    "1 citron, skivad",
+    "2 msk olivolja",
+    "1 dl vatten",
+    "1 tsk fänkålsfrön",
+    "salt och svartpeppar"
+  ],
+  "instructions": [
+    "Sätt ugnen på 200 °C. Lägg fänkål i en form med vatten och olja.",
+    "Lägg lax och citron ovanpå, strö över fänkålsfrön och krydda.",
+    "Baka i 18–20 minuter tills laxen precis delar sig i flagor."
+  ],
+  "deletedAt": null
+}

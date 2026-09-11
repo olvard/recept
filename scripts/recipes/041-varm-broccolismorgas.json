@@ -1,0 +1,30 @@
+{
+  "id": "041",
+  "slug": "varm-broccolismorgas",
+  "title": "Varm broccolismörgås",
+  "categorySlugs": [
+    "lunch"
+  ],
+  "categoryNames": [
+    "Lunch"
+  ],
+  "prepMinutes": 20,
+  "archivedAt": "2025-12-21",
+  "note": "En varm smörgås med pressad broccoli, ost och ett sting av chili.",
+  "context": "Broccoli · surdegsbröd · ost",
+  "ingredients": [
+    "1 broccoli",
+    "4 skivor surdegsbröd",
+    "120 g prästost, riven",
+    "1 vitlöksklyfta",
+    "1 msk olivolja",
+    "1 krm chiliflakes",
+    "salt och svartpeppar"
+  ],
+  "instructions": [
+    "Koka broccolin mjuk i lättsaltat vatten, cirka 5 minuter.",
+    "Mosa den med vitlök, olja, chili, salt och peppar.",
+    "Fördela på brödet, toppa med ost och gratinera i 225 °C i 6–8 minuter."
+  ],
+  "deletedAt": null
+}

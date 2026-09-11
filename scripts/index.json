@@ -1,0 +1,130 @@
+[
+  {
+    "id": "048",
+    "slug": "rostad-morotssoppa-med-vitbonor",
+    "title": "Rostad morotssoppa med vitbönor",
+    "categorySlugs": [
+      "middag"
+    ],
+    "categoryNames": [
+      "Middag"
+    ],
+    "prepMinutes": 40,
+    "archivedAt": "2026-02-18",
+    "note": "",
+    "context": "Morot · vita bönor · rosmarin",
+    "deletedAt": null
+  },
+  {
+    "id": "047",
+    "slug": "gron-kalspasta-med-citron",
+    "title": "Grönkålspasta med citron",
+    "categorySlugs": [
+      "middag"
+    ],
+    "categoryNames": [
+      "Middag"
+    ],
+    "prepMinutes": 25,
+    "archivedAt": "2026-02-11",
+    "note": "En snabb vardagspasta där citronen håller grönkålen klar och frisk.",
+    "context": "Grönkål · pasta · citron",
+    "deletedAt": null
+  },
+  {
+    "id": "046",
+    "slug": "bakad-potatis-med-svamp",
+    "title": "Bakad potatis med svamp",
+    "categorySlugs": [
+      "lunch"
+    ],
+    "categoryNames": [
+      "Lunch"
+    ],
+    "prepMinutes": 60,
+    "archivedAt": "2026-02-03",
+    "note": "Bakpotatis som får god tid i ugnen, med varm svampfyllning.",
+    "context": "Potatis · svamp · timjan",
+    "deletedAt": null
+  },
+  {
+    "id": "045",
+    "slug": "linsgryta-med-rotfrukter",
+    "title": "Linsgryta med rotfrukter",
+    "categorySlugs": [
+      "matlador"
+    ],
+    "categoryNames": [
+      "Matlådor"
+    ],
+    "prepMinutes": 45,
+    "archivedAt": "2026-01-27",
+    "note": "En stadig gryta som blir ännu bättre efter en natt i kylskåpet.",
+    "context": "Röda linser · kålrot · tomat",
+    "deletedAt": null
+  },
+  {
+    "id": "044",
+    "slug": "ragbrodstoast-med-aggsallad",
+    "title": "Rågbrödstoast med äggsallad",
+    "categorySlugs": [
+      "lunch"
+    ],
+    "categoryNames": [
+      "Lunch"
+    ],
+    "prepMinutes": 15,
+    "archivedAt": "2026-01-19",
+    "note": "Krispigt rågbröd och äggsallad med dill för en enkel vinterlunch.",
+    "context": "Ägg · rågbröd · dill",
+    "deletedAt": null
+  },
+  {
+    "id": "043",
+    "slug": "ugnsbakad-lax-med-fankal",
+    "title": "Ugnsbakad lax med fänkål",
+    "categorySlugs": [
+      "middag"
+    ],
+    "categoryNames": [
+      "Middag"
+    ],
+    "prepMinutes": 30,
+    "archivedAt": "2026-01-12",
+    "note": "Fänkål och citron ger laxen en lätt, tydlig riktning utan krångel.",
+    "context": "Lax · fänkål · citron",
+    "deletedAt": null
+  },
+  {
+    "id": "042",
+    "slug": "korngrynssallad-med-rodbeta",
+    "title": "Korngrynssallad med rödbeta",
+    "categorySlugs": [
+      "matlador"
+    ],
+    "categoryNames": [
+      "Matlådor"
+    ],
+    "prepMinutes": 50,
+    "archivedAt": "2026-01-05",
+    "note": "Matig sallad med jordiga rödbetor och en syrlig senapsvinägrett.",
+    "context": "Korngryn · rödbeta · getost",
+    "deletedAt": null
+  },
+  {
+    "id": "041",
+    "slug": "varm-broccolismorgas",
+    "title": "Varm broccolismörgås",
+    "categorySlugs": [
+      "lunch"
+    ],
+    "categoryNames": [
+      "Lunch"
+    ],
+    "prepMinutes": 20,
+    "archivedAt": "2025-12-21",
+    "note": "En varm smörgås med pressad broccoli, ost och ett sting av chili.",
+    "context": "Broccoli · surdegsbröd · ost",
+    "deletedAt": null
+  }
+]

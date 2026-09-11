@@ -1,0 +1,32 @@
+{
+  "id": "048",
+  "slug": "rostad-morotssoppa-med-vitbonor",
+  "title": "Rostad morotssoppa med vitbönor",
+  "categorySlugs": [
+    "middag"
+  ],
+  "categoryNames": [
+    "Middag"
+  ],
+  "prepMinutes": 40,
+  "archivedAt": "2026-02-18",
+  "note": "",
+  "context": "Morot · vita bönor · rosmarin",
+  "ingredients": [
+    "700 g morötter, grovt skurna",
+    "1 gul lök, klyftad",
+    "2 msk rapsolja",
+    "2 vitlöksklyftor",
+    "380 g vita bönor, avrunna",
+    "8 dl grönsaksbuljong",
+    "1 tsk torkad rosmarin",
+    "1 msk citronjuice",
+    "salt och svartpeppar"
+  ],
+  "instructions": [
+    "Sätt ugnen på 225 °C. Vänd morot och lök i olja, salt och peppar och rosta i 25 minuter.",
+    "Lägg de rostade grönsakerna i en kastrull med vitlök, bönor, buljong och rosmarin.",
+    "Koka i 10 minuter, mixa slät och smaka av med citronjuice, salt och peppar."
+  ],
+  "deletedAt": null
+}

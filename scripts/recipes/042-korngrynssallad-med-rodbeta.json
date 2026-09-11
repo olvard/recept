@@ -1,0 +1,31 @@
+{
+  "id": "042",
+  "slug": "korngrynssallad-med-rodbeta",
+  "title": "Korngrynssallad med rödbeta",
+  "categorySlugs": [
+    "matlador"
+  ],
+  "categoryNames": [
+    "Matlådor"
+  ],
+  "prepMinutes": 50,
+  "archivedAt": "2026-01-05",
+  "note": "Matig sallad med jordiga rödbetor och en syrlig senapsvinägrett.",
+  "context": "Korngryn · rödbeta · getost",
+  "ingredients": [
+    "2 dl korngryn",
+    "4 rödbetor",
+    "100 g getost",
+    "70 g ruccola",
+    "1 msk dijonsenap",
+    "2 msk äppelcidervinäger",
+    "3 msk rapsolja",
+    "salt och svartpeppar"
+  ],
+  "instructions": [
+    "Sätt ugnen på 200 °C. Rosta tärnade rödbetor i olja i 35 minuter.",
+    "Koka korngrynen enligt förpackningen och låt svalna något.",
+    "Vispa senap, vinäger och olja. Vänd ihop med gryn, rödbetor, ruccola och getost."
+  ],
+  "deletedAt": null
+}

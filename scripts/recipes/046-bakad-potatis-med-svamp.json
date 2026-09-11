@@ -1,0 +1,30 @@
+{
+  "id": "046",
+  "slug": "bakad-potatis-med-svamp",
+  "title": "Bakad potatis med svamp",
+  "categorySlugs": [
+    "lunch"
+  ],
+  "categoryNames": [
+    "Lunch"
+  ],
+  "prepMinutes": 60,
+  "archivedAt": "2026-02-03",
+  "note": "Bakpotatis som får god tid i ugnen, med varm svampfyllning.",
+  "context": "Potatis · svamp · timjan",
+  "ingredients": [
+    "4 stora bakpotatisar",
+    "300 g skogschampinjoner",
+    "1 schalottenlök",
+    "1 msk smör",
+    "1 dl crème fraîche",
+    "1 tsk färsk timjan",
+    "salt och svartpeppar"
+  ],
+  "instructions": [
+    "Sätt ugnen på 200 °C. Stick potatisen och baka den mjuk i 50–60 minuter.",
+    "Stek svamp och lök i smör tills vätskan kokat bort. Krydda med timjan.",
+    "Öppna potatisen, fyll med crème fraîche och svamp. Smaka av med salt och peppar."
+  ],
+  "deletedAt": null
+}

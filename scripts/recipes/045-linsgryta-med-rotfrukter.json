@@ -1,0 +1,31 @@
+{
+  "id": "045",
+  "slug": "linsgryta-med-rotfrukter",
+  "title": "Linsgryta med rotfrukter",
+  "categorySlugs": [
+    "matlador"
+  ],
+  "categoryNames": [
+    "Matlådor"
+  ],
+  "prepMinutes": 45,
+  "archivedAt": "2026-01-27",
+  "note": "En stadig gryta som blir ännu bättre efter en natt i kylskåpet.",
+  "context": "Röda linser · kålrot · tomat",
+  "ingredients": [
+    "2 dl röda linser",
+    "300 g kålrot, tärnad",
+    "2 morötter, tärnade",
+    "1 gul lök, hackad",
+    "1 burk krossade tomater",
+    "6 dl grönsaksbuljong",
+    "1 tsk rökt paprikapulver",
+    "2 msk rapsolja"
+  ],
+  "instructions": [
+    "Fräs lök, kålrot och morot i olja i fem minuter.",
+    "Tillsätt linser, tomater, buljong och paprikapulver. Sjud under lock i 25 minuter.",
+    "Smaka av med salt och peppar. Låt gärna vila före servering."
+  ],
+  "deletedAt": null
+}

@@ -1,0 +1,20 @@
+name: Rebuild Recipe Index
+
+on:
+  push:
+    branches: [main]
+    paths: ["recipes/**.json"]
+
+jobs:
+  index:
+    runs-on: ubuntu-latest
+    permissions: { contents: write }
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          node -e 'const fs=require("fs");const rs=fs.readdirSync("recipes").filter(f=>f.endsWith(".json")).map(f=>JSON.parse(fs.readFileSync("recipes/"+f)));const i=rs.filter(r=>!r.deletedAt).map(({ingredients,instructions,...r})=>r).sort((a,b)=>b.archivedAt.localeCompare(a.archivedAt)||Number(b.id)-Number(a.id));fs.writeFileSync("index.json",JSON.stringify(i,null,2)+"\n")'
+      - run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add index.json
+          git diff --cached --quiet || (git commit -m "chore: rebuild recipe index" && git push)

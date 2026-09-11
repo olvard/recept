@@ -38,7 +38,7 @@ export function VaultCatalog() {
 
   const filtered = recipes.filter((recipe) => {
     const needle = q.trim().toLocaleLowerCase("sv");
-    const haystack = [recipe.title, recipe.note, recipe.context, ...recipe.ingredients].join(" ").toLocaleLowerCase("sv");
+    const haystack = [recipe.title, recipe.note, recipe.context].join(" ").toLocaleLowerCase("sv");
     return (!needle || haystack.includes(needle)) && (!selectedCategories.length || selectedCategories.some((slug) => recipe.categorySlugs.includes(slug))) && matchesPrep(recipe.prepMinutes, prep);
   }).sort((a, b) => {
     if (sort === "alpha") return a.title.localeCompare(b.title, "sv");
@@ -63,7 +63,7 @@ export function VaultCatalog() {
   const reset = () => router.push("/vault", { scroll: false });
 
   return <div className="page-wrap vault-page">
-    <section className="page-intro"><p className="eyebrow">Personligt arkiv · 8 recept</p><div className="page-intro-title-row"><h1>Recept</h1><NewPostButton /></div><p>Oliver & Wilmas receptsamling.</p></section>
+    <section className="page-intro"><p className="eyebrow">Personligt arkiv · {recipes.length} recept</p><div className="page-intro-title-row"><h1>Recept</h1><NewPostButton /></div><p>Oliver & Wilmas receptsamling.</p></section>
     <section className="controls" aria-label="Sök och filtrera recept">
       <div className="search-field"><label htmlFor="search">Sök i arkivet</label><input id="search" type="search" value={q} placeholder="Till exempel morot eller citron" onChange={(e) => updateFilter({ q: e.target.value }, true)} /></div>
       <button className="filter-toggle" type="button" aria-expanded={filtersOpen} aria-controls="filter-options" onClick={() => setFiltersOpen((open) => !open)}>Filter {filtersOpen ? "−" : "+"}</button>
@@ -76,7 +76,7 @@ export function VaultCatalog() {
     </section>
     <p className="result-count" aria-live="polite">{filtered.length} {filtered.length === 1 ? "recept" : "recept"} i arkivet</p>
     {visible.length ? <><section className="recipe-grid" aria-label="Receptposter">{visible.map((recipe) => <article className="recipe-card" key={recipe.id}>
-      <p className="archive-line">#{recipe.id} · {recipe.categoryNames.join(" · ")} · {recipe.prepMinutes} min</p><h2>{recipe.title}</h2>{recipe.note && <p className="note">{recipe.note}</p>}<div className="card-bottom"><p className="context">{recipe.context}</p><Link className="open-link" href={recipe.source === "fixture" ? `/recipes/${recipe.id}` : `/vault?recipe=${recipe.id}`}>Öppna <span aria-hidden="true">→</span></Link></div>
+      <p className="archive-line">#{recipe.id} · {recipe.categoryNames.join(" · ")} · {recipe.prepMinutes} min</p><h2>{recipe.title}</h2>{recipe.note && <p className="note">{recipe.note}</p>}<div className="card-bottom"><p className="context">{recipe.context}</p><Link className="open-link" href={`/recipes/${recipe.id}`}>Öppna <span aria-hidden="true">→</span></Link></div>
     </article>)}</section>
       <nav className="pagination" aria-label="Sidindelning"><button type="button" disabled={page === 1} onClick={() => update({ page: String(page - 1) })}>← Föregående</button><span aria-live="polite">Sida {page} av {totalPages}</span><button type="button" disabled={page === totalPages} onClick={() => update({ page: String(page + 1) })}>Nästa →</button></nav></> : <section className="no-results"><h2>Inga recept matchar din sökning</h2><p>Prova en annan sökning eller återställ indexet.</p><button className="button" type="button" onClick={reset}>Rensa filter</button></section>}
   </div>;

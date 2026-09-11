@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import type { MergedRecipe } from "@/lib/recipe-vault";
+import type { CanonicalRecipe } from "@/lib/recipe-vault";
 import { RecipeEditorForm } from "@/app/components/recipe-editor-form";
 
-export function RecipeEditorDialog({ mode, recipe, onClose, onSaved }: { mode: "create" | "edit"; recipe?: MergedRecipe; onClose: () => void; onSaved: (recipe: MergedRecipe) => void }) {
+export function RecipeEditorDialog({ mode, recipe, onClose, onSaved }: { mode: "create" | "edit"; recipe?: CanonicalRecipe; onClose: () => void; onSaved: (recipe: CanonicalRecipe) => void }) {
   const dialogRef = useRef<HTMLElement>(null);
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {

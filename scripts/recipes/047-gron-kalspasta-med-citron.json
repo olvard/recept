@@ -1,0 +1,31 @@
+{
+  "id": "047",
+  "slug": "gron-kalspasta-med-citron",
+  "title": "Grönkålspasta med citron",
+  "categorySlugs": [
+    "middag"
+  ],
+  "categoryNames": [
+    "Middag"
+  ],
+  "prepMinutes": 25,
+  "archivedAt": "2026-02-11",
+  "note": "En snabb vardagspasta där citronen håller grönkålen klar och frisk.",
+  "context": "Grönkål · pasta · citron",
+  "ingredients": [
+    "300 g pasta",
+    "150 g grönkål",
+    "1 citron, finrivet skal och juice",
+    "2 vitlöksklyftor, skivade",
+    "2 msk olivolja",
+    "1 dl pastavatten",
+    "50 g lagrad ost, riven",
+    "salt och svartpeppar"
+  ],
+  "instructions": [
+    "Koka pastan i väl saltat vatten och spara 1 dl av kokvattnet.",
+    "Fräs vitlök i olja, tillsätt grönkål och låt den mjukna i 3–4 minuter.",
+    "Vänd ner pasta, citron och pastavatten. Avsluta med ost och svartpeppar."
+  ],
+  "deletedAt": null
+}
