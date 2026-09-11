@@ -30,10 +30,6 @@ function ShellContents({ children }: { children: React.ReactNode }) {
       </header>
       <main>{children}</main>
       <footer>Oliver Lundin · Created 2026</footer>
-      <nav className="mobile-nav" aria-label="Mobilnavigering">
-        <Link className={vaultActive ? "active" : ""} href="/vault">Recept</Link>
-        <Link className={pathname === "/kategorier" ? "active" : ""} href="/kategorier">Kategorier</Link><button className={pathname === "/recept/nytt" ? "active" : ""} type="button" onClick={controls.openCreate}>+ Nytt recept</button>
-      </nav>
     {editor && <RecipeEditorDialog mode={editor.mode} recipe={editor.recipe} onClose={() => setEditor(null)} onSaved={(recipe) => { setEditor(null); router.push(`/recipes/${recipe.id}`); }} />}
     </div></EditorContext.Provider>;
 }

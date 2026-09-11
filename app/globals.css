@@ -128,8 +128,7 @@ h2 {
   border-bottom: 2px solid transparent;
 }
 
-.desktop-nav .active,
-.mobile-nav .active {
+.desktop-nav .active {
   color: var(--accent);
   border-color: var(--accent);
   font-weight: 700;
@@ -523,10 +522,6 @@ textarea { min-height: 84px; resize: vertical; }
   margin: 0 0 28px;
 }
 
-.mobile-nav {
-  display: none;
-}
-
 @media (max-width: 900px) {
   .controls {
     grid-template-columns: repeat(2, 1fr);
@@ -547,7 +542,7 @@ textarea { min-height: 84px; resize: vertical; }
 
 @media (max-width: 767px) {
   body {
-    padding-bottom: 64px;
+    padding-bottom: 0;
   }
 
   .site-header {
@@ -623,36 +618,6 @@ textarea { min-height: 84px; resize: vertical; }
     font-size: .78rem;
   }
 
-  .mobile-nav {
-    position: fixed;
-    z-index: 5;
-    bottom: 0;
-    left: 12px;
-    right: 12px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    overflow: hidden;
-    background: var(--surface-soft);
-    border: 0;
-    border-radius: 28px;
-    margin-bottom: 12px;
-  }
-
-  .mobile-nav a {
-    min-height: 58px;
-    display: grid;
-    place-items: center;
-    text-decoration: none;
-    border: 0;
-  }
-
-  .mobile-nav button { min-height: 58px; color: var(--ink); background: transparent; border: 0; }
-
-  .mobile-nav .active {
-    color: #fff8f6;
-    background: var(--primary);
-  }
-
   .pagination {
     font-size: .8rem;
   }
@@ -708,8 +673,19 @@ textarea { min-height: 84px; resize: vertical; }
   gap: 24px;
 }
 
-.intro-new-post {
+.intro-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   margin-right: 80px;
+}
+
+.intro-category-link {
+  display: none;
+}
+
+.intro-new-post {
+  margin-right: 0;
   padding: 16px 24px;
   font-size: 1.7rem;
 }
@@ -723,11 +699,6 @@ textarea { min-height: 84px; resize: vertical; }
 }
 
 @media (max-width: 767px) {
-  .site-header {
-    gap: 12px;
-    padding: 12px 16px;
-  }
-
   .attribution {
     display: none;
   }
@@ -749,7 +720,21 @@ textarea { min-height: 84px; resize: vertical; }
   }
 
   .page-intro-title-row {
-    gap: 16px;
+    gap: 10px;
+  }
+
+  .intro-actions {
+    gap: 6px;
+    flex-shrink: 0;
+    margin-left: auto;
+    margin-right: 0;
+  }
+
+  .intro-category-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 14px;
+    font-size: .9rem;
   }
 
   .intro-new-post {
@@ -757,6 +742,17 @@ textarea { min-height: 84px; resize: vertical; }
     margin-right: 0;
     padding: 12px 14px;
     font-size: .9rem;
+  }
+
+  @media (max-width: 420px) {
+    .page-intro-title-row {
+      flex-wrap: wrap;
+    }
+
+    .intro-actions {
+      width: 100%;
+      justify-content: flex-end;
+    }
   }
 
   .controls {

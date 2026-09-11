@@ -63,7 +63,7 @@ export function VaultCatalog() {
   const reset = () => router.push("/vault", { scroll: false });
 
   return <div className="page-wrap vault-page">
-    <section className="page-intro"><p className="eyebrow">Personligt arkiv · {recipes.length} recept</p><div className="page-intro-title-row"><h1>Recept</h1><NewPostButton /></div><p>Oliver & Wilmas receptsamling.</p></section>
+    <section className="page-intro"><p className="eyebrow">Personligt arkiv · {recipes.length} recept</p><div className="page-intro-title-row"><h1>Recept</h1><div className="intro-actions"><Link className="button intro-category-link" href="/kategorier">Kategorier</Link><NewPostButton /></div></div><p>Oliver & Wilmas receptsamling.</p></section>
     <section className="controls" aria-label="Sök och filtrera recept">
       <div className="search-field"><label htmlFor="search">Sök i arkivet</label><input id="search" type="search" value={q} placeholder="Till exempel morot eller citron" onChange={(e) => updateFilter({ q: e.target.value }, true)} /></div>
       <button className="filter-toggle" type="button" aria-expanded={filtersOpen} aria-controls="filter-options" onClick={() => setFiltersOpen((open) => !open)}>Filter {filtersOpen ? "−" : "+"}</button>
