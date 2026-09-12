@@ -12,6 +12,13 @@ const prepOptions = [
   ["all", "Alla"], ["15", "≤15 min"], ["16-30", "16–30 min"], ["31-45", "31–45 min"], ["46-60", "46–60 min"], ["60", "Över 1 tim"],
 ] as const;
 const sortOptions = [["recent", "Senast arkiverade"], ["archive", "Arkivnummer"], ["alpha", "Alfabetiskt"]] as const;
+const archiveMonths = ["jan", "feb", "mar", "apr", "maj", "jun", "jul", "aug", "sep", "okt", "nov", "dec"];
+
+function formatArchiveDate(value: string) {
+  const [year, month, day] = value.split("-");
+  const monthName = archiveMonths[Number(month) - 1];
+  return monthName ? `${day} ${monthName} ${year}` : value;
+}
 
 function matchesPrep(minutes: number, prep: string) {
   if (prep === "15") return minutes <= 15;
@@ -75,9 +82,17 @@ export function VaultCatalog() {
       </div>
     </section>
     <p className="result-count" aria-live="polite">{filtered.length} {filtered.length === 1 ? "recept" : "recept"} i arkivet</p>
-    {visible.length ? <><section className="recipe-grid" aria-label="Receptposter">{visible.map((recipe) => <article className="recipe-card" key={recipe.id}>
-      <p className="archive-line">#{recipe.id} · {recipe.categoryNames.join(" · ")} · {recipe.prepMinutes} min</p><h2>{recipe.title}</h2>{recipe.note && <p className="note">{recipe.note}</p>}<div className="card-bottom"><p className="context">{recipe.context}</p><Link className="open-link" href={`/recipes/${recipe.id}`}>Öppna <span aria-hidden="true">→</span></Link></div>
-    </article>)}</section>
+    {visible.length ? <><ul className="recipe-list" aria-label="Receptposter">{visible.map((recipe) => <li key={recipe.id}>
+      <Link className="recipe-row" href={`/recipes/${recipe.id}`}>
+        <span className="recipe-rank">#{recipe.id}</span>
+        <span className="recipe-main">
+          <span className="recipe-title-line"><span className="recipe-title">{recipe.title}</span><span className="category">{recipe.categoryNames.join(" · ")}</span></span>
+          <span className="recipe-meta"><span>{recipe.prepMinutes} min</span><span>Arkiverad {formatArchiveDate(recipe.archivedAt)}</span><span className="recipe-context">{recipe.context}</span></span>
+          {recipe.note && <span className="recipe-note">{recipe.note}</span>}
+        </span>
+        <span className="row-arrow" aria-hidden="true">→</span>
+      </Link>
+    </li>)}</ul>
       <nav className="pagination" aria-label="Sidindelning"><button type="button" disabled={page === 1} onClick={() => update({ page: String(page - 1) })}>← Föregående</button><span aria-live="polite">Sida {page} av {totalPages}</span><button type="button" disabled={page === totalPages} onClick={() => update({ page: String(page + 1) })}>Nästa →</button></nav></> : <section className="no-results"><h2>Inga recept matchar din sökning</h2><p>Prova en annan sökning eller återställ indexet.</p><button className="button" type="button" onClick={reset}>Rensa filter</button></section>}
   </div>;
 }
