@@ -1,9 +1,10 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { createServer } from "node:http";
 import { RecipeImportError } from "./errors";
 import { parseHtml } from "./parse-html";
 import { parseJsonLd } from "./parse-jsonld";
 import { importRecipeFromUrl } from "./service";
-import { safeFetchHtml } from "./safe-fetch";
+import { nodeHttpRequest, safeFetchHtml } from "./safe-fetch";
 import type { HttpRequestExecutor, HttpResponse, LlmExtractor, ResolvedAddress } from "./types";
 import { MAX_HTML_BYTES } from "./types";
 import { validateUrl } from "./url-policy";
@@ -234,6 +235,31 @@ describe("recipe URL import service", () => {
     const request = vi.fn(async () => htmlResponse(""));
     await expect(safeFetchHtml("https://public.example.test/robots", { request, robots: async () => false, resolve: async () => [publicAddress] })).rejects.toMatchObject({ code: "ROBOTS_DISALLOWED" });
     expect(request).not.toHaveBeenCalled();
+  });
+
+  it("supports Node's all-address DNS lookup callback", async () => {
+    const server = createServer((_request, response) => {
+      response.writeHead(200, { "content-type": "text/html" });
+      response.end("<html>ok</html>");
+    });
+    const port = await new Promise<number>((resolve, reject) => {
+      server.once("error", reject);
+      server.listen(0, "127.0.0.1", () => {
+        const address = server.address();
+        if (!address || typeof address === "string") return reject(new Error("Test server address unavailable."));
+        resolve(address.port);
+      });
+    });
+
+    try {
+      const response = await nodeHttpRequest(new URL(`http://127.0.0.1:${port}/`), { address: "127.0.0.1", family: 4 }, new AbortController().signal);
+      const chunks: Uint8Array[] = [];
+      for await (const chunk of response.body) chunks.push(chunk);
+      expect(response.statusCode).toBe(200);
+      expect(Buffer.concat(chunks.map((chunk) => Buffer.from(chunk))).toString()).toBe("<html>ok</html>");
+    } finally {
+      await new Promise<void>((resolve, reject) => server.close((error) => error ? reject(error) : resolve()));
+    }
   });
 
   it("maps provider failures without exposing provider details", async () => {

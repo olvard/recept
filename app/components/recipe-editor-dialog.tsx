@@ -1,22 +1,11 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import type { CanonicalRecipe } from "@/lib/recipe-vault";
+import type { RecipeDraft } from "@/lib/recipe-vault";
+import type { RecipeImportReview } from "@/lib/recipe-import/frontend";
 import { RecipeEditorForm } from "@/app/components/recipe-editor-form";
+import { ModalDialog } from "@/app/components/modal-dialog";
 
-export function RecipeEditorDialog({ mode, recipe, onClose, onSaved }: { mode: "create" | "edit"; recipe?: CanonicalRecipe; onClose: () => void; onSaved: (recipe: CanonicalRecipe) => void }) {
-  const dialogRef = useRef<HTMLElement>(null);
-  useEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") { onClose(); return; }
-      if (event.key !== "Tab" || !dialogRef.current) return;
-      const focusable = Array.from(dialogRef.current.querySelectorAll<HTMLElement>('button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled])'));
-      if (!focusable.length) return;
-      const first = focusable[0], last = focusable[focusable.length - 1];
-      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
-      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
-    };
-    document.addEventListener("keydown", onKeyDown); return () => document.removeEventListener("keydown", onKeyDown);
-  }, [onClose]);
-  return <div className="dialog-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }}><RecipeEditorForm mode={mode} recipe={recipe} onClose={onClose} onSaved={onSaved} containerRef={dialogRef} className="dialog editor-dialog" dialog /></div>;
+export function RecipeEditorDialog({ mode, recipe, initialDraft, importReview, onClose, onSaved }: { mode: "create" | "edit"; recipe?: CanonicalRecipe; initialDraft?: RecipeDraft; importReview?: RecipeImportReview; onClose: () => void; onSaved: (recipe: CanonicalRecipe) => void }) {
+  return <ModalDialog titleId="recipe-editor-title" onClose={onClose} className="editor-dialog"><RecipeEditorForm mode={mode} recipe={recipe} initialDraft={initialDraft} importReview={importReview} onClose={onClose} onSaved={onSaved} /></ModalDialog>;
 }

@@ -59,7 +59,11 @@ export const nodeHttpRequest: HttpRequestExecutor = (url, address, signal) => ne
     headers: { ...REQUEST_HEADERS, "User-Agent": process.env.RECIPE_IMPORT_USER_AGENT ?? REQUEST_HEADERS["User-Agent"] },
     agent: false,
     signal,
-    lookup: (_hostname, _options, callback) => callback(null, address.address, address.family),
+    lookup: (_hostname, options, callback) => {
+      const resolved = { address: address.address, family: address.family };
+      if (options.all) callback(null, [resolved]);
+      else callback(null, resolved.address, resolved.family);
+    },
     ...(url.protocol === "https:" ? { servername: url.hostname } : {}),
   };
   let settled = false;
