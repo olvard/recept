@@ -1,5 +1,11 @@
 # Recept — Phase 2 PRD
 
+> **Historical specification — superseded:** This document describes the
+> browser-local editor phase. Published recipes now use authenticated API
+> mutations and the GitHub-backed recipe database; local storage is only for
+> unfinished drafts and legacy-state cleanup. Use `AGENTS.md` and the
+> implementation as the current source of engineering constraints.
+
 ## 1. Product Definition
 
 **Product:** Recept — Personal Recipe Vault  

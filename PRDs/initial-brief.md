@@ -1,5 +1,11 @@
 # Personal Recipe Vault — Implementation-Ready PRD
 
+> **Historical specification — superseded:** This describes the original static,
+> read-only MVP. Recept now has authenticated editing, server Route Handlers,
+> GitHub-backed recipe storage, recipe import, and OpenAI-assisted processing.
+> Use `AGENTS.md` and the implementation as the current source of engineering
+> constraints; retain this document only for the original product rationale.
+
 ## 1. Product definition
 
 **Product name:** Recept  

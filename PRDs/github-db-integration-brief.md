@@ -1,11 +1,13 @@
 # Product Requirements Document (PRD): GitHub-Backed Recipe Database
 
-> **Implementation status — 2026-09-10:** This GitHub-backed design is not
-> implemented in Recept yet. The current Phase 2 application is a static
-> export and has no GitHub API calls, remote data fetching, repository
-> configuration, token handling, or GitHub Action. Its implemented read/write
-> behavior is documented in section 4. Sections 2, 3, 5, and the GitHub parts
-> of section 6 describe the proposed integration, not current functionality.
+> **Historical specification — partially implemented and superseded:** This
+> document captures the proposed GitHub-database migration, but its status
+> statements and static-export assumptions are no longer accurate. Recept now
+> reads and writes the configured GitHub recipe repository through authenticated
+> Node.js Route Handlers. Use `AGENTS.md`, `lib/recipe-db.ts`, and
+> `recipe-db-template/` as the current implementation references. This PRD is
+> retained for rationale and may describe details that are not the current
+> contract.
 
 ## 1. Overview & Objective
 Build a lightweight, zero-maintenance database for recipe storage using a dedicated GitHub repository. The repository will store individual recipe files in JSON format and maintain an auto-generated index file for fast client-side listing, searching, and filtering.
