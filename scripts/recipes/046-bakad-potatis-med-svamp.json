@@ -11,7 +11,6 @@
   "prepMinutes": 60,
   "archivedAt": "2026-02-03",
   "note": "Bakpotatis som får god tid i ugnen, med varm svampfyllning.",
-  "context": "Potatis · svamp · timjan",
   "ingredients": [
     "4 stora bakpotatisar",
     "300 g skogschampinjoner",
@@ -26,5 +25,10 @@
     "Stek svamp och lök i smör tills vätskan kokat bort. Krydda med timjan.",
     "Öppna potatisen, fyll med crème fraîche och svamp. Smaka av med salt och peppar."
   ],
-  "deletedAt": null
+  "deletedAt": null,
+  "contextTags": [
+    "Potatis",
+    "svamp",
+    "timjan"
+  ]
 }

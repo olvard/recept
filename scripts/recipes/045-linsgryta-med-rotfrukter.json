@@ -11,7 +11,6 @@
   "prepMinutes": 45,
   "archivedAt": "2026-01-27",
   "note": "En stadig gryta som blir ännu bättre efter en natt i kylskåpet.",
-  "context": "Röda linser · kålrot · tomat",
   "ingredients": [
     "2 dl röda linser",
     "300 g kålrot, tärnad",
@@ -27,5 +26,10 @@
     "Tillsätt linser, tomater, buljong och paprikapulver. Sjud under lock i 25 minuter.",
     "Smaka av med salt och peppar. Låt gärna vila före servering."
   ],
-  "deletedAt": null
+  "deletedAt": null,
+  "contextTags": [
+    "Röda linser",
+    "kålrot",
+    "tomat"
+  ]
 }

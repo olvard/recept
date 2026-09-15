@@ -11,7 +11,6 @@
   "prepMinutes": 50,
   "archivedAt": "2026-01-05",
   "note": "Matig sallad med jordiga rödbetor och en syrlig senapsvinägrett.",
-  "context": "Korngryn · rödbeta · getost",
   "ingredients": [
     "2 dl korngryn",
     "4 rödbetor",
@@ -27,5 +26,10 @@
     "Koka korngrynen enligt förpackningen och låt svalna något.",
     "Vispa senap, vinäger och olja. Vänd ihop med gryn, rödbetor, ruccola och getost."
   ],
-  "deletedAt": null
+  "deletedAt": null,
+  "contextTags": [
+    "Korngryn",
+    "rödbeta",
+    "getost"
+  ]
 }
