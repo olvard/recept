@@ -1029,6 +1029,7 @@ textarea {
     grid-template-columns: minmax(0, 1fr) minmax(180px, 220px) minmax(150px, 180px) auto;
     column-gap: 16px;
     align-items: end;
+    padding-bottom: 16px;
   }
 
   .search-field {
