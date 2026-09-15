@@ -133,6 +133,61 @@ describe("recipe URL import service", () => {
     expect(response.provenance.instructions).toMatchObject({ source: "llm", confidence: "low" });
   });
 
+  it("uses the LLM to fill missing preparation time when core fields are complete", async () => {
+    const page = `<html><body><main class="recipe"><h1 itemprop="name">Pasta med citron</h1><ul><li itemprop="recipeIngredient">300 g pasta</li></ul><ol itemprop="recipeInstructions"><li>Koka pastan.</li></ol></main></body></html>`;
+    const request = vi.fn(async () => htmlResponse(page));
+    const payloads: unknown[] = [];
+    const llm = vi.fn(async (payload) => {
+      payloads.push(payload);
+      return {
+        title: null,
+        note: null,
+        categorySlugs: [],
+        ingredients: [],
+        instructions: [],
+        prepMinutes: 10,
+        cookMinutes: null,
+        totalMinutes: null,
+        servingsValue: null,
+        servingsRawText: null,
+      };
+    });
+
+    const response = await importRecipeFromUrl("https://recipes.example.test/missing-prep", serviceDependencies(request, llm));
+
+    expect(llm).toHaveBeenCalledOnce();
+    expect((payloads[0] as { unresolvedFields: string[] }).unresolvedFields).toEqual(["prepMinutes"]);
+    expect(response.result.prepMinutes).toBe(10);
+    expect(response.provenance.prepMinutes).toMatchObject({ source: "llm", confidence: "low" });
+    expect(response.warnings.some((warning) => warning.code === "MISSING_PREP_TIME")).toBe(false);
+  });
+
+  it("keeps a missing preparation time when the LLM has no supported value", async () => {
+    const page = `<html><body><main class="recipe"><h1 itemprop="name">Pasta med citron</h1><ul><li itemprop="recipeIngredient">300 g pasta</li></ul><ol itemprop="recipeInstructions"><li>Koka pastan.</li></ol></main></body></html>`;
+    const request = vi.fn(async () => htmlResponse(page));
+    const llm = vi.fn(async () => ({
+      title: null,
+      note: null,
+      categorySlugs: [],
+      ingredients: [],
+      instructions: [],
+      prepMinutes: null,
+      cookMinutes: null,
+      totalMinutes: null,
+      servingsValue: null,
+      servingsRawText: null,
+    }));
+
+    const response = await importRecipeFromUrl("https://recipes.example.test/unsupported-prep", serviceDependencies(request, llm));
+
+    expect(response.status).toBe("needs_review");
+    expect(response.result.prepMinutes).toBeNull();
+    expect(response.warnings).toEqual(expect.arrayContaining([
+      expect.objectContaining({ code: "MISSING_PREP_TIME", field: "prepMinutes" }),
+      expect.objectContaining({ code: "LLM_VALUE_USED" }),
+    ]));
+  });
+
   it("records malformed JSON-LD and succeeds with HTML fallback", () => {
     const parsedJsonLd = parseJsonLd("<script type=\"application/ld+json\">{bad</script>", "https://recipes.example.test/");
     const parsedHtml = parseHtml("<h1 itemprop=\"name\">Recept</h1><li itemprop=\"recipeIngredient\">1 äpple</li><div itemprop=\"recipeInstructions\">Skär äpplet.</div>", "https://recipes.example.test/");

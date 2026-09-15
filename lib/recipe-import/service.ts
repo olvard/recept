@@ -49,6 +49,13 @@ function requiredFields(result: RecipeImportResponse["result"]) {
   ].filter((field): field is string => field !== null);
 }
 
+function llmFields(result: RecipeImportResponse["result"]) {
+  return [
+    ...requiredFields(result),
+    result.prepMinutes === null ? "prepMinutes" : null,
+  ].filter((field): field is string => field !== null);
+}
+
 async function runLlmWithDeadline(extractor: LlmExtractor, payload: Parameters<LlmExtractor>[0], deadlineAt: number, now: () => number) {
   const timeoutMs = deadlineAt - now();
   if (timeoutMs <= 0) throw new RecipeImportError("LLM_TIMEOUT");
@@ -107,7 +114,7 @@ export async function importRecipeFromUrl(url: string, dependencies: RecipeImpor
     });
 
     let merged = mergeDeterministicExtractions(jsonld, html, fetched.finalUrl);
-    const unresolvedFields = requiredFields(merged.result);
+    const unresolvedFields = llmFields(merged.result);
     if (unresolvedFields.length) {
       const extractor = dependencies.llm ?? createOpenAiExtractor();
       const payload = {
