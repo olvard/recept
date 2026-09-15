@@ -11,7 +11,6 @@
   "prepMinutes": 40,
   "archivedAt": "2026-02-18",
   "note": "",
-  "context": "Morot · vita bönor · rosmarin",
   "ingredients": [
     "700 g morötter, grovt skurna",
     "1 gul lök, klyftad",
@@ -28,5 +27,10 @@
     "Lägg de rostade grönsakerna i en kastrull med vitlök, bönor, buljong och rosmarin.",
     "Koka i 10 minuter, mixa slät och smaka av med citronjuice, salt och peppar."
   ],
-  "deletedAt": null
+  "deletedAt": null,
+  "contextTags": [
+    "Morot",
+    "vita bönor",
+    "rosmarin"
+  ]
 }

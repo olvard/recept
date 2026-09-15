@@ -117,7 +117,6 @@ export function mergeDeterministicExtractions(jsonld: ParsedExtraction, html: Pa
     categorySlugs: categorySource.fields.categoryTexts.length ? categorySource.provenance.categoryTexts : undefined,
     categoryCandidates: categorySource.fields.categoryTexts.length ? categorySource.provenance.categoryTexts : undefined,
     sourceUrl: { source: "derived", confidence: "high", evidence: "validated final response URL" },
-    context: { source: "derived", confidence: "medium", evidence: "first normalized ingredients" },
   };
 
   const result: NormalizedRecipeImport = {
@@ -133,7 +132,6 @@ export function mergeDeterministicExtractions(jsonld: ParsedExtraction, html: Pa
     servings: servings.value,
     sourceUrl,
     imageUrl: imageUrl.value,
-    context: (ingredients.value ?? []).slice(0, 3).join(" · "),
   };
 
   if (!result.prepMinutes) warnings.push({ code: "MISSING_PREP_TIME", field: "prepMinutes", message: "Förberedelsetid kunde inte hittas." });
@@ -177,7 +175,6 @@ export function mergeLlmExtraction(base: ReturnType<typeof mergeDeterministicExt
     result.totalMinutes = result.prepMinutes + result.cookMinutes;
     provenance.totalMinutes = { source: "derived", confidence: "medium", evidence: "prepMinutes + cookMinutes" };
   }
-  result.context = result.ingredients.slice(0, 3).join(" · ");
   for (const [warningCode, field, present] of [
     ["MISSING_PREP_TIME", "prepMinutes", result.prepMinutes !== null],
     ["MISSING_COOK_TIME", "cookMinutes", result.cookMinutes !== null],

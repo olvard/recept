@@ -7,12 +7,12 @@ export const LEGACY_DELETED_STORAGE_KEY = "recept.phase2.deleted.v1";
 export type CanonicalRecipe = {
   id: string; slug: string; title: string; categorySlugs: string[];
   categoryNames: string[]; prepMinutes: number; archivedAt: string;
-  note: string; context: string; ingredients: string[]; instructions: string[];
+  note: string; contextTags: [string, string, string]; ingredients: string[]; instructions: string[];
   deletedAt: string | null;
 };
 export type RecipeSummary = Omit<CanonicalRecipe, "ingredients" | "instructions">;
 export type MergedRecipe = CanonicalRecipe;
-export type RecipeDraft = Partial<Omit<CanonicalRecipe, "id" | "slug" | "archivedAt" | "categoryNames" | "deletedAt">>;
+export type RecipeDraft = Partial<Omit<CanonicalRecipe, "id" | "slug" | "archivedAt" | "categoryNames" | "deletedAt" | "contextTags">>;
 
 function storage(): Storage | null { if (typeof window === "undefined") return null; try { return window.localStorage; } catch { return null; } }
 function readJson<T>(key: string, fallback: T): T { try { const value = storage()?.getItem(key); return value ? JSON.parse(value) as T : fallback; } catch { return fallback; } }

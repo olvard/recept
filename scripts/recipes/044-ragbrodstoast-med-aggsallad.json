@@ -11,7 +11,6 @@
   "prepMinutes": 15,
   "archivedAt": "2026-01-19",
   "note": "Krispigt rågbröd och äggsallad med dill för en enkel vinterlunch.",
-  "context": "Ägg · rågbröd · dill",
   "ingredients": [
     "4 ägg",
     "4 skivor rågbröd",
@@ -26,5 +25,10 @@
     "Hacka äggen och rör ihop med majonnäs, senap, dill och selleri.",
     "Rosta rågbrödet och fördela äggsalladen ovanpå."
   ],
-  "deletedAt": null
+  "deletedAt": null,
+  "contextTags": [
+    "Ägg",
+    "rågbröd",
+    "dill"
+  ]
 }

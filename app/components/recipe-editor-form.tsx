@@ -7,9 +7,8 @@ import type { RecipeImportReview } from "@/lib/recipe-import/frontend";
 import { useRecipeVault } from "@/app/components/recipe-vault-provider";
 import { RecipeImportReview as ImportReview } from "@/app/components/recipe-import-review";
 
-const emptyDraft = (): RecipeDraft => ({ title: "", categorySlugs: [], prepMinutes: undefined, note: "", context: "", ingredients: [""], instructions: [""] });
-const fromRecipe = (recipe: CanonicalRecipe): RecipeDraft => ({ title: recipe.title, categorySlugs: recipe.categorySlugs, prepMinutes: recipe.prepMinutes, note: recipe.note, context: recipe.context, ingredients: recipe.ingredients, instructions: recipe.instructions });
-const contextFromIngredients = (ingredients: string[] = []) => ingredients.map((item) => item.trim()).filter(Boolean).slice(0, 3).join(" · ");
+const emptyDraft = (): RecipeDraft => ({ title: "", categorySlugs: [], prepMinutes: undefined, note: "", ingredients: [""], instructions: [""] });
+const fromRecipe = (recipe: CanonicalRecipe): RecipeDraft => ({ title: recipe.title, categorySlugs: recipe.categorySlugs, prepMinutes: recipe.prepMinutes, note: recipe.note, ingredients: recipe.ingredients, instructions: recipe.instructions });
 
 type RecipeEditorFormProps = {
   mode: "create" | "edit";
@@ -28,6 +27,7 @@ export function RecipeEditorForm({ mode, recipe, initialDraft, importReview, onC
   const key = mode === "create" ? "new" : recipe!.id;
   const [draft, setDraft] = useState<RecipeDraft>(() => initialDraft ?? drafts[key] ?? (recipe ? fromRecipe(recipe) : emptyDraft()));
   const [errors, setErrors] = useState<string[]>([]);
+  const [saving, setSaving] = useState(false);
   const localRef = useRef<HTMLElement>(null);
   const firstField = useRef<HTMLInputElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -46,25 +46,29 @@ export function RecipeEditorForm({ mode, recipe, initialDraft, importReview, onC
     if (errors.length) setErrors(validateRecipeDraft(next));
   };
 
-  const rows = (field: "ingredients" | "instructions", label: string) => <fieldset className="editor-rows"><legend>{label}</legend>{(draft[field] ?? [""]).map((value, index) => <div className="editor-row" key={`${field}-${index}`}><input aria-label={`${label} ${index + 1}`} value={value} onChange={(event) => { const values = [...(draft[field] ?? [])]; values[index] = event.target.value; update({ [field]: values }); }} />{(draft[field]?.length ?? 0) > 1 && <button className="text-button" type="button" onClick={() => update({ [field]: draft[field]!.filter((_, row) => row !== index) })}>Ta bort</button>}</div>)}<button className="text-button" type="button" onClick={() => update({ [field]: [...(draft[field] ?? []), ""] })}>+ Lägg till rad</button></fieldset>;
+  const rows = (field: "ingredients" | "instructions", label: string) => <fieldset className="editor-rows"><legend>{label}</legend>{(draft[field] ?? [""]).map((value, index) => <div className="editor-row" key={`${field}-${index}`}><input aria-label={`${label} ${index + 1}`} value={value} onChange={(event) => { const values = [...(draft[field] ?? [])]; values[index] = event.target.value; update({ [field]: values }); }} disabled={saving} />{(draft[field]?.length ?? 0) > 1 && <button className="text-button" type="button" onClick={() => update({ [field]: draft[field]!.filter((_, row) => row !== index) })} disabled={saving}>Ta bort</button>}</div>)}<button className="text-button" type="button" onClick={() => update({ [field]: [...(draft[field] ?? []), ""] })} disabled={saving}>+ Lägg till rad</button></fieldset>;
 
   const close = () => { commitDraft(); onClose(); };
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
-    const draftToSave = { ...draft, context: contextFromIngredients(draft.ingredients) || draft.context || "" };
-    const nextErrors = validateRecipeDraft(draftToSave);
+    const nextErrors = validateRecipeDraft(draft);
     setErrors(nextErrors);
     if (nextErrors.length) {
       const target = nextErrors[0].startsWith("Kategori") ? "input[type=checkbox]" : nextErrors[0].startsWith("Förberedelsetid") ? "#recipe-prep" : nextErrors[0].startsWith("ingrediens") ? '[aria-label="Ingredienser 1"]' : nextErrors[0].startsWith("instruktion") ? '[aria-label="Gör så här 1"]' : "#recipe-title";
       rootRef.current?.querySelector<HTMLElement>(target)?.focus();
       return;
     }
-    const saved = await (mode === "create" ? publish(draftToSave) : edit(recipe!.id, draftToSave));
-    if (!saved) return;
-    shouldPersistOnUnmount.current = !clearDraft(key);
-    onSaved(saved);
+    setSaving(true);
+    try {
+      const saved = await (mode === "create" ? publish(draft) : edit(recipe!.id, draft));
+      if (!saved) return;
+      shouldPersistOnUnmount.current = !clearDraft(key);
+      onSaved(saved);
+    } finally {
+      setSaving(false);
+    }
   };
 
-  const contextPreview = draft.context?.trim() || contextFromIngredients(draft.ingredients);
-  return <section className={`${className} editor-surface ${mode === "create" ? "editor-create" : ""}`.trim()} ref={rootRef} {...(dialog ? { role: "dialog", "aria-modal": true } : {})} aria-labelledby="recipe-editor-title"><button className="dialog-close" type="button" aria-label="Stäng receptformuläret" onClick={close}>×</button><p className="eyebrow">{mode === "create" ? "Nytt recept" : `Redigera #${recipe!.id}`}</p><h2 id="recipe-editor-title">{mode === "create" ? "Lägg till i Recept" : "Redigera recept"}</h2>{importReview && <ImportReview review={importReview} />}<form onSubmit={submit} noValidate><div className="editor-fields"><div><label htmlFor="recipe-title">Titel</label><input ref={firstField} id="recipe-title" value={draft.title ?? ""} onChange={(event) => update({ title: event.target.value })} /></div><fieldset><legend>Kategorier</legend><div className="category-checks">{categories.map((category) => <label key={category.slug}><input type="checkbox" checked={draft.categorySlugs?.includes(category.slug) ?? false} onChange={(event) => update({ categorySlugs: event.target.checked ? [...(draft.categorySlugs ?? []), category.slug] : (draft.categorySlugs ?? []).filter((slug) => slug !== category.slug) })} /> {category.name}</label>)}</div></fieldset><div><label htmlFor="recipe-prep">Förberedelsetid (minuter)</label><input id="recipe-prep" type="text" inputMode="numeric" pattern="[0-9]*" value={draft.prepMinutes ?? ""} onKeyDown={(event) => { if (["e", "E", "+", "-", ".", ","].includes(event.key)) event.preventDefault(); }} onChange={(event) => { const digits = event.target.value.replace(/\D/g, ""); update({ prepMinutes: digits ? Number(digits) : undefined }); }} /></div><div><label htmlFor="recipe-note">Beskrivning</label><textarea id="recipe-note" value={draft.note ?? ""} onChange={(event) => update({ note: event.target.value })} /></div>{rows("ingredients", "Ingredienser")}<div className="context-preview"><span className="field-label">Kontexttaggar</span><p>{contextPreview || "Fyll i ingredienser för att skapa kontext."}</p><small>De tre första ingredienserna används som kontexttaggar.</small></div>{rows("instructions", "Gör så här")}</div>{errors.length > 0 && <div className="form-errors" role="alert">{errors.map((error) => <p key={error}>{error}</p>)}</div>}{storageError && <p className="form-errors" role="alert">{storageError}</p>}<div className="dialog-actions"><button className="text-button" type="button" onClick={close}>Avbryt</button><button className="button" type="submit">{mode === "create" ? "Publicera" : "Spara ändringar"}</button></div></form></section>;
+  const contextPreview = recipe?.contextTags.join(" · ") ?? "Skapas när receptet publiceras.";
+  return <section className={`${className} editor-surface ${mode === "create" ? "editor-create" : ""}`.trim()} ref={rootRef} {...(dialog ? { role: "dialog", "aria-modal": true } : {})} aria-labelledby="recipe-editor-title"><button className="dialog-close" type="button" aria-label="Stäng receptformuläret" onClick={close} disabled={saving}>×</button><p className="eyebrow">{mode === "create" ? "Nytt recept" : `Redigera #${recipe!.id}`}</p><h2 id="recipe-editor-title">{mode === "create" ? "Lägg till i Recept" : "Redigera recept"}</h2>{importReview && <ImportReview review={importReview} />}<form onSubmit={submit} noValidate><div className="editor-fields"><div><label htmlFor="recipe-title">Titel</label><input ref={firstField} id="recipe-title" value={draft.title ?? ""} onChange={(event) => update({ title: event.target.value })} disabled={saving} /></div><fieldset><legend>Kategorier</legend><div className="category-checks">{categories.map((category) => <label key={category.slug}><input type="checkbox" checked={draft.categorySlugs?.includes(category.slug) ?? false} onChange={(event) => update({ categorySlugs: event.target.checked ? [...(draft.categorySlugs ?? []), category.slug] : (draft.categorySlugs ?? []).filter((slug) => slug !== category.slug) })} disabled={saving} /> {category.name}</label>)}</div></fieldset><div><label htmlFor="recipe-prep">Förberedelsetid (minuter)</label><input id="recipe-prep" type="text" inputMode="numeric" pattern="[0-9]*" value={draft.prepMinutes ?? ""} onKeyDown={(event) => { if (["e", "E", "+", "-", ".", ","].includes(event.key)) event.preventDefault(); }} onChange={(event) => { const digits = event.target.value.replace(/\D/g, ""); update({ prepMinutes: digits ? Number(digits) : undefined }); }} disabled={saving} /></div><div><label htmlFor="recipe-note">Beskrivning</label><textarea id="recipe-note" value={draft.note ?? ""} onChange={(event) => update({ note: event.target.value })} disabled={saving} /></div>{rows("ingredients", "Ingredienser") }<div className="context-preview"><span className="field-label">Kontexttaggar</span><p>{contextPreview}</p><small>Tre svenska taggar skapas av språkmodellen när receptet publiceras.</small></div>{rows("instructions", "Gör så här")}</div>{errors.length > 0 && <div className="form-errors" role="alert">{errors.map((error) => <p key={error}>{error}</p>)}</div>}{storageError && <p className="form-errors" role="alert">{storageError}</p>}{saving && <p className="import-status" role="status" aria-live="polite">Skapar kontexttaggar och sparar receptet…</p>}<div className="dialog-actions"><button className="text-button" type="button" onClick={close} disabled={saving}>Avbryt</button><button className="button" type="submit" disabled={saving}>{saving ? "Sparar…" : mode === "create" ? "Publicera" : "Spara ändringar"}</button></div></form></section>;
 }

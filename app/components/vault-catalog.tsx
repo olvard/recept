@@ -45,7 +45,7 @@ export function VaultCatalog() {
 
   const filtered = recipes.filter((recipe) => {
     const needle = q.trim().toLocaleLowerCase("sv");
-    const haystack = [recipe.title, recipe.note, recipe.context].join(" ").toLocaleLowerCase("sv");
+    const haystack = [recipe.title, recipe.note, ...recipe.contextTags].join(" ").toLocaleLowerCase("sv");
     return (!needle || haystack.includes(needle)) && (!selectedCategories.length || selectedCategories.some((slug) => recipe.categorySlugs.includes(slug))) && matchesPrep(recipe.prepMinutes, prep);
   }).sort((a, b) => {
     if (sort === "alpha") return a.title.localeCompare(b.title, "sv");
@@ -87,7 +87,7 @@ export function VaultCatalog() {
         <span className="recipe-rank">#{recipe.id}</span>
         <span className="recipe-main">
           <span className="recipe-title-line"><span className="recipe-title">{recipe.title}</span><span className="category">{recipe.categoryNames.join(" · ")}</span></span>
-          <span className="recipe-meta"><span>{recipe.prepMinutes} min</span><span>Arkiverad {formatArchiveDate(recipe.archivedAt)}</span><span className="recipe-context">{recipe.context}</span></span>
+          <span className="recipe-meta"><span>{recipe.prepMinutes} min</span><span>Arkiverad {formatArchiveDate(recipe.archivedAt)}</span><span className="recipe-context">{recipe.contextTags.join(" · ")}</span></span>
           {recipe.note && <span className="recipe-note">{recipe.note}</span>}
         </span>
         <span className="row-arrow" aria-hidden="true">→</span>

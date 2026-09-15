@@ -17,7 +17,6 @@ const response: RecipeImportResponse = {
     servings: { value: 4, rawText: "4 portioner" },
     sourceUrl: "https://example.test/soppa",
     imageUrl: "https://example.test/soppa.jpg",
-    context: "2 morötter",
   },
   provenance: { title: { source: "jsonld", confidence: "high", evidence: "name" } },
   warnings: [{ code: "CHECK", field: "servings", message: "Kontrollera portionerna." }],
@@ -34,7 +33,6 @@ describe("recipe import frontend helpers", () => {
       prepMinutes: 15,
       ingredients: ["2 morötter"],
       instructions: ["Rosta morötterna."],
-      context: "2 morötter",
     });
     expect(draft).not.toHaveProperty("servings");
     expect(draft).not.toHaveProperty("cookMinutes");
@@ -43,10 +41,9 @@ describe("recipe import frontend helpers", () => {
     expect(draft).not.toHaveProperty("sourceUrl");
   });
 
-  it("keeps review context separate from the draft", () => {
+  it("keeps the source review separate from the draft", () => {
     expect(recipeImportToReview(response)).toEqual({
       sourceUrl: "https://example.test/soppa",
-      context: "2 morötter",
       warnings: response.warnings,
       provenance: response.provenance,
     });

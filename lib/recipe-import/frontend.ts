@@ -3,7 +3,6 @@ import type { FieldProvenance, NormalizedRecipeImport, RecipeImportResponse } fr
 
 export type RecipeImportReview = {
   sourceUrl: string;
-  context: string;
   warnings: RecipeImportResponse["warnings"];
   provenance: Partial<Record<keyof NormalizedRecipeImport, FieldProvenance>>;
 };
@@ -16,14 +15,12 @@ export function recipeImportToDraft(result: NormalizedRecipeImport): RecipeDraft
     prepMinutes: result.prepMinutes ?? undefined,
     ingredients: [...result.ingredients],
     instructions: [...result.instructions],
-    context: result.context,
   };
 }
 
 export function recipeImportToReview(response: RecipeImportResponse): RecipeImportReview {
   return {
     sourceUrl: response.result.sourceUrl,
-    context: response.result.context,
     warnings: response.warnings,
     provenance: response.provenance,
   };

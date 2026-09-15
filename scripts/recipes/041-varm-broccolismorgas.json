@@ -11,7 +11,6 @@
   "prepMinutes": 20,
   "archivedAt": "2025-12-21",
   "note": "En varm smörgås med pressad broccoli, ost och ett sting av chili.",
-  "context": "Broccoli · surdegsbröd · ost",
   "ingredients": [
     "1 broccoli",
     "4 skivor surdegsbröd",
@@ -26,5 +25,10 @@
     "Mosa den med vitlök, olja, chili, salt och peppar.",
     "Fördela på brödet, toppa med ost och gratinera i 225 °C i 6–8 minuter."
   ],
-  "deletedAt": null
+  "deletedAt": null,
+  "contextTags": [
+    "Broccoli",
+    "surdegsbröd",
+    "ost"
+  ]
 }

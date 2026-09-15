@@ -46,7 +46,7 @@ recipe-db/
 | `categorySlug` | `string` | Yes | URL-safe category key (e.g., `"middag"`). |
 | `prepMinutes` | `number` | Yes | Total preparation/cooking time in minutes. |
 | `archivedAt` | `string \| null` | No | ISO date (`"YYYY-MM-DD"`) if archived, or `null`. |
-| `context` | `string` | No | Short highlight / key ingredient descriptor (e.g., `"Morot · vita bönor · rosmarin"`). |
+| `contextTags` | `string[3]` | Yes | Exactly three Swedish LLM-generated context tags (e.g., `["Morot", "vita bönor", "rosmarin"]`). |
 | `ingredients` | `string[]` | Yes | Ordered array of raw ingredient strings. |
 | `instructions` | `string[]` | Yes | Ordered step-by-step instructions. |
 
@@ -63,7 +63,7 @@ To avoid fetching multiple individual files when loading lists or search views, 
     "categorySlug": "middag",
     "prepMinutes": 40,
     "archivedAt": "2026-02-18",
-    "context": "Morot · vita bönor · rosmarin"
+    "contextTags": ["Morot", "vita bönor", "rosmarin"]
   }
 ]
 ```

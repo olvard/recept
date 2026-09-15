@@ -11,7 +11,6 @@
   "prepMinutes": 30,
   "archivedAt": "2026-01-12",
   "note": "Fänkål och citron ger laxen en lätt, tydlig riktning utan krångel.",
-  "context": "Lax · fänkål · citron",
   "ingredients": [
     "600 g laxfilé",
     "2 fänkål, tunt skivade",
@@ -26,5 +25,10 @@
     "Lägg lax och citron ovanpå, strö över fänkålsfrön och krydda.",
     "Baka i 18–20 minuter tills laxen precis delar sig i flagor."
   ],
-  "deletedAt": null
+  "deletedAt": null,
+  "contextTags": [
+    "Lax",
+    "fänkål",
+    "citron"
+  ]
 }

@@ -48,7 +48,6 @@ export type NormalizedRecipeImport = {
   servings: Servings | null;
   sourceUrl: string;
   imageUrl: string | null;
-  context: string;
 };
 
 export type RecipeImportResponse = {
