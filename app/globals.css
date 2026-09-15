@@ -166,21 +166,21 @@ h3 {
   gap: 18px;
 }
 
+.home-hero-copy {
+  display: grid;
+  gap: 12px;
+}
+
+.vault-hero-intro .eyebrow {
+  margin-bottom: 0;
+}
+
 .wordmark {
   font-family: var(--font-lora), Georgia, serif;
   font-size: clamp(2.4rem, 11vw, 3.5rem);
   font-weight: 700;
   line-height: 1;
   text-decoration: none;
-}
-
-.brand-block p {
-  max-width: 260px;
-  margin: 0;
-  color: var(--color-muted);
-  font-size: .75rem;
-  line-height: 1.4;
-  text-align: right;
 }
 
 .new-post,
@@ -247,7 +247,7 @@ footer span:first-child {
 .page-wrap {
   width: min(var(--content-width), calc(100% - 2 * var(--page-gutter)));
   margin: 0 auto;
-  padding: 40px 0 64px;
+  /* padding: 40px 0 64px; */
 }
 
 .page-intro {
@@ -258,7 +258,7 @@ footer span:first-child {
 .archive-line {
   margin: 0 0 10px;
   color: var(--color-orange);
-  font-size: .6875rem;
+  font-size: .9875rem;
   font-weight: 700;
   letter-spacing: .02em;
   text-transform: uppercase;
@@ -280,6 +280,7 @@ footer span:first-child {
 .select-field {
   display: grid;
   gap: 6px;
+  padding-bottom: 10px;
 }
 
 label,
@@ -329,7 +330,7 @@ textarea::placeholder {
 }
 
 .category-chips {
-  margin: 18px 0 0;
+  margin: 0;
   padding: 0;
   border: 0;
   display: flex;
@@ -364,21 +365,19 @@ textarea::placeholder {
 }
 
 .prep-field {
-  margin-top: 18px;
+  margin-top: 0;
 }
 
 .filter-toggle {
   width: 100%;
   min-height: 44px;
-  margin-top: 12px;
-  padding: 8px 0;
+  margin-top: 18px;
+  padding: 9px 11px;
   display: flex;
   justify-content: space-between;
   color: var(--color-ink);
   background: transparent;
-  border: 0;
-  border-top: 1px solid var(--color-ink);
-  border-bottom: 1px solid var(--color-ink);
+  border: 1px solid var(--color-ink);
   font-size: .8125rem;
   font-weight: 700;
   text-align: left;
@@ -386,8 +385,8 @@ textarea::placeholder {
 
 .filter-options {
   display: none;
-  gap: 12px;
-  padding: 14px 0;
+  gap: 16px;
+  padding: 18px 0 4px;
 }
 
 .filter-options.is-open {
@@ -1006,9 +1005,10 @@ textarea {
     display: block;
   }
 
-  .brand-block p {
-    margin-top: 8px;
-    text-align: left;
+  .home-hero-copy {
+    display: flex;
+    align-items: baseline;
+    gap: 32px;
   }
 
   .wordmark {
@@ -1021,7 +1021,7 @@ textarea {
   }
 
   .page-wrap {
-    padding: 56px 0 88px;
+    /* padding: 56px 0 88px; */
   }
 
   .controls {
@@ -1036,27 +1036,28 @@ textarea {
     grid-column: 1 / -1;
   }
 
-  .category-chips {
+  .filter-options .category-chips {
     grid-column: 1;
     grid-row: 2;
-  }
-
-  .prep-field {
-    grid-column: 3;
-    grid-row: 2;
-    min-width: 0;
   }
 
   .filter-toggle {
     display: none;
   }
 
-  .filter-options {
+  .filter-options,
+  .filter-options.is-open {
     display: contents;
   }
 
-  .filter-options .select-field {
+  .filter-options .sort-field {
     grid-column: 2;
+    grid-row: 2;
+    min-width: 0;
+  }
+
+  .filter-options .prep-field {
+    grid-column: 3;
     grid-row: 2;
     min-width: 0;
   }
@@ -1114,10 +1115,6 @@ textarea {
 @media (max-width: 500px) {
   .household-label {
     display: none;
-  }
-
-  .brand-block p {
-    max-width: 145px;
   }
 
   .recipe-context {
