@@ -82,7 +82,7 @@ export function VaultCatalog() {
         <button className="text-button clear-button" type="button" onClick={reset}>Rensa filter</button>
       </div>
     </section>
-    {/* <div className="catalog-summary"><p className="result-count" aria-live="polite">{filtered.length.toString().padStart(2, "0")} {filtered.length === 1 ? "recept" : "recept"}</p><span>Index</span></div> */}
+    <p className="sr-only" aria-live="polite">{filtered.length} {filtered.length === 1 ? "recept" : "recept"} hittades. Sida {page} av {totalPages} visas.</p>
     {visible.length ? <><ul className="recipe-list" aria-label="Receptposter">{visible.map((recipe) => <li key={recipe.id}>
       <Link className="recipe-row" href={`/recipes/${recipe.id}`}>
         <span className="recipe-rank">{recipe.id}</span>

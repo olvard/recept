@@ -38,8 +38,8 @@ function ShellContents({ children }: { children: React.ReactNode }) {
     <div className="utility-bar">
       <div className="utility-inner">
         <nav className="utility-nav" aria-label="Huvudnavigering">
-          <Link className={vaultActive ? "active" : ""} href="/vault">Vault</Link>
-          <Link className={pathname === "/kategorier" ? "active" : ""} href="/kategorier">Kategorier</Link>
+          <Link className={vaultActive ? "active" : ""} aria-current={vaultActive ? "page" : undefined} href="/vault">Vault</Link>
+          <Link className={pathname === "/kategorier" ? "active" : ""} aria-current={pathname === "/kategorier" ? "page" : undefined} href="/kategorier">Kategorier</Link>
         </nav>
         <span className="household-label">Oliver &amp; Wilmas hushåll</span>
         <span className="weekday" aria-label={weekday ? `I dag är det ${weekday}` : undefined}>{weekday}</span>

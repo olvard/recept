@@ -10,6 +10,19 @@
   --color-error: #9f1d16;
   --page-gutter: 18px;
   --content-width: 1120px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 40px;
+  --space-9: 48px;
+  --space-10: 64px;
+  --control-height: 44px;
+  --rule: 1px solid var(--color-ink);
+  --strong-rule: 2px solid var(--color-ink);
 }
 
 * {
@@ -151,12 +164,12 @@ h3 {
   width: min(var(--content-width), calc(100% - 2 * var(--page-gutter)));
   min-height: 156px;
   margin: 0 auto;
-  padding: 28px 0 24px;
+  padding: 28px 0 var(--space-6);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 22px;
-  border-bottom: 2px solid var(--color-ink);
+  gap: var(--space-5);
+  border-bottom: var(--strong-rule);
 }
 
 .brand-block {
@@ -185,7 +198,7 @@ h3 {
 
 .new-post,
 .button {
-  min-height: 44px;
+  min-height: var(--control-height);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -228,11 +241,11 @@ main {
 footer {
   width: min(var(--content-width), calc(100% - 2 * var(--page-gutter)));
   margin: 0 auto;
-  padding: 18px 0 24px;
+  padding: var(--space-5) 0 var(--space-6);
   display: flex;
   justify-content: space-between;
-  gap: 16px;
-  border-top: 1px solid var(--color-ink);
+  gap: var(--space-4);
+  border-top: var(--rule);
   color: var(--color-muted);
   font-size: .6875rem;
 }
@@ -247,7 +260,7 @@ footer span:first-child {
 .page-wrap {
   width: min(var(--content-width), calc(100% - 2 * var(--page-gutter)));
   margin: 0 auto;
-  /* padding: 40px 0 64px; */
+  padding: var(--space-7) 0 var(--space-10);
 }
 
 .page-intro {
@@ -273,14 +286,14 @@ footer span:first-child {
 }
 
 .controls {
-  margin: 32px 0 0;
+  margin: 0;
+  padding-bottom: var(--space-6);
 }
 
 .search-field,
 .select-field {
   display: grid;
-  gap: 6px;
-  padding-bottom: 10px;
+  gap: var(--space-2);
 }
 
 label,
@@ -294,8 +307,8 @@ input,
 select,
 textarea {
   width: 100%;
-  min-height: 44px;
-  padding: 9px 11px;
+  min-height: var(--control-height);
+  padding: 9px var(--space-3);
   color: var(--color-ink);
   background: var(--color-canvas);
   border: 1px solid var(--color-ink);
@@ -344,7 +357,7 @@ textarea::placeholder {
 }
 
 .category-chips button {
-  min-height: 32px;
+  min-height: var(--control-height);
   padding: 5px 10px;
   color: var(--color-ink);
   background: var(--color-canvas);
@@ -370,9 +383,9 @@ textarea::placeholder {
 
 .filter-toggle {
   width: 100%;
-  min-height: 44px;
-  margin-top: 18px;
-  padding: 9px 11px;
+  min-height: var(--control-height);
+  margin-top: var(--space-5);
+  padding: 9px var(--space-3);
   display: flex;
   justify-content: space-between;
   color: var(--color-ink);
@@ -385,8 +398,8 @@ textarea::placeholder {
 
 .filter-options {
   display: none;
-  gap: 16px;
-  padding: 18px 0 4px;
+  gap: var(--space-4);
+  padding: var(--space-5) 0 0;
 }
 
 .filter-options.is-open {
@@ -394,7 +407,7 @@ textarea::placeholder {
 }
 
 .text-button {
-  min-height: 44px;
+  min-height: var(--control-height);
   padding: 8px 4px;
   color: var(--color-ink);
   background: transparent;
@@ -427,6 +440,7 @@ textarea::placeholder {
 .recipe-list {
   margin: 0;
   padding: 0;
+  border-top: var(--strong-rule);
   list-style: none;
 }
 
@@ -567,15 +581,15 @@ textarea::placeholder {
 }
 
 .category-grid {
-  margin-top: 18px;
-  border-top: 2px solid var(--color-ink);
+  margin-top: 0;
+  border-top: var(--strong-rule);
 }
 
 .category-card {
   min-height: 110px;
   padding: 18px 0;
   display: grid;
-  grid-template-columns: 42px 1fr auto;
+  grid-template-columns: 42px minmax(0, 1fr) auto;
   gap: 12px;
   align-items: center;
   border-bottom: 1px solid var(--color-ink);
@@ -595,6 +609,7 @@ textarea::placeholder {
 
 .category-card-main {
   display: block;
+  min-width: 0;
 }
 
 .category-card .archive-line {
@@ -626,7 +641,7 @@ textarea::placeholder {
 
 .detail-header {
   max-width: 780px;
-  margin-top: 42px;
+  margin-top: var(--space-8);
 }
 
 .detail-header .context {
@@ -637,11 +652,11 @@ textarea::placeholder {
 }
 
 .detail-grid {
-  margin-top: 42px;
-  padding-top: 28px;
+  margin-top: var(--space-8);
+  padding-top: var(--space-7);
   display: grid;
   gap: 44px;
-  border-top: 2px solid var(--color-ink);
+  border-top: var(--strong-rule);
 }
 
 .detail-grid h2 {
@@ -700,7 +715,7 @@ textarea::placeholder {
 .not-found {
   max-width: 760px;
   min-height: 440px;
-  padding-top: 72px;
+  padding-top: var(--space-8);
 }
 
 .not-found p:not(.eyebrow) {
@@ -710,7 +725,7 @@ textarea::placeholder {
 
 .loading-state {
   min-height: 440px;
-  padding-top: 72px;
+  padding-top: var(--space-8);
   color: var(--color-muted);
 }
 
@@ -718,7 +733,7 @@ textarea::placeholder {
   position: fixed;
   inset: 0;
   z-index: 10;
-  padding: 18px;
+  padding: var(--page-gutter);
   display: grid;
   place-items: center;
   background: rgb(23 23 23 / .6);
@@ -727,7 +742,7 @@ textarea::placeholder {
 .dialog {
   position: relative;
   width: min(460px, 100%);
-  padding: 28px;
+  padding: var(--space-7);
   color: var(--color-ink);
   background: var(--color-canvas);
   border: 2px solid var(--color-ink);
@@ -735,7 +750,12 @@ textarea::placeholder {
 }
 
 .dialog h2 {
-  margin-bottom: 14px;
+  margin-bottom: var(--space-3);
+}
+
+.dialog:has(> .dialog-close) h2,
+.editor-surface h2 {
+  padding-right: var(--space-8);
 }
 
 .dialog>p:not(.eyebrow) {
@@ -745,13 +765,13 @@ textarea::placeholder {
 
 .editor-dialog {
   width: min(720px, 100%);
-  max-height: min(90vh, 840px);
+  max-height: min(calc(100dvh - var(--page-gutter) - var(--page-gutter)), 840px);
   overflow-y: auto;
 }
 
 .import-dialog {
   width: min(620px, 100%);
-  max-height: min(90vh, 840px);
+  max-height: min(calc(100dvh - var(--page-gutter) - var(--page-gutter)), 840px);
   overflow-y: auto;
 }
 
@@ -784,8 +804,8 @@ textarea::placeholder {
 
 .editor-fields {
   display: grid;
-  gap: 20px;
-  margin-top: 22px;
+  gap: var(--space-5);
+  margin-top: var(--space-6);
 }
 
 .editor-fields>div,
@@ -793,7 +813,7 @@ textarea::placeholder {
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 6px;
+  gap: var(--space-2);
   border: 0;
 }
 
@@ -804,7 +824,7 @@ textarea::placeholder {
 }
 
 .category-checks label {
-  min-height: 44px;
+  min-height: var(--control-height);
   padding: 8px 10px;
   display: flex;
   align-items: center;
@@ -908,13 +928,13 @@ textarea {
 }
 
 .choice-actions {
-  margin-top: 28px;
+  margin-top: var(--space-7);
   display: grid;
   gap: 12px;
 }
 
 .choice-button {
-  min-height: 44px;
+  min-height: var(--control-height);
   padding: 10px 14px;
   color: var(--color-ink);
   background: var(--color-canvas);
@@ -1021,24 +1041,17 @@ textarea {
   }
 
   .page-wrap {
-    /* padding: 56px 0 88px; */
+    padding: var(--space-8) 0 calc(var(--space-10) + var(--space-3));
   }
 
   .controls {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(180px, 220px) minmax(150px, 180px) auto;
-    column-gap: 16px;
-    align-items: end;
-    padding-bottom: 16px;
+    gap: var(--space-4);
   }
 
   .search-field {
     grid-column: 1 / -1;
-  }
-
-  .filter-options .category-chips {
-    grid-column: 1;
-    grid-row: 2;
+    padding-bottom: 0;
   }
 
   .filter-toggle {
@@ -1047,24 +1060,28 @@ textarea {
 
   .filter-options,
   .filter-options.is-open {
-    display: contents;
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: minmax(0, 1fr) minmax(150px, 180px) auto;
+    gap: var(--space-4);
+    align-items: end;
+    padding: 0;
+  }
+
+  .filter-options .category-chips {
+    grid-column: 1 / -1;
   }
 
   .filter-options .sort-field {
-    grid-column: 2;
-    grid-row: 2;
-    min-width: 0;
+    grid-column: 1;
   }
 
   .filter-options .prep-field {
-    grid-column: 3;
-    grid-row: 2;
-    min-width: 0;
+    grid-column: 2;
   }
 
   .filter-options .clear-button {
-    grid-column: 4;
-    grid-row: 2;
+    grid-column: 3;
     align-self: end;
   }
 
@@ -1087,13 +1104,9 @@ textarea {
     font-size: .8125rem;
   }
 
-  .category-grid {
-    margin-top: 30px;
-  }
-
   .category-card {
     min-height: 126px;
-    grid-template-columns: 64px 1fr auto;
+    grid-template-columns: 64px minmax(0, 1fr) auto;
     gap: 20px;
     padding: 22px 0;
   }
@@ -1109,6 +1122,36 @@ textarea {
 
   .choice-actions {
     grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1024px) {
+  .filter-options,
+  .filter-options.is-open {
+    grid-template-columns: minmax(0, 1fr) minmax(180px, 220px) minmax(150px, 180px) auto;
+  }
+
+  .filter-options .category-chips,
+  .filter-options .sort-field,
+  .filter-options .prep-field,
+  .filter-options .clear-button {
+    grid-row: 1;
+  }
+
+  .filter-options .category-chips {
+    grid-column: 1;
+  }
+
+  .filter-options .sort-field {
+    grid-column: 2;
+  }
+
+  .filter-options .prep-field {
+    grid-column: 3;
+  }
+
+  .filter-options .clear-button {
+    grid-column: 4;
   }
 }
 
