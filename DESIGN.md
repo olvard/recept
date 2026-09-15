@@ -1,123 +1,140 @@
-# Sustainable Web Design System
+# Recept design specification
 
-## Design direction
+## 1. Product and visual intent
 
-The interface should feel warm, practical, editorial, and resource-conscious. It should communicate care for ingredients, people, and the planet through a restrained visual language: a small color palette, generous whitespace, strong hierarchy, visible structure, and purposeful motion.
+Recept is a private Swedish recipe vault for Oliver and Wilma. It should feel like a useful kitchen bulletin: warm paper, clear black rules, bright orange notices, and an unapologetically yellow action button. The reference is a narrow, editorial mobile list rather than a soft lifestyle app.
 
-Sustainable web design is treated here as both an aesthetic and a performance principle. Pages should be lightweight, durable, easy to scan, and useful without decoration that does not improve understanding.
+The visual character is **practical, printed, warm, and direct**. Preserve the sense of a neatly typeset household noticeboard: generous empty space, hairline rules, compact facts, and one high-contrast action at a time.
 
-## Core palette
+Use Swedish UI copy throughout: `Vault`, `Kategorier`, `Nytt recept`, `Sök recept…`, `Tid: valfri`. `Recept` is the wordmark.
 
-| Token | Hex | Use |
+### Principles
+
+1. **Mobile is the primary composition.** Design the 390 px-wide view first; desktop is the same system with more room, not a different visual language.
+2. **Structure replaces decoration.** Use alignment, borders, type, and spacing to communicate hierarchy. Do not add gradients, shadows, illustrations, glass effects, or decorative texture.
+3. **One loud action.** Reserve yellow for the primary create/save action and orange for utility emphasis, counts, and active states.
+4. **Recipes are a readable index.** A list row should reveal its number, title, short description, category, and preparation time at a glance.
+5. **Keep control text plain.** Controls and metadata are concise Inter text, never decorative or monospaced.
+
+## 2. Foundations
+
+### Color tokens
+
+| Token | Value | Purpose |
 | --- | --- | --- |
-| `--color-canvas` | `#f7cfcc` | Main page background |
-| `--color-primary` | `#d44625` | Primary actions, headings, and active states |
-| `--color-secondary` | `#c45257` | Supporting actions, metadata, and selected states |
-| `--color-tertiary` | `#9e5bbc` | Compact icon actions and accent states |
-| `--color-neutral` | `#a26767` | Quiet borders, dividers, and neutral UI |
-| `--color-ink` | `#4a2928` | Body text and inverted surfaces |
-| `--color-surface` | `#fde9e7` | Cards, notes, inputs, and grouped surfaces |
+| `--color-canvas` | `#FCFAF2` | Warm off-white page background and default paper surface |
+| `--color-ink` | `#171717` | Text, icons, borders, and offset button edge |
+| `--color-orange` | `#FF5A00` | Top utility strip, active filter, item numbers, small emphasis |
+| `--color-yellow` | `#FFF200` | Primary action fill only |
+| `--color-muted` | `#76736B` | Secondary descriptions and placeholder text |
+| `--color-focus` | `#005FCC` | Keyboard focus outline; do not use orange alone for focus |
 
-The pale pink canvas and tomato-red primary are the signature combination. Rose, purple, and neutral brown are supporting accents. Keep surfaces close to the canvas so the interface remains light, calm, and easy to scan.
+Use flat, opaque colors only. `--color-canvas` is the default surface for cards and inputs too; separate areas with black rules instead of tinted panels. Never substitute the old pink, rose, purple, or moss palette.
 
-### Color rules
+### Typography
 
-- Prefer flat fills and solid borders over gradients, shadows, and decorative textures.
-- Use `--color-ink` for body text and `--color-primary` for headings and key controls.
-- Use the light canvas/surface colors for text on `--color-primary` buttons; verify contrast for every pairing.
-- Never use color as the only signal. Pair states with labels, icons, borders, or text.
-- Keep large areas of the page in the core background to reduce visual and CSS complexity.
-- Focus states should use a visible `2px` outline in `--color-tertiary`, with an offset that does not depend on a shadow.
+| Role | Font | Weight | Size and line-height |
+| --- | --- | --- | --- |
+| Wordmark and display headings | Lora | 700 | `clamp(2rem, 7vw, 3rem)` / `1` |
+| Page and section headings | Lora | 700 | `1.5rem–2rem` / `1.1` |
+| Recipe title | Inter | 400 or 500 | `1.125rem–1.25rem` / `1.3` |
+| Button and filter label | Inter | 600 or 700 | `0.8125rem–0.9375rem` / `1.2` |
+| Body and form text | Inter | 400 | `1rem` / `1.5` |
+| Description and metadata | Inter | 400 | `0.6875rem–0.8125rem` / `1.4` |
+| Utility strip | Inter | 500 | `0.625rem–0.6875rem` / `1.2` |
 
-## Typography
+Lora is bold only and is reserved for the brand and meaningful headings. Inter is used for everything else, including recipe descriptions, metadata, filter labels, input placeholders, small utility text, and numbers. Do not use IBM Plex Mono, IBM Mono, Syne Mono, or any monospace font. Do not simulate a typewriter look through letter spacing.
 
-### Families
+Use sentence case for labels and headings; the wordmark remains `RECEPT`. Letter spacing is normal except for deliberate compact utility text (at most `0.02em`).
 
-- **Display and interface headings:** `Syne Mono`, monospace fallback.
-- **Body, labels, and utility text:** `Inter`, sans-serif fallback.
+### Spacing and dimensions
 
-Titles should feel deliberate and slightly technical. Body text should be calm, highly readable, and straightforward. Load only the weights and character subsets the product actually uses; prefer locally hosted, compressed font files where possible.
+Use a 4 px base unit: `4, 8, 12, 16, 20, 24, 32, 40, 48, 64` px. On mobile, page gutters are `18px`; at 768 px and above they are `32px`. Keep touch targets at least `44px` tall.
 
-### Type scale
+- Utility strip: `30px` tall.
+- Mobile header: `150px–164px` including wordmark, tagline, and primary action.
+- Primary action: `44px` minimum height, `2px` ink border, `4px` solid ink offset down/right.
+- Search field: `42px` minimum height, `1px` ink border.
+- Filter chips: `28px–32px` height with `1px` ink border.
+- Catalog divider: `1px` ink; use it to separate every recipe row.
 
-| Role | Size | Line height | Family |
-| --- | ---: | ---: | --- |
-| Display | `clamp(2.5rem, 7vw, 6rem)` | `0.95` | Syne Mono |
-| Page heading | `clamp(2rem, 4vw, 3.5rem)` | `1` | Syne Mono |
-| Section heading | `1.5rem–2rem` | `1.1` | Syne Mono |
-| Card heading | `1.125rem–1.375rem` | `1.15` | Syne Mono |
-| Body | `1rem–1.125rem` | `1.55` | Inter |
-| Small / metadata | `0.8125rem–0.9375rem` | `1.35` | Inter |
+## 3. Layout and responsive behavior
 
-Use sentence case for headings and labels. Avoid dense all-caps typography; if an overline is needed, keep it short, use Inter, and add modest letter spacing.
+### App shell
 
-## Shape, borders, and elevation
+The shell is a single off-white paper field. At the top, a full-bleed orange utility strip puts the vault ownership at left and the day at right. The content header follows with the black `RECEPT` wordmark, a small Inter tagline, then the primary action.
 
-Cards, buttons, inputs, and grouped search/filter controls remain direct and rectangular. Dialogs and the mobile navigation use generous rounding inspired by the reference system.
+On mobile the primary `+ Nytt recept` button spans the content width. Use a compact plus glyph before the label; it is a textual/line icon, not an emoji. A black horizontal rule separates the header from the catalog controls.
 
-- Surface radius: `1.75rem`.
-- Note-style radius: `0.5rem–0.75rem`.
-- Note-style components include tips, annotations, toasts, inline messages, and small status spans.
-- Use `1px` borders for grouping and `2px` borders for emphasis.
-- Favor a hard, offset border treatment over blurred box shadows when depth is needed.
-- Do not use rounded pills for ordinary buttons. A pill is reserved for navigation containers, compact statuses, or tags where the shape communicates compactness.
+Desktop may place navigation and secondary actions beside the brand, but preserve the orange strip, paper canvas, solid rules, and yellow primary action. The application shell changes at `767px`; never hide the create action on mobile.
 
-## Layout and spacing
+### Catalog page
 
-Use a simple, responsive grid with a maximum content width of roughly `72rem`. Keep the reading measure between `45rem` and `70rem` depending on content type.
+The catalog sequence is:
 
-Use a consistent spacing scale based on `0.25rem`: `0.25`, `0.5`, `0.75`, `1`, `1.5`, `2`, `3`, and `4rem`. Prefer fewer, larger spacing decisions over many small adjustments.
+1. Search input, always visible.
+2. Category filter chips.
+3. A compact preparation-time select or disclosure.
+4. A full-width divider with breathing room above it.
+5. Numbered recipe rows.
 
-Layouts should remain useful on narrow screens. Stack columns before shrinking text, keep touch targets at least `44px`, and preserve generous edge padding (`1rem` minimum, `1.5rem` or more on larger screens).
+On mobile, only the search and the essential filter controls appear initially; any extra filters remain collapsed. Search changes replace URL state; intentional filter, sort, reset, and pagination changes push URL state. Filter and sort changes reset the page.
 
-## Component language
+Do not place recipes in floating cards. A catalog is one continuous list bounded by horizontal rules.
 
-### Navigation
+### Recipe row anatomy
 
-Navigation is compact and text-led. Use Syne Mono for the brand and active navigation item, with Inter for supporting controls. Active states can use an underline, a solid block, or a moss-colored marker; do not rely on hover-only feedback.
+Each row is a two-column layout: a narrow orange archive number (`01`, `02`, etc.) at left and the recipe content at right. The content order is title, muted one-line description, then category tag and preparation time.
+
+- Keep the title on the first visual line when possible; permit wrapping without truncating meaningful names.
+- Use Inter for the title and all supporting text.
+- Description is muted, small, and can wrap to two lines if needed.
+- Category is a small outlined pill only because it communicates a compact classification. Preparation time is plain text beside it.
+- The full row is the recipe-link target and has a visible keyboard focus treatment.
+- Use archive IDs in URLs, but show friendly two-digit list indices when the catalog design calls for them.
+
+### Forms, editor, and detail views
+
+Use the same paper background, ink rules, Lora headings, and Inter controls. Group fields through spacing and dividers rather than colored cards. Labels are visible above inputs; placeholders only provide examples. Primary save/publish actions use yellow. Destructive or error states use clear text, an ink border, and an accessible status message; do not overload orange as an error color.
+
+## 4. Components and interaction states
 
 ### Buttons
 
-Buttons are rectangular, bordered, and direct. Provide primary, secondary, inverted, and outlined variants using the named palette tokens. Provide clear pressed and disabled states, and keep labels action-oriented.
+- **Primary:** yellow fill, `2px` ink border, `4px` hard ink offset, Inter 700 label, black text. On press, remove the offset and shift the button down/right by the same amount.
+- **Secondary:** canvas fill, `1px` ink border, no shadow or offset unless it represents a primary action.
+- **Icon button:** only when a text label would be redundant; provide an accessible name and a `44px` touch target.
+- **Disabled:** retain the shape and label, reduce contrast modestly, and prevent interaction. Never convey disabled status by color alone.
 
-### Cards and recipe surfaces
+### Search and selects
 
-Cards use a flat `--color-surface` surface, square corners, and a visible border. Information hierarchy should come from spacing, typography, and small color accents rather than shadows. Keep metadata close to the title and make the primary action obvious.
+Inputs are square-cornered, canvas-filled, and ink-bordered. The search field includes a simple black search icon at left, then Inter placeholder text. Show a `2px` `--color-focus` outline with a `2px` offset on keyboard focus. The time filter uses a visible text label and chevron; do not make a custom control indistinguishable from plain text.
 
-### Notes, toasts, and inline messages
+### Filter chips and tags
 
-These are the main places where rounding is allowed. Use a paper or moss surface, a short label, and concise supporting text. A note may use a small clay marker or icon, but should remain quiet enough not to compete with the main task.
+Chips are compact, rounded only enough to read as tokens (`999px` radius), canvas-filled, and ink-bordered. The selected category uses orange fill with ink text and border. Always pair the category name with its count, e.g. `Alla 06`; color is never the sole selected-state signal.
 
-### Forms
+### Dialogs and feedback
 
-Inputs are rectangular with a solid border and a paper background. Labels are always visible; placeholders are supplemental only. Error text should be adjacent to the field and paired with a border/color change plus explanatory copy.
+Dialogs use a canvas surface, square or subtly rounded corners (maximum `4px`), solid ink border, and no blurred shadow. Keep Escape and outside-click closing behavior. Trap focus, restore it to the trigger, and label the dialog semantically.
 
-## Imagery and iconography
+Use concise inline feedback near the affected control and announce changing recipe-result counts via an `aria-live` region. Toasts are reserved for confirmation that does not require an immediate decision.
 
-Use real, useful imagery: ingredients, finished dishes, growing environments, or process details. Prefer appropriately sized responsive images, modern formats, lazy loading below the fold, and explicit dimensions to avoid layout shifts.
+## 5. Accessibility and quality bar
 
-Icons should be simple line or solid symbols with consistent stroke weight. Avoid large decorative illustrations if they add significant payload without adding meaning. Alt text should describe the purpose of an image, not its visual style.
+- Meet WCAG 2.2 AA contrast. Check final combinations, especially orange text on canvas and yellow button text.
+- Every control works with keyboard and touch, has a visible focus indicator, and has an accessible name.
+- Use semantic landmarks, headings in order, real buttons for actions, real links for navigation, associated labels, and descriptive validation errors.
+- Respect `prefers-reduced-motion`; transitions are brief and optional, with no looping motion.
+- Load only the Lora 700 and Inter weights actually used. Prefer stable font loading and system fallbacks (`Georgia, serif` for Lora; `system-ui, sans-serif` for Inter).
+- Keep visual effects lightweight: no image-led hero, autoplay media, gradients, or shadows.
 
-## Motion and interaction
+## 6. Do and do not
 
-Motion should clarify state, hierarchy, or progress. Use short transitions for menus, focus, and feedback; avoid perpetual animation, parallax, and autoplay media. Respect `prefers-reduced-motion` by removing non-essential transitions and movement.
+**Do:** make the canvas look like clean kitchen paper; use strong black rules; give the main action a yellow fill and hard offset; make recipe metadata compact; let whitespace make the index easy to scan.
 
-Hover is an enhancement, not a requirement. Every interactive state must work with keyboard, touch, and assistive technology. Use visible focus indicators and preserve logical tab order.
+**Do not:** use pink or purple surfaces; use rounded cards; use blurred elevation; use monospaced or IBM typography; turn every control into a pill; add decorative food imagery to compensate for weak hierarchy; or translate the established Swedish product vocabulary into English.
 
-## Sustainable implementation principles
+## 7. Overall impression
 
-- Ship minimal JavaScript and prefer semantic HTML and CSS for layout and interaction.
-- Avoid autoplay video, oversized hero media, unnecessary carousels, and heavyweight animation libraries.
-- Optimize images, defer non-critical assets, and reserve space before media loads.
-- Use system fallbacks while fonts load; avoid invisible text and unnecessary font weights.
-- Keep pages cacheable and avoid fetching content that is not needed for the current view.
-- Provide a useful experience on slow connections and small screens.
-- Design components to be durable: clear content, reusable patterns, and few one-off visual effects.
-
-## Accessibility baseline
-
-Meet WCAG 2.2 AA targets wherever applicable: at least `4.5:1` contrast for normal text, `3:1` for large text and UI graphics, keyboard access to every control, visible focus, semantic landmarks, correctly associated labels, and reduced-motion support. Test the actual rendered color combinations rather than relying on the token names.
-
-## Overall impression
-
-The finished UI should feel like a warm, tactile recipe archive: pale pink canvas, tomato-red primary actions, rose and purple accents, monospaced editorial headings, clean sans-serif reading text, firm square cards, rounded grouped surfaces, and clear direct controls.
+The finished interface should look like a calm, well-used private recipe bulletin: off-white paper, orange notices, crisp black type and dividers, a yellow `Nytt recept` button, Lora-bold editorial headings, and Inter everywhere else. It should feel immediate and handmade in spirit, while remaining precise, accessible, and easy to use on a phone.

@@ -4,10 +4,9 @@ import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { categories } from "@/lib/recipes";
-import { NewPostButton } from "@/app/components/new-post-button";
 import { useRecipeVault } from "@/app/components/recipe-vault-provider";
 
-const perPage = 4;
+const perPage = 6;
 const prepOptions = [
   ["all", "Alla"], ["15", "≤15 min"], ["16-30", "16–30 min"], ["31-45", "31–45 min"], ["46-60", "46–60 min"], ["60", "Över 1 tim"],
 ] as const;
@@ -68,27 +67,29 @@ export function VaultCatalog() {
   };
   const updateFilter = (changes: Record<string, string | string[]>, replace = false) => update({ ...changes, page: null }, replace);
   const reset = () => router.push("/vault", { scroll: false });
+  const counts = Object.fromEntries(categories.map((category) => [category.slug, recipes.filter((recipe) => recipe.categorySlugs.includes(category.slug)).length]));
+  const toggleCategory = (slug: string) => updateFilter({ category: selectedCategories.includes(slug) ? selectedCategories.filter((item) => item !== slug) : [...selectedCategories, slug] });
 
   return <div className="page-wrap vault-page">
-    <section className="page-intro"><p className="eyebrow">Personligt arkiv · {recipes.length} recept</p><div className="page-intro-title-row"><h1>Recept</h1><div className="intro-actions"><Link className="button intro-category-link" href="/kategorier">Kategorier</Link><NewPostButton /></div></div><p>Oliver & Wilmas receptsamling.</p></section>
+    <section className="page-intro"><h1 className="sr-only">Receptarkiv</h1><p className="eyebrow">Vault · {recipes.length.toString().padStart(2, "0")} recept</p><p className="catalog-lede">Bläddra bland favoriter, vardagsmat och sådant vi vill laga igen.</p></section>
     <section className="controls" aria-label="Sök och filtrera recept">
-      <div className="search-field"><label htmlFor="search">Sök i arkivet</label><input id="search" type="search" value={q} placeholder="Till exempel morot eller citron" onChange={(e) => updateFilter({ q: e.target.value }, true)} /></div>
-      <button className="filter-toggle" type="button" aria-expanded={filtersOpen} aria-controls="filter-options" onClick={() => setFiltersOpen((open) => !open)}>Filter {filtersOpen ? "−" : "+"}</button>
+      <div className="search-field"><label htmlFor="search">Sök recept</label><div className="search-input"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m15.5 15.5 5 5" /></svg><input id="search" type="search" value={q} placeholder="Sök recept…" onChange={(e) => updateFilter({ q: e.target.value }, true)} /></div></div>
+      <fieldset className="category-chips"><legend>Kategorier</legend><button type="button" className={selectedCategories.length === 0 ? "selected" : ""} aria-pressed={selectedCategories.length === 0} onClick={() => updateFilter({ category: [] })}>Alla <span>{recipes.length.toString().padStart(2, "0")}</span></button>{categories.map((item) => <button type="button" className={selectedCategories.includes(item.slug) ? "selected" : ""} aria-pressed={selectedCategories.includes(item.slug)} key={item.slug} onClick={() => toggleCategory(item.slug)}>{item.name} <span>{String(counts[item.slug]).padStart(2, "0")}</span></button>)}</fieldset>
+      <div className="select-field prep-field"><label htmlFor="prep">Tid</label><select id="prep" value={prep} onChange={(e) => updateFilter({ prep: e.target.value })}>{prepOptions.map(([value, label]) => <option key={value} value={value}>{value === "all" ? "Tid: valfri" : label}</option>)}</select></div>
+      <button className="filter-toggle" type="button" aria-expanded={filtersOpen} aria-controls="filter-options" onClick={() => setFiltersOpen((open) => !open)}>Sortering och återställning <span aria-hidden="true">{filtersOpen ? "−" : "+"}</span></button>
       <div id="filter-options" className={`filter-options${filtersOpen ? " is-open" : ""}`}>
-        <fieldset className="category-filter"><legend>Kategorier</legend>{categories.map((item) => <label key={item.slug}><input type="checkbox" checked={selectedCategories.includes(item.slug)} onChange={(event) => updateFilter({ category: event.target.checked ? [...selectedCategories, item.slug] : selectedCategories.filter((slug) => slug !== item.slug) })} /> {item.name}</label>)}</fieldset>
-        <div className="select-field"><label htmlFor="prep">Förberedelsetid</label><select id="prep" value={prep} onChange={(e) => updateFilter({ prep: e.target.value })}>{prepOptions.map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></div>
         <div className="select-field"><label htmlFor="sort">Sortera</label><select id="sort" value={sort} onChange={(e) => updateFilter({ sort: e.target.value })}>{sortOptions.map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></div>
-        <button className="text-button clear-button" type="button" onClick={reset}>Rensa</button>
+        <button className="text-button clear-button" type="button" onClick={reset}>Rensa filter</button>
       </div>
     </section>
-    <p className="result-count" aria-live="polite">{filtered.length} {filtered.length === 1 ? "recept" : "recept"} i arkivet</p>
+    {/* <div className="catalog-summary"><p className="result-count" aria-live="polite">{filtered.length.toString().padStart(2, "0")} {filtered.length === 1 ? "recept" : "recept"}</p><span>Index</span></div> */}
     {visible.length ? <><ul className="recipe-list" aria-label="Receptposter">{visible.map((recipe) => <li key={recipe.id}>
       <Link className="recipe-row" href={`/recipes/${recipe.id}`}>
-        <span className="recipe-rank">#{recipe.id}</span>
+        <span className="recipe-rank">{recipe.id}</span>
         <span className="recipe-main">
-          <span className="recipe-title-line"><span className="recipe-title">{recipe.title}</span><span className="category">{recipe.categoryNames.join(" · ")}</span></span>
-          <span className="recipe-meta"><span>{recipe.prepMinutes} min</span><span>Arkiverad {formatArchiveDate(recipe.archivedAt)}</span><span className="recipe-context">{recipe.contextTags.join(" · ")}</span></span>
+          <span className="recipe-title-line"><span className="recipe-title">{recipe.title}</span></span>
           {recipe.note && <span className="recipe-note">{recipe.note}</span>}
+          <span className="recipe-meta"><span className="category">{recipe.categoryNames.join(" · ")}</span><span>{recipe.prepMinutes} min</span><span>Arkiverad {formatArchiveDate(recipe.archivedAt)}</span><span className="recipe-context">{recipe.contextTags.join(" · ")}</span></span>
         </span>
         <span className="row-arrow" aria-hidden="true">→</span>
       </Link>

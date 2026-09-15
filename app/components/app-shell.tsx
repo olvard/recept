@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { RecipeEditorDialog } from "@/app/components/recipe-editor-dialog";
 import { ModalDialog } from "@/app/components/modal-dialog";
 import { NewRecipeChoice } from "@/app/components/new-recipe-choice";
 import { RecipeImportForm } from "@/app/components/recipe-import-form";
-import { RecipeVaultProvider, useRecipeVault } from "@/app/components/recipe-vault-provider";
+import { RecipeVaultProvider } from "@/app/components/recipe-vault-provider";
 import type { CanonicalRecipe } from "@/lib/recipe-vault";
 import type { RecipeDraft } from "@/lib/recipe-vault";
 import type { RecipeImportReview } from "@/lib/recipe-import/frontend";
@@ -16,12 +16,15 @@ type EditorControls = { openCreate: () => void; openEdit: (recipe: CanonicalReci
 type EditorState = { mode: "create" | "edit"; recipe?: CanonicalRecipe; initialDraft?: RecipeDraft; importReview?: RecipeImportReview };
 const EditorContext = createContext<EditorControls | null>(null);
 export function useRecipeEditor() { const value = useContext(EditorContext); if (!value) throw new Error("useRecipeEditor måste användas i AppShell."); return value; }
+const subscribeToWeekday = () => () => {};
+const getWeekday = () => new Intl.DateTimeFormat("sv-SE", { weekday: "long" }).format(new Date());
 
 function ShellContents({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname(); const router = useRouter(); const { isHydrated } = useRecipeVault();
+  const pathname = usePathname(); const router = useRouter();
   const [editor, setEditor] = useState<EditorState | null>(null);
   const [newRecipeFlow, setNewRecipeFlow] = useState<"choice" | "import" | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const weekday = useSyncExternalStore(subscribeToWeekday, getWeekday, () => "");
   const choiceFocusRef = useRef<HTMLButtonElement>(null);
   const importFocusRef = useRef<HTMLInputElement>(null);
   useEffect(() => { const media = window.matchMedia("(max-width: 767px)"); const update = () => setIsMobile(media.matches); update(); media.addEventListener("change", update); return () => media.removeEventListener("change", update); }, []);
@@ -30,17 +33,22 @@ function ShellContents({ children }: { children: React.ReactNode }) {
   const openCreateEditor = () => { setNewRecipeFlow(null); setEditor({ mode: "create" }); };
   const openImportedEditor = (initialDraft: RecipeDraft, importReview: RecipeImportReview) => { setNewRecipeFlow(null); setEditor({ mode: "create", initialDraft, importReview }); };
   return <EditorContext.Provider value={controls}><div className="site-frame">
-      <header className="site-header">
-        <Link className="wordmark" href="/vault">Recept</Link>
-        <nav className="desktop-nav" aria-label="Huvudnavigering">
-          <Link className={vaultActive ? "active" : ""} href="/vault">Recept</Link>
+      <div className="utility-bar">
+        <div className="utility-inner">
+          <nav className="utility-nav" aria-label="Huvudnavigering">
+          <Link className={vaultActive ? "active" : ""} href="/vault">Vault</Link>
           <Link className={pathname === "/kategorier" ? "active" : ""} href="/kategorier">Kategorier</Link>
-        </nav>
-        <button className="new-post header-new-post" type="button" onClick={controls.openCreate}>+ Nytt recept</button>
-        <div className="attribution"><span>Oliver</span><span>V.1</span><span>{isHydrated ? "personligt arkiv" : "läser arkivet"}</span></div>
+          </nav>
+          <span className="household-label">Oliver &amp; Wilmas hushåll</span>
+          <span className="weekday" aria-label={weekday ? `I dag är det ${weekday}` : undefined}>{weekday}</span>
+        </div>
+      </div>
+      <header className="site-header">
+        <div className="brand-block"><Link className="wordmark" href="/vault">RECEPT</Link><p>Recept vi lagar, sparar och återvänder till.</p></div>
+        <button className="new-post header-new-post" type="button" onClick={controls.openCreate}><span aria-hidden="true">+</span> Nytt recept</button>
       </header>
        <main>{children}</main>
-       <footer>Oliver Lundin · Created 2026</footer>
+       <footer><span>Recept</span><span>Ett personligt receptarkiv · 2026</span></footer>
      {newRecipeFlow === "choice" && <ModalDialog titleId="new-recipe-choice-title" onClose={() => setNewRecipeFlow(null)} initialFocusRef={choiceFocusRef} showClose><NewRecipeChoice firstFocusRef={choiceFocusRef} onCreate={openCreateEditor} onImport={() => setNewRecipeFlow("import")} /></ModalDialog>}
      {newRecipeFlow === "import" && <ModalDialog titleId="recipe-import-title" onClose={() => setNewRecipeFlow(null)} className="import-dialog" initialFocusRef={importFocusRef} showClose><RecipeImportForm firstFocusRef={importFocusRef} onBack={() => setNewRecipeFlow("choice")} onImported={openImportedEditor} /></ModalDialog>}
      {editor && <RecipeEditorDialog mode={editor.mode} recipe={editor.recipe} initialDraft={editor.initialDraft} importReview={editor.importReview} onClose={() => setEditor(null)} onSaved={(recipe) => { setEditor(null); router.push(`/recipes/${recipe.id}`); }} />}
