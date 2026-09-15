@@ -31,7 +31,7 @@ export async function requestJson<T>(url: string, init: RequestInit = {}): Promi
       headers: { "Content-Type": "application/json", ...init.headers },
     });
   } catch {
-    throw new ClientApiError("Nätverksfelet kunde inte nå receptarkivet.", 0, { retryable: true });
+    throw new ClientApiError("Nätverksfelet kunde inte nå recepten.", 0, { retryable: true });
   }
 
   const body = await response.json().catch(() => ({})) as ApiErrorBody & T;

@@ -10,7 +10,7 @@ const perPage = 6;
 const prepOptions = [
   ["all", "Alla"], ["15", "≤15 min"], ["16-30", "16–30 min"], ["31-45", "31–45 min"], ["46-60", "46–60 min"], ["60", "Över 1 tim"],
 ] as const;
-const sortOptions = [["recent", "Senast arkiverade"], ["archive", "Arkivnummer"], ["alpha", "Alfabetiskt"]] as const;
+const sortOptions = [["recent", "Senast tillagda"], ["archive", "Receptnummer"], ["alpha", "Alfabetiskt"]] as const;
 const archiveMonths = ["jan", "feb", "mar", "apr", "maj", "jun", "jul", "aug", "sep", "okt", "nov", "dec"];
 
 function formatArchiveDate(value: string) {
@@ -71,7 +71,7 @@ export function VaultCatalog() {
   const toggleCategory = (slug: string) => updateFilter({ category: selectedCategories.includes(slug) ? selectedCategories.filter((item) => item !== slug) : [...selectedCategories, slug] });
 
   return <div className="page-wrap vault-page">
-    <h1 className="sr-only">Receptarkiv</h1>
+    <h1 className="sr-only">Recept</h1>
     <section className="controls" aria-label="Sök och filtrera recept">
       <div className="search-field"><label htmlFor="search">Sök recept</label><div className="search-input"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m15.5 15.5 5 5" /></svg><input id="search" type="search" value={q} placeholder="Sök recept…" onChange={(e) => updateFilter({ q: e.target.value }, true)} /></div></div>
       <button className="filter-toggle" type="button" aria-expanded={filtersOpen} aria-controls="filter-options" onClick={() => setFiltersOpen((open) => !open)}>Filtrera och sortera <span aria-hidden="true">{filtersOpen ? "−" : "+"}</span></button>
@@ -89,7 +89,7 @@ export function VaultCatalog() {
         <span className="recipe-main">
           <span className="recipe-title-line"><span className="recipe-title">{recipe.title}</span></span>
           {recipe.note && <span className="recipe-note">{recipe.note}</span>}
-          <span className="recipe-meta"><span className="category">{recipe.categoryNames.join(" · ")}</span><span>{recipe.prepMinutes} min</span><span>Arkiverad {formatArchiveDate(recipe.archivedAt)}</span><span className="recipe-context">{recipe.contextTags.join(" · ")}</span></span>
+          <span className="recipe-meta"><span className="category">{recipe.categoryNames.join(" · ")}</span><span>{recipe.prepMinutes} min</span><span>Tillagd {formatArchiveDate(recipe.archivedAt)}</span><span className="recipe-context">{recipe.contextTags.join(" · ")}</span></span>
         </span>
         <span className="row-arrow" aria-hidden="true">→</span>
       </Link>

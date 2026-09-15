@@ -137,7 +137,7 @@ export function mergeDeterministicExtractions(jsonld: ParsedExtraction, html: Pa
   if (!result.prepMinutes) warnings.push({ code: "MISSING_PREP_TIME", field: "prepMinutes", message: "Förberedelsetid kunde inte hittas." });
   if (!result.cookMinutes) warnings.push({ code: "MISSING_COOK_TIME", field: "cookMinutes", message: "Tillagningstid kunde inte hittas." });
   if (!result.servings?.value) warnings.push({ code: "MISSING_SERVINGS", field: "servings", message: "Antal portioner kunde inte hittas." });
-  if (!result.categorySlugs.length) warnings.push({ code: "CATEGORY_REVIEW_REQUIRED", field: "categorySlugs", message: "Välj en arkivkategori innan receptet sparas." });
+  if (!result.categorySlugs.length) warnings.push({ code: "CATEGORY_REVIEW_REQUIRED", field: "categorySlugs", message: "Välj en receptkategori innan receptet sparas." });
   if (result.imageUrl) warnings.push({ code: "IMAGE_URL_UNVALIDATED", field: "imageUrl", message: "Bildadressen är inte hämtad eller säkerhetskontrollerad." });
 
   return { result, provenance, warnings };

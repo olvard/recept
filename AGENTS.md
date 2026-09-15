@@ -15,7 +15,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - This is **Recept**, a Swedish personal recipe vault with an authenticated editor workflow and a GitHub-backed recipe database.
 - The application is deployed with a Node.js runtime. It reads and writes recipes through Route Handlers; recipe imports may fetch approved external recipe pages and use OpenAI to extract or tag data.
 - Do not widen the product scope without an explicit request. In particular, preserve the private-editor model, the GitHub recipe-database contract, and server-side handling of all credentials.
-- Keep UI copy in Swedish. `Recept` is the wordmark; use the established product vocabulary (`Vault`, `Kategorier`, `Nytt recept`).
+- Keep UI copy in Swedish. `Recept` is the product name; use the established product vocabulary (`Recept`, `Nytt recept`).
 
 ### Architecture
 
@@ -24,13 +24,12 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Route map:
   - `/` redirects to `/vault`.
   - `/vault` is the catalog page. Keep `app/vault/page.tsx` as the server wrapper with a `Suspense` boundary around the client catalog.
-  - `/kategorier` is the category collection page.
   - `/recipes/[id]` is a dynamic detail route whose Client Component reads the recipe from `/api/recipes/[id]`.
   - `/recept/nytt` supplies the dedicated mobile recipe-editor flow.
   - `app/not-found.tsx` provides the branded Swedish 404 state.
 - Route Handlers live under `app/api/`: `/api/recipes`, `/api/recipes/[id]`, `/api/auth/session`, and `/api/recipe-import`. Keep protected mutations same-origin and editor-authenticated.
 - `app/components/vault-catalog.tsx` is a Client Component. It owns all client-only catalog behavior: query-string state, search, filtering, sorting, pagination, and the mobile filter disclosure.
-- `app/components/app-shell.tsx` is a Client Component because it owns pathname-aware navigation and desktop create, import, and edit dialogs. It also wraps the application in `RecipeVaultProvider`. Keep dialog Escape and outside-click close behavior intact.
+- `app/components/app-shell.tsx` is a Client Component because it owns the application information bar and desktop create, import, and edit dialogs. It also wraps the application in `RecipeVaultProvider`. Keep dialog Escape and outside-click close behavior intact.
 
 ### Data
 

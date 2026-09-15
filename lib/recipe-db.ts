@@ -12,7 +12,7 @@ const isDate = (value: unknown) => typeof value === "string" && /^\d{4}-\d{2}-\d
 
 export function getRecipeDbConfig(): Config {
   const { GITHUB_RECIPE_DB_OWNER: owner, GITHUB_RECIPE_DB_REPO: repo, GITHUB_RECIPE_DB_BRANCH: branch = "main", GITHUB_RECIPE_DB_TOKEN: token } = process.env;
-  if (!owner || !repo || !token) throw new RecipeDbError("Receptarkivet är inte konfigurerat.", 503);
+  if (!owner || !repo || !token) throw new RecipeDbError("Recepten är inte konfigurerade.", 503);
   return { owner, repo, branch, token };
 }
 export function slugify(value: string) { return value.toLocaleLowerCase("sv").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") || "recept"; }
@@ -21,11 +21,11 @@ export function toSummary(recipe: CanonicalRecipe): RecipeSummary { return { id:
 export function sortIndex(recipes: RecipeSummary[]) { return [...recipes].sort((a, b) => b.archivedAt.localeCompare(a.archivedAt) || Number(b.id) - Number(a.id)); }
 export function generateIndex(recipes: CanonicalRecipe[]) { return sortIndex(recipes.filter((recipe) => !recipe.deletedAt).map(toSummary)); }
 export function validateRecipe(value: unknown): CanonicalRecipe {
-  if (!value || typeof value !== "object") throw new RecipeDbError("Ogiltig receptdata i arkivet.", 502);
+  if (!value || typeof value !== "object") throw new RecipeDbError("Ogiltig receptdata.", 502);
   const recipe = value as Partial<CanonicalRecipe>;
   const legacyTags = typeof (value as { context?: unknown }).context === "string" ? (value as { context: string }).context.split("·").map((tag) => tag.trim()).filter(Boolean) : [];
   const contextTags = Array.isArray(recipe.contextTags) ? recipe.contextTags : legacyTags;
-  if (!/^\d{3,}$/.test(recipe.id ?? "") || typeof recipe.slug !== "string" || !recipe.slug || typeof recipe.title !== "string" || !recipe.title.trim() || !stringArray(recipe.categorySlugs) || !recipe.categorySlugs.length || !stringArray(recipe.categoryNames) || recipe.categoryNames.length !== recipe.categorySlugs.length || typeof recipe.prepMinutes !== "number" || !Number.isFinite(recipe.prepMinutes) || recipe.prepMinutes < 1 || !isDate(recipe.archivedAt) || typeof recipe.note !== "string" || !Array.isArray(contextTags) || contextTags.length !== 3 || !contextTags.every((tag) => typeof tag === "string" && tag.trim()) || new Set(contextTags.map((tag) => tag.toLocaleLowerCase("sv"))).size !== 3 || !stringArray(recipe.ingredients) || !recipe.ingredients.length || !stringArray(recipe.instructions) || !recipe.instructions.length || !(recipe.deletedAt === null || typeof recipe.deletedAt === "string")) throw new RecipeDbError("Ogiltig receptdata i arkivet.", 502);
+  if (!/^\d{3,}$/.test(recipe.id ?? "") || typeof recipe.slug !== "string" || !recipe.slug || typeof recipe.title !== "string" || !recipe.title.trim() || !stringArray(recipe.categorySlugs) || !recipe.categorySlugs.length || !stringArray(recipe.categoryNames) || recipe.categoryNames.length !== recipe.categorySlugs.length || typeof recipe.prepMinutes !== "number" || !Number.isFinite(recipe.prepMinutes) || recipe.prepMinutes < 1 || !isDate(recipe.archivedAt) || typeof recipe.note !== "string" || !Array.isArray(contextTags) || contextTags.length !== 3 || !contextTags.every((tag) => typeof tag === "string" && tag.trim()) || new Set(contextTags.map((tag) => tag.toLocaleLowerCase("sv"))).size !== 3 || !stringArray(recipe.ingredients) || !recipe.ingredients.length || !stringArray(recipe.instructions) || !recipe.instructions.length || !(recipe.deletedAt === null || typeof recipe.deletedAt === "string")) throw new RecipeDbError("Ogiltig receptdata.", 502);
   return { ...recipe, contextTags: contextTags as [string, string, string] } as CanonicalRecipe;
 }
 export function validateSummary(value: unknown): RecipeSummary { const full = validateRecipe({ ...(value as object), ingredients: ["index"], instructions: ["index"] }); return toSummary(full); }
@@ -34,11 +34,11 @@ export function nextRecipeId(index: RecipeSummary[]) { return String(Math.max(0,
 async function github(path: string, init: RequestInit = {}) {
   const config = getRecipeDbConfig();
   const response = await fetch(`${api}/repos/${config.owner}/${config.repo}${path}`, { ...init, headers: { Accept: "application/vnd.github+json", Authorization: `Bearer ${config.token}`, "X-GitHub-Api-Version": "2022-11-28", ...init.headers }, cache: "no-store" });
-  if (!response.ok) throw new RecipeDbError(response.status === 404 ? "Receptet hittades inte." : "GitHub kunde inte läsa receptarkivet.", response.status === 404 ? 404 : response.status === 422 ? 422 : 502);
+  if (!response.ok) throw new RecipeDbError(response.status === 404 ? "Receptet hittades inte." : "GitHub kunde inte läsa recepten.", response.status === 404 ? 404 : response.status === 422 ? 422 : 502);
   return response.json() as Promise<unknown>;
 }
-async function content(path: string) { const raw = await github(`/contents/${path}?ref=${encodeURIComponent(getRecipeDbConfig().branch)}`) as { content: string; encoding: string }; if (raw.encoding !== "base64") throw new RecipeDbError("Ogiltigt svar från receptarkivet.", 502); try { return JSON.parse(Buffer.from(raw.content.replace(/\n/g, ""), "base64").toString("utf8")) as unknown; } catch { throw new RecipeDbError("Ogiltig JSON i receptarkivet.", 502); } }
-export async function readIndex() { const raw = await content("index.json"); if (!Array.isArray(raw)) throw new RecipeDbError("Ogiltigt index i receptarkivet.", 502); return sortIndex(raw.map(validateSummary).filter((recipe) => !recipe.deletedAt)); }
+async function content(path: string) { const raw = await github(`/contents/${path}?ref=${encodeURIComponent(getRecipeDbConfig().branch)}`) as { content: string; encoding: string }; if (raw.encoding !== "base64") throw new RecipeDbError("Ogiltigt svar för recepten.", 502); try { return JSON.parse(Buffer.from(raw.content.replace(/\n/g, ""), "base64").toString("utf8")) as unknown; } catch { throw new RecipeDbError("Ogiltig JSON för recepten.", 502); } }
+export async function readIndex() { const raw = await content("index.json"); if (!Array.isArray(raw)) throw new RecipeDbError("Ogiltigt receptindex.", 502); return sortIndex(raw.map(validateSummary).filter((recipe) => !recipe.deletedAt)); }
 export async function readRecipe(id: string) { const summary = (await readIndex()).find((item) => item.id === id); if (!summary) throw new RecipeDbError("Receptet hittades inte.", 404); return validateRecipe(await content(recipePath(summary))); }
 async function canonicalFromDraft(draft: RecipeDraft, id: string, previous: CanonicalRecipe | undefined, tagger: RecipeTagger, existingTags?: [string, string, string]): Promise<CanonicalRecipe> {
   const errors = validateRecipeDraft(draft); if (errors.length) throw new RecipeDbError(errors.join(" "), 400);

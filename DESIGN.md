@@ -2,11 +2,11 @@
 
 ## 1. Product and visual intent
 
-Recept is a private Swedish recipe vault for Oliver and Wilma. It should feel like a useful kitchen bulletin: warm paper, clear black rules, bright orange notices, and an unapologetically yellow action button. The reference is a narrow, editorial mobile list rather than a soft lifestyle app.
+Recept is a private Swedish collection of recipes for Oliver and Wilma. It should feel like a useful kitchen bulletin: warm paper, clear black rules, bright orange notices, and an unapologetically yellow action button. The reference is a narrow, editorial mobile list rather than a soft lifestyle app.
 
 The visual character is **practical, printed, warm, and direct**. Preserve the sense of a neatly typeset household noticeboard: generous empty space, hairline rules, compact facts, and one high-contrast action at a time.
 
-Use Swedish UI copy throughout: `Vault`, `Kategorier`, `Nytt recept`, `Sök recept…`, `Tid: valfri`. `Recept` is the wordmark.
+Use Swedish UI copy throughout: `Recept`, `Nytt recept`, `Sök recept…`, `Tid: valfri`. Use `Tillagd` for the date a recipe was added.
 
 ### Principles
 
@@ -52,7 +52,7 @@ Use sentence case for labels and headings; the wordmark remains `RECEPT`. Letter
 Use a 4 px base unit: `4, 8, 12, 16, 20, 24, 32, 40, 48, 64` px. On mobile, page gutters are `18px`; at 768 px and above they are `32px`. Keep touch targets at least `44px` tall.
 
 - Utility strip: `30px` tall.
-- Mobile header: `150px–164px` including wordmark, tagline, and primary action.
+- Mobile header: `150px–164px` including the primary action.
 - Primary action: `44px` minimum height, `2px` ink border, `4px` solid ink offset down/right.
 - Search field: `42px` minimum height, `1px` ink border.
 - Filter chips: `28px–32px` height with `1px` ink border.
@@ -62,11 +62,11 @@ Use a 4 px base unit: `4, 8, 12, 16, 20, 24, 32, 40, 48, 64` px. On mobile, page
 
 ### App shell
 
-The shell is a single off-white paper field. At the top, a full-bleed orange utility strip puts the vault ownership at left and the day at right. The content header follows with the black `RECEPT` wordmark, a small Inter tagline, then the primary action.
+The shell is a single off-white paper field. At the top, a full-bleed orange utility strip shows `RECEPT`, the recipe count, household ownership, and the day. The content header follows with the primary action.
 
 On mobile the primary `+ Nytt recept` button spans the content width. Use a compact plus glyph before the label; it is a textual/line icon, not an emoji. A black horizontal rule separates the header from the catalog controls.
 
-Desktop may place navigation and secondary actions beside the brand, but preserve the orange strip, paper canvas, solid rules, and yellow primary action. The application shell changes at `767px`; never hide the create action on mobile.
+The utility strip is static information rather than navigation. Preserve the orange strip, paper canvas, solid rules, and yellow primary action. The application shell changes at `767px`; never hide the create action on mobile.
 
 ### Catalog page
 

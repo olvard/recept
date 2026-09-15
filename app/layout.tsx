@@ -18,8 +18,8 @@ const lora = Lora({
 });
 
 export const metadata: Metadata = {
-  title: "Recept — Personligt receptarkiv",
-  description: "Ett stillsamt arkiv för personliga recept.",
+  title: "Recept — Personliga recept",
+  description: "En samling personliga recept.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
