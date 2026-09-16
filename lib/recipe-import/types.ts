@@ -59,7 +59,6 @@ export type RecipeImportResponse = {
 
 export type RecipeImportErrorCode =
   | "INVALID_REQUEST"
-  | "EDITOR_AUTH_REQUIRED"
   | "ORIGIN_NOT_ALLOWED"
   | "REQUEST_TOO_LARGE"
   | "FETCHED_BODY_TOO_LARGE"
@@ -69,7 +68,6 @@ export type RecipeImportErrorCode =
   | "EXTRACTION_INCOMPLETE"
   | "FETCH_FAILED"
   | "LLM_PROVIDER_ERROR"
-  | "AUTH_NOT_CONFIGURED"
   | "LLM_NOT_CONFIGURED"
   | "FETCH_TIMEOUT"
   | "LLM_TIMEOUT"

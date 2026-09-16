@@ -40,20 +40,3 @@ export async function requestJson<T>(url: string, init: RequestInit = {}): Promi
   }
   return body as T;
 }
-
-export async function requestEditorAccess() {
-  const password = window.prompt("Lösenord för redaktörsåtkomst");
-  if (password === null) return false;
-  await requestJson("/api/auth/session", { method: "POST", body: JSON.stringify({ password }) });
-  return true;
-}
-
-export async function withEditorAccess<T>(request: () => Promise<T>): Promise<T | null> {
-  try {
-    return await request();
-  } catch (error) {
-    const requiresAccess = error instanceof ClientApiError && (error.code === "EDITOR_AUTH_REQUIRED" || error.message === "Redaktörsåtkomst krävs.");
-    if (!requiresAccess || !await requestEditorAccess()) return null;
-    return request();
-  }
-}

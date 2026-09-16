@@ -1,13 +1,11 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({
-  isEditor: vi.fn(),
   sameOrigin: vi.fn(),
   importRecipeFromUrl: vi.fn(),
 }));
 
-vi.mock("@/lib/editor-auth", () => ({
-  isEditor: mocks.isEditor,
+vi.mock("@/lib/request-origin", () => ({
   sameOrigin: mocks.sameOrigin,
 }));
 vi.mock("@/lib/recipe-import/service", () => ({
@@ -26,45 +24,20 @@ function request(body: string, contentType = "application/json") {
 
 describe("POST /api/recipe-import", () => {
   beforeEach(() => {
-    mocks.isEditor.mockClear();
     mocks.sameOrigin.mockClear();
     mocks.importRecipeFromUrl.mockClear();
-    vi.stubEnv("RECEPT_ADMIN_PASSWORD", "admin");
-    vi.stubEnv("RECEPT_SESSION_SECRET", "secret");
     mocks.sameOrigin.mockReturnValue(true);
-    mocks.isEditor.mockResolvedValue(true);
     mocks.importRecipeFromUrl.mockResolvedValue({ status: "needs_review", result: { title: "Test" }, provenance: {}, warnings: [] });
   });
 
-  it("rejects cross-origin requests before authentication or fetching", async () => {
+  it("rejects cross-origin requests before fetching", async () => {
     mocks.sameOrigin.mockReturnValue(false);
 
     const response = await POST(request(JSON.stringify({ url: "https://recipes.example.test/" })));
 
     expect(response.status).toBe(403);
     expect(await response.json()).toMatchObject({ code: "ORIGIN_NOT_ALLOWED", retryable: false });
-    expect(mocks.isEditor).not.toHaveBeenCalled();
     expect(mocks.importRecipeFromUrl).not.toHaveBeenCalled();
-  });
-
-  it("requires an editor session", async () => {
-    mocks.isEditor.mockResolvedValue(false);
-
-    const response = await POST(request(JSON.stringify({ url: "https://recipes.example.test/" })));
-
-    expect(response.status).toBe(401);
-    expect(await response.json()).toMatchObject({ code: "EDITOR_AUTH_REQUIRED", retryable: false });
-    expect(mocks.importRecipeFromUrl).not.toHaveBeenCalled();
-  });
-
-  it("reports missing authentication configuration", async () => {
-    vi.stubEnv("RECEPT_SESSION_SECRET", "");
-
-    const response = await POST(request(JSON.stringify({ url: "https://recipes.example.test/" })));
-
-    expect(response.status).toBe(503);
-    expect(await response.json()).toMatchObject({ code: "AUTH_NOT_CONFIGURED", retryable: false });
-    expect(mocks.isEditor).not.toHaveBeenCalled();
   });
 
   it("enforces JSON and the request body limit", async () => {

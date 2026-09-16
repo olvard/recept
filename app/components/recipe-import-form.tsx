@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { requestJson, ClientApiError, withEditorAccess } from "@/lib/editor-client";
+import { requestJson, ClientApiError } from "@/lib/editor-client";
 import { recipeImportToDraft, recipeImportToReview, recipeImportUrlError, type RecipeImportReview } from "@/lib/recipe-import/frontend";
 import type { RecipeImportResponse } from "@/lib/recipe-import/types";
 import type { RecipeDraft } from "@/lib/recipe-vault";
@@ -37,11 +37,10 @@ export function RecipeImportForm({ onBack, onImported, firstFocusRef }: RecipeIm
     setResponse(null);
     setLoading(true);
     try {
-      const imported = await withEditorAccess(() => requestJson<RecipeImportResponse>("/api/recipe-import", {
+      const imported = await requestJson<RecipeImportResponse>("/api/recipe-import", {
         method: "POST",
         body: JSON.stringify({ url: url.trim() }),
-      }));
-      if (!imported) return;
+      });
       setResponse(imported);
     } catch (requestError) {
       const message = requestError instanceof ClientApiError ? requestError.message : "Importen kunde inte genomföras.";

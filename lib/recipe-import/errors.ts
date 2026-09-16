@@ -2,7 +2,6 @@ import type { ImportWarning, RecipeImportErrorCode } from "./types";
 
 const ERROR_MESSAGES: Record<RecipeImportErrorCode, string> = {
   INVALID_REQUEST: "Begäran kunde inte läsas.",
-  EDITOR_AUTH_REQUIRED: "Redaktörsåtkomst krävs.",
   ORIGIN_NOT_ALLOWED: "Begärans ursprung är inte tillåtet.",
   REQUEST_TOO_LARGE: "Begäran är för stor.",
   FETCHED_BODY_TOO_LARGE: "Källsidan är för stor.",
@@ -12,7 +11,6 @@ const ERROR_MESSAGES: Record<RecipeImportErrorCode, string> = {
   EXTRACTION_INCOMPLETE: "Receptet innehåller inte tillräckligt med information.",
   FETCH_FAILED: "Källsidan kunde inte hämtas.",
   LLM_PROVIDER_ERROR: "Recepttolkningen kunde inte slutföras.",
-  AUTH_NOT_CONFIGURED: "Serverns autentisering är inte konfigurerad.",
   LLM_NOT_CONFIGURED: "Automatisk komplettering är inte konfigurerad.",
   FETCH_TIMEOUT: "Källsidan tog för lång tid att hämta.",
   LLM_TIMEOUT: "Automatisk komplettering tog för lång tid.",
@@ -21,7 +19,6 @@ const ERROR_MESSAGES: Record<RecipeImportErrorCode, string> = {
 
 const ERROR_STATUSES: Record<RecipeImportErrorCode, number> = {
   INVALID_REQUEST: 400,
-  EDITOR_AUTH_REQUIRED: 401,
   ORIGIN_NOT_ALLOWED: 403,
   REQUEST_TOO_LARGE: 413,
   FETCHED_BODY_TOO_LARGE: 413,
@@ -31,7 +28,6 @@ const ERROR_STATUSES: Record<RecipeImportErrorCode, number> = {
   EXTRACTION_INCOMPLETE: 422,
   FETCH_FAILED: 502,
   LLM_PROVIDER_ERROR: 502,
-  AUTH_NOT_CONFIGURED: 503,
   LLM_NOT_CONFIGURED: 503,
   FETCH_TIMEOUT: 504,
   LLM_TIMEOUT: 504,

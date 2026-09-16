@@ -27,7 +27,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
   - `/recipes/[id]` is a dynamic detail route whose Client Component reads the recipe from `/api/recipes/[id]`.
   - `/recept/nytt` supplies the dedicated mobile recipe-editor flow.
   - `app/not-found.tsx` provides the branded Swedish 404 state.
-- Route Handlers live under `app/api/`: `/api/recipes`, `/api/recipes/[id]`, `/api/auth/session`, and `/api/recipe-import`. Keep protected mutations same-origin and editor-authenticated.
+- Route Handlers live under `app/api/`: `/api/recipes`, `/api/recipes/[id]`, and `/api/recipe-import`. Keep protected mutations same-origin; application-wide authentication protects editor access.
 - `app/components/vault-catalog.tsx` is a Client Component. It owns all client-only catalog behavior: query-string state, search, filtering, sorting, pagination, and the mobile filter disclosure.
 - `app/components/app-shell.tsx` is a Client Component because it owns the application information bar and desktop create, import, and edit dialogs. It also wraps the application in `RecipeVaultProvider`. Keep dialog Escape and outside-click close behavior intact.
 
