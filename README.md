@@ -117,10 +117,3 @@ Run at least the type check and linter after changes. Changes to API routes, imp
 
 Write API requests require the same origin. Recipe imports use constrained, safe fetching and respect websites' robots rules.
 
-## Contributing
-
-Keep interface copy in Swedish and preserve the private-editor model. Recipe data must always pass through Route Handlers and server modules in `lib/`; never expose secrets to the client.
-
-## License
-
-This project does not currently specify a license.
