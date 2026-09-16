@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Lora } from "next/font/google";
 import "./globals.css";
 import { AppShell } from "@/app/components/app-shell";
@@ -20,6 +20,11 @@ const lora = Lora({
 export const metadata: Metadata = {
   title: "Recept — Personliga recept",
   description: "En samling personliga recept.",
+  manifest: "/site.webmanifest",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#ff5a00",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

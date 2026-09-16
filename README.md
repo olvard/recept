@@ -1,5 +1,9 @@
 # Recept
 
+<p align="center">
+  <img src="public/logo.png" alt="Recept" width="480">
+</p>
+
 Recept is a personal, private recipe vault for collecting recipes in a calm, practical place. Browse, search, and filter the archive; write your own recipes; or import one from the web and review it before saving.
 
 Recipe data lives in a separate private GitHub repository. The app reads and writes it on the server, so GitHub tokens and OpenAI keys never reach the browser.
