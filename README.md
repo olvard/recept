@@ -1,36 +1,122 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Recept
 
-## Getting Started
+Recept is a personal, private recipe vault for collecting recipes in a calm, practical place. Browse, search, and filter the archive; write your own recipes; or import one from the web and review it before saving.
 
-First, run the development server:
+Recipe data lives in a separate private GitHub repository. The app reads and writes it on the server, so GitHub tokens and OpenAI keys never reach the browser.
+
+## Features
+
+- Search, categorize, sort, and paginate the recipe archive.
+- Create, edit, and soft-delete recipes.
+- Import recipes from supported web pages. Structured recipe data is preferred, with OpenAI used only to fill in missing details.
+- Review imported recipes before saving them.
+- Store each recipe as its own JSON file, plus a lightweight `index.json`, in GitHub.
+- Use a mobile-friendly recipe-editor flow at `/recept/nytt`.
+
+## Technology
+
+- Next.js 16 with the App Router and Node.js runtime
+- React 19 and TypeScript
+- GitHub API for the recipe database
+- OpenAI for context tags and, when necessary, completing imported recipes
+- Zod for validation, Vitest for tests, and ESLint for code quality
+
+## Getting started
+
+Prerequisites: a current Node.js LTS release, npm, a private GitHub repository for recipes, a GitHub token with read/write access to its contents, and an OpenAI API key.
+
+```bash
+git clone <repository-url>
+cd recept
+npm install
+cp .env.example .env.local
+```
+
+Then populate `.env.local`:
+
+```dotenv
+GITHUB_RECIPE_DB_OWNER=your-github-user-or-organization
+GITHUB_RECIPE_DB_REPO=your-private-recipe-repository
+GITHUB_RECIPE_DB_BRANCH=main
+GITHUB_RECIPE_DB_TOKEN=your-github-token
+OPENAI_API_KEY=your-openai-api-key
+# Optional: model used for importing and tagging
+OPENAI_RECIPE_MODEL=
+# Optional: identification when fetching recipe pages
+RECIPE_IMPORT_USER_AGENT=ReceptRecipeImporter/0.1
+```
+
+Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000). The home page redirects to `/vault`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+> Keep `.env.local` private. It is ignored by Git; never put secrets in client code or commit them.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Set up the recipe database
 
-## Learn More
+1. Create a new **private** GitHub repository for your recipes.
+2. Copy the contents of [`recipe-db-template/`](recipe-db-template) into that repository, including the hidden `.github` directory. Its workflow rebuilds `index.json` when recipe files change.
+3. From the recipe database repository's root, run this project's seed script to create the eight sample recipes:
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   node ../recept/scripts/seed-recipe-db.mjs ../recept/data/recipes.json
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. Commit and push `recipes/` and `index.json` to the branch configured in `GITHUB_RECIPE_DB_BRANCH`.
+5. Create a GitHub token that can read and write the repository contents, then set it as `GITHUB_RECIPE_DB_TOKEN`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The database contains one file per recipe, named `recipes/<id>-<slug>.json`. Root-level `index.json` holds summaries only, enabling fast catalogue reads. Recipes are saved atomically through GitHub commits, and the app retries concurrent changes.
 
-## Deploy on Vercel
+## Project structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```text
+app/                    Pages, Route Handlers, and user interface
+app/api/                Recipe and recipe-import API
+app/components/         Catalogue, editor, dialogs, and detail view
+data/recipes.json       Eight seed recipes for a new recipe database
+lib/recipe-db.ts        Server-side GitHub storage and validation
+lib/recipe-import/      Safe fetching, extraction, and normalization
+lib/recipe-tags.ts      OpenAI-powered context tags
+recipe-db-template/     Template for the separate recipe repository
+scripts/                Seed tool and legacy data files
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Common commands
+
+```bash
+npm run dev              # development server
+npm run lint             # ESLint
+npm test                 # Vitest, run once
+npm run test:watch       # Vitest in watch mode
+npx tsc --noEmit         # type check
+npx next build --webpack # production build
+npm run start            # start a built application
+```
+
+Run at least the type check and linter after changes. Changes to API routes, imports, tagging, or recipe persistence should also be followed by `npm test`.
+
+## Routes and API
+
+| Route | Purpose |
+| --- | --- |
+| `/vault` | Recipe catalogue with URL-driven search, filters, and sorting |
+| `/recipes/[id]` | Recipe detail view |
+| `/recept/nytt` | Mobile-friendly editor for new recipes |
+| `GET /api/recipes` | Fetch recipe summaries for the catalogue |
+| `POST /api/recipes` | Create a recipe |
+| `GET`, `PUT`, `DELETE /api/recipes/[id]` | Fetch, update, or soft-delete a recipe |
+| `POST /api/recipe-import` | Fetch and prepare a recipe from a URL for review |
+
+Write API requests require the same origin. Recipe imports use constrained, safe fetching and respect websites' robots rules.
+
+## Contributing
+
+Keep interface copy in Swedish and preserve the private-editor model. Recipe data must always pass through Route Handlers and server modules in `lib/`; never expose secrets to the client.
+
+## License
+
+This project does not currently specify a license.
